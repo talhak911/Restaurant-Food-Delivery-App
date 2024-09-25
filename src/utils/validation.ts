@@ -83,13 +83,45 @@ export const validateSignInForm = (email: string, password: string) => {
 };
 
 export const validateOtp = (email: string, otp: string) => {
-  if (!otp) {
-    ToastAndroid.show('Enter otp', ToastAndroid.SHORT);
+  if (!otp || otp.length!=6) {
+    ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
     return false;
   }
 
   if (!isValidEmail(email)) {
     ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+    return false;
+  }
+
+  return true;
+};
+
+export const validateForgetPasswordForm = (email: string, password: string,confirmPassword:string,otp:string) => {
+  if (!email || !password || !confirmPassword || !otp) {
+    ToastAndroid.show('All fields are required', ToastAndroid.LONG);
+    return false;
+  }
+
+  if (!isValidEmail(email)) {
+    ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+    return false;
+  }
+  if (otp.length!=6) {
+    ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
+    return false;
+  }
+  if (password.length < 8) {
+    ToastAndroid.show(
+      'Password must be at least 8 characters long',
+      ToastAndroid.SHORT,
+    );
+    return false;
+  }
+  if (password !== confirmPassword) {
+    ToastAndroid.show(
+      'Password does not match',
+      ToastAndroid.SHORT,
+    );
     return false;
   }
 

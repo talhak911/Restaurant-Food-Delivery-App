@@ -10,6 +10,7 @@ import BackIcon from '../../assets/icons/back';
 import {Text, TouchableOpacity, View} from 'react-native';
 import { SignIn } from '../../screens/signIn/SignIn';
 import VerifyOtp from '../../screens/verifyOtp/VerifyOtp';
+import ForgetPassword from '../../screens/forgetPassword/ForgetPassword';
 
 export default function AuthNavigator() {
   const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -48,6 +49,7 @@ export default function AuthNavigator() {
         <Stack.Screen key="New Account" name="New Account" component={SignUp}/>
         <Stack.Screen key="Log In" name="Log In" component={SignIn}/>
         <Stack.Screen key="Verify Otp" name="Verify Otp" component={VerifyOtp}/>
+        <Stack.Screen key="Forget Password" name="Forget Password" component={ForgetPassword}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

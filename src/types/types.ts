@@ -120,7 +120,7 @@ export type AuthStackParamList = {
     "Log In": undefined;
     'Verify Otp':{email:string},
     VerifyEmail: undefined;
-    ForgetPassword: undefined;
+    "Forget Password": undefined;
   };
 export type FIELDS_TYPE = {
   label: string;

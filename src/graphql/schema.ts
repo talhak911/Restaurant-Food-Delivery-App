@@ -20,3 +20,14 @@ export const VERIFY_ACCOUNT = gql`
   }
 `;
 
+export const REQUEST_OTP = gql`
+mutation requestOtp($email: String!  $type: String!) {
+  requestOtp(email: $email, type: $type)
+}
+
+`
+export const RESET_PASSWORD = gql`
+mutation resetPassword($email: String!, $otp: String! $password: String!) {
+  resetPassword(otp: $otp, password: $password, email: $email)
+}
+`

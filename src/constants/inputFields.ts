@@ -109,3 +109,42 @@ export const SIGN_IN_FIELDS = (
     secureInput: true,
   },
 ];
+
+export const RESET_PASSWORD_FIELDS = (
+  email: string,
+  setEmail: (text: string) => void,
+  password: string,
+  setPassword: (text: string) => void,
+  confirmPassword: string,
+  setConfirmPassword: (text: string) => void,
+  otp: string,
+  setOtp: (text: string) => void,
+): FIELDS_TYPE[] => [
+  {
+    label: 'Email',
+    value: email,
+    onChange: setEmail,
+    placeholder: 'Enter your Email',
+  },
+  {
+    label: 'Password',
+    value: password,
+    onChange: setPassword,
+    placeholder: 'Enter Password',
+    secureInput: true,
+  },
+  {
+    label: 'Confirm Password',
+    value: confirmPassword,
+    onChange: setConfirmPassword,
+    placeholder: 'Retype Password',
+    secureInput: true,
+  },
+  {
+    label: 'Otp',
+    value: otp,
+    onChange: setOtp,
+    placeholder: 'Enter Otp',
+    keyboardType:"numeric"
+  },
+];
