@@ -51,40 +51,12 @@ export type ChangePasswordPayload = {
 };
 
 
-export type StackNavigatorParamList = {
-  Tab: undefined;
-  Income: undefined;
-  Expense: undefined;
-  'Financial Report': undefined;
-  'Detail Transaction': {
-    headerColor: string;
-    id: string | undefined;
-    date: string;
-    type: 'income' | 'expense';
-    url: string | null | undefined;
-    category: string;
-    description: string;
-    amount: string;
-  };
-  'Update Profile': undefined;
-  Currency: undefined;
-  Settings: undefined;
-  'Reset Password': undefined;
-};
-export type DetailTransactionProps = NativeStackScreenProps<
-  StackNavigatorParamList,
-  'Detail Transaction'
->;
+
+
 
 // export type StackNavigationProp =
 //   NativeStackNavigationProp<StackNavigatorParamList>;
-export type TabParamsList = {
-  Home: undefined;
-  Transaction: undefined;
-  AddTransaction: undefined;
-  Budget: undefined;
-  Profile: undefined;
-};
+
 export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
 
 
@@ -112,6 +84,41 @@ export type FinancialReportResult = {
 
 
 //new 
+
+
+
+
+
+
+
+
+
+
+
+export type TabParamsList = {
+  Home: undefined;
+  Help:undefined;
+  Foods:undefined
+  Favoirite:undefined;
+  Orders:undefined
+};
+
+
+export type StackNavigatorParamList = {
+Home:undefined
+Tab:undefined
+  // 'Detail Transaction': {
+  //   headerColor: string;
+  //   id: string | undefined;
+  //   date: string;
+  //   type: 'income' | 'expense';
+  //   url: string | null | undefined;
+  //   category: string;
+  //   description: string;
+  //   amount: string;
+  // };
+
+};
 
 export type AuthStackParamList = {
   OnBoarding:undefined,

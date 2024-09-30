@@ -1,8 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 import { ChangePasswordPayload} from '../../types/types';
+import { useQuery } from '@apollo/client';
+import { GetCurrentUserDocument } from '../../gql/graphql';
+import { client } from '../../providers/apolloProvider/apolloProvider';
 
-const initialState:any= {
+const initialState:{user:any}= {
   user: null,
 };
 
@@ -20,6 +23,17 @@ export const signIn = createAsyncThunk(
 
   },
 );
+export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (_, { rejectWithValue }) => {
+  try {
+    const response = await client.query({
+      query: GetCurrentUserDocument,
+    });
+    return response?.data.getCurrentUser;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
 export const signUp = createAsyncThunk(
   'auth/signUp',
   async (
@@ -50,19 +64,7 @@ export const changePassword = createAsyncThunk(
   },
 );
 
-export const signUpWithGoogle = createAsyncThunk(
-  'auth/signUpWithGoogle',
-  async (_, {rejectWithValue}) => {
-    try {
-     
 
-
-
-    } catch (error: any) {
-
-    }
-  }
-);
 
 export const signOut = createAsyncThunk('auth/signOut', async () => {
  
@@ -80,13 +82,13 @@ export const authSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.user = action.payload;
     });
-    builder.addCase(signUpWithGoogle.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
+
     builder.addCase(signOut.fulfilled, state => {
       state.user = null;
     });
-  
+    builder.addCase(fetchUserData.fulfilled,(state,action)=>{
+      state.user =action.payload
+    })
   },
 });
 

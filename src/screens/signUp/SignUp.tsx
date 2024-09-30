@@ -24,14 +24,14 @@ import GoogleIcon from '../../assets/icons/google';
 export const SignUp = () => {
   const {
     navigateToSignIn,
-    setIsChecked,
-    setLoading,
+  
+
     handleSignUp,
     fields,
     role,
-    loadings,
+    loading,
     selectRole,
-    isChecked,
+
     isDatePickerVisible,
     dob,
     hideDatePicker,
@@ -42,7 +42,8 @@ export const SignUp = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <KeyboardAwareScrollView
-        keyboardShouldPersistTaps="always"
+         contentContainerStyle={{flexGrow:1}}
+       keyboardShouldPersistTaps="always"
         style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.gap}>
@@ -83,7 +84,7 @@ export const SignUp = () => {
               selectedValue={role}
             />
           </View>
-          {loadings ? (
+          {loading ? (
             <View style={{marginTop: 16}}>
               <ActivityIndicator size="large" color={COLORS.purple} />
             </View>
@@ -100,7 +101,7 @@ export const SignUp = () => {
               <CustomButton
                 title="Sign Up"
                 pH={Width(15)}
-                loading={loadings}
+                loading={loading}
                 onPress={handleSignUp}
               />
               <Text style={{color: COLORS.almostBlack, marginVertical: 9}}>

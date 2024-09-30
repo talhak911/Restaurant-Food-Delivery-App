@@ -1,3 +1,10 @@
+import React from 'react';
+import ContactUsIcon from '../assets/icons/contactUs';
+import DeliveryAddressIcon from '../assets/icons/deliveryAddress';
+import HelpAndFaqsIcon from '../assets/icons/helpAndFaqsIcon';
+import MyOrdersIcon from '../assets/icons/myOrders';
+import MyProfileIcon from '../assets/icons/myProfile';
+import PaymentMethodIcon from '../assets/icons/paymentMethod';
 import { SignIn } from '../screens/signIn/SignIn';
 import { SignUp } from '../screens/signUp/SignUp';
 import Welcome from '../screens/welcome/Welcome';
@@ -5,6 +12,7 @@ import {
   AuthScreenOptions,
 } from '../types/types';
 import { COLORS } from './color';
+import SettingsIcon from '../assets/icons/settings';
 
 
 export const MONTHS = [
@@ -205,3 +213,17 @@ export const TAB_SCREEN_OPTIONS = {
   tabBarActiveTintColor: COLORS.purple,
   headerShown: false,
 };
+
+
+
+//
+
+export const DrawerList = [
+  {icon: <MyOrdersIcon/>, label: 'My Orders', navigateTo: 'My Orders'},
+  {icon: <MyProfileIcon />, label: 'My Profile', navigateTo: 'My Profile'},
+  {icon: <DeliveryAddressIcon/>, label: 'Delivery Address', navigateTo: 'Delivery Address'},
+  {icon: <PaymentMethodIcon/>, label: 'Payment Method', navigateTo: 'Payment Method'},
+  {icon: <ContactUsIcon/>, label: 'Contact Us', navigateTo: 'Contact Us'},
+  {icon: <HelpAndFaqsIcon/>, label: 'Help & FAQs', navigateTo: 'Help & FAQs'},
+  {icon: <SettingsIcon/>, label: 'Settings', navigateTo: 'Settings'},
+];

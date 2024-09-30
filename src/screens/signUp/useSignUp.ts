@@ -35,14 +35,13 @@ export const useSignUp = () => {
   const selectRole = (e: Role) => {
     setRole(e);
   };
-  const [signUp, {loading, error}] = useMutation(SignUpDocument);
+  const [signUp, {loading}] = useMutation(SignUpDocument);
   const handleSignUp = async () => {
     const isValid = validateSignUpForm(name, email, password, phone, dob, role);
     if (!isValid || !role) {
       return;
     }
 
-    console.log("name is ",typeof(name), " eamil is ", typeof(email), " password is ",typeof(password)," role is ", typeof(role), "  dob is  ",typeof(dob)," numb is ", typeof(Number(phone)))
     try {
       const {data} = await signUp({
         variables: {
@@ -58,20 +57,17 @@ export const useSignUp = () => {
       });
       if (data) {
         ToastAndroid.show('Verify your account to login ', ToastAndroid.SHORT);
-        navigation.navigate("Verify Otp",{email})
+        navigation.navigate('Verify Otp', {email});
       }
     } catch (error: any) {
-      console.log(error)
-      ToastAndroid.show(
-        error.message,
-        ToastAndroid.LONG,
-      );
+      console.log(error);
+      ToastAndroid.show(error.message, ToastAndroid.LONG);
     }
   };
-  const [isChecked, setIsChecked] = useState(false);
+
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [loadings, setLoading] = useState(false);
+
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<Role | null>(null);
   const [dob, setDob] = useState('');
@@ -90,15 +86,10 @@ export const useSignUp = () => {
 
   return {
     navigateToSignIn,
-    setIsChecked,
-    setLoading,
     handleSignUp,
-    isChecked,
     selectRole,
-    loadings,
-    hideDatePicker,
     loading,
-    error,
+    hideDatePicker,
     fields,
     role,
     dob,

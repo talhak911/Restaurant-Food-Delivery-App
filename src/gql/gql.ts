@@ -14,10 +14,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  mutation signUp($data: UserCreateInput!) {\n    signUp(data: $data) {\n      name\n    }\n  }\n": types.SignUpDocument,
-    "\n  mutation signIn($email: String!,$password:String!) {\n    signIn(email: $email,password:$password)\n  }\n": types.SignInDocument,
-    "\n  mutation verifyAccount($email: String!,$otp:String!) {\n    verifyAccount(email: $email,otp:$otp)\n  }\n": types.VerifyAccountDocument,
-    "\nmutation requestOtp($email: String!  $type: String!) {\n  requestOtp(email: $email, type: $type)\n}\n\n": types.RequestOtpDocument,
-    "\nmutation resetPassword($email: String!, $otp: String! $password: String!) {\n  resetPassword(otp: $otp, password: $password, email: $email)\n}\n": types.ResetPasswordDocument,
+    "\n  mutation signIn($email: String!, $password: String!) {\n    signIn(email: $email, password: $password)\n  }\n": types.SignInDocument,
+    "\n  mutation verifyAccount($email: String!, $otp: String!) {\n    verifyAccount(email: $email, otp: $otp)\n  }\n": types.VerifyAccountDocument,
+    "\n  mutation requestOtp($email: String!, $type: String!) {\n    requestOtp(email: $email, type: $type)\n  }\n": types.RequestOtpDocument,
+    "\n  mutation resetPassword($email: String!, $otp: String!, $password: String!) {\n    resetPassword(otp: $otp, password: $password, email: $email)\n  }\n": types.ResetPasswordDocument,
+    "\n  query getCurrentUser {\n    getCurrentUser {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n": types.GetCurrentUserDocument,
 };
 
 /**
@@ -41,19 +42,23 @@ export function gql(source: "\n  mutation signUp($data: UserCreateInput!) {\n   
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation signIn($email: String!,$password:String!) {\n    signIn(email: $email,password:$password)\n  }\n"): (typeof documents)["\n  mutation signIn($email: String!,$password:String!) {\n    signIn(email: $email,password:$password)\n  }\n"];
+export function gql(source: "\n  mutation signIn($email: String!, $password: String!) {\n    signIn(email: $email, password: $password)\n  }\n"): (typeof documents)["\n  mutation signIn($email: String!, $password: String!) {\n    signIn(email: $email, password: $password)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation verifyAccount($email: String!,$otp:String!) {\n    verifyAccount(email: $email,otp:$otp)\n  }\n"): (typeof documents)["\n  mutation verifyAccount($email: String!,$otp:String!) {\n    verifyAccount(email: $email,otp:$otp)\n  }\n"];
+export function gql(source: "\n  mutation verifyAccount($email: String!, $otp: String!) {\n    verifyAccount(email: $email, otp: $otp)\n  }\n"): (typeof documents)["\n  mutation verifyAccount($email: String!, $otp: String!) {\n    verifyAccount(email: $email, otp: $otp)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nmutation requestOtp($email: String!  $type: String!) {\n  requestOtp(email: $email, type: $type)\n}\n\n"): (typeof documents)["\nmutation requestOtp($email: String!  $type: String!) {\n  requestOtp(email: $email, type: $type)\n}\n\n"];
+export function gql(source: "\n  mutation requestOtp($email: String!, $type: String!) {\n    requestOtp(email: $email, type: $type)\n  }\n"): (typeof documents)["\n  mutation requestOtp($email: String!, $type: String!) {\n    requestOtp(email: $email, type: $type)\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nmutation resetPassword($email: String!, $otp: String! $password: String!) {\n  resetPassword(otp: $otp, password: $password, email: $email)\n}\n"): (typeof documents)["\nmutation resetPassword($email: String!, $otp: String! $password: String!) {\n  resetPassword(otp: $otp, password: $password, email: $email)\n}\n"];
+export function gql(source: "\n  mutation resetPassword($email: String!, $otp: String!, $password: String!) {\n    resetPassword(otp: $otp, password: $password, email: $email)\n  }\n"): (typeof documents)["\n  mutation resetPassword($email: String!, $otp: String!, $password: String!) {\n    resetPassword(otp: $otp, password: $password, email: $email)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query getCurrentUser {\n    getCurrentUser {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query getCurrentUser {\n    getCurrentUser {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

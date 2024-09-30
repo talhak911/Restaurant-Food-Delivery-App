@@ -16,38 +16,44 @@ export const SignIn = () => {
     navigateToSignUp,
     navigateToForgetPassword,
     fields,
-    loadings
-
+    loading,
   } = useSignIn();
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView>
-        <View style={styles.containerContent}>
-          <Text style={styles.heading} >Welcome</Text>
-      
-          <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </Text>
-          {fields.map((field, index) => (
-            <CustomInput
-              key={index}
-              value={field.value}
-              onChange={field.onChange}
-              placeHolder={field.placeholder}
-              secureInput={field.secureInput}
-              label={field.label}
-              keyboardType={field.keyboardType}
-            />
-          ))}
-          <TouchableOpacity
-            onPress={navigateToForgetPassword}
-            style={styles.forgetPasswordContainer}>
-            <Text style={styles.forgetPasswordText}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-    
+    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+      <KeyboardAwareScrollView
+       contentContainerStyle={{flexGrow:1}}
+       keyboardShouldPersistTaps="always"
+        style={{flex: 1}}>
+        <View style={styles.container}>
+          <View style={styles.containerContent}>
+            <Text style={styles.heading}>Welcome</Text>
+
+            <Text style={styles.description}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
+            </Text>
+            {fields.map((field, index) => (
+              <CustomInput
+                key={index}
+                value={field.value}
+                onChange={field.onChange}
+                placeHolder={field.placeholder}
+                secureInput={field.secureInput}
+                label={field.label}
+                keyboardType={field.keyboardType}
+              />
+            ))}
+            <TouchableOpacity
+              onPress={navigateToForgetPassword}
+              style={styles.forgetPasswordContainer}>
+              <Text style={styles.forgetPasswordText}>Forgot Password?</Text>
+            </TouchableOpacity>
+          </View>
+
           <View style={{marginTop: Height(7), marginHorizontal: 16}}>
             <View style={{alignItems: 'center'}}>
               <CustomButton
-            loading={loadings}
+                loading={loading}
                 onPress={onSignInPress}
                 title="Login"
                 pH={Width(15)}
@@ -58,14 +64,19 @@ export const SignIn = () => {
             <SignUpGoogle loading={loading} setLoading={setLoading} />
             </View> */}
             <View style={styles.footerView}>
-            <Text style={{color: COLORS.almostBlack, marginTop: 29,marginBottom:19}}>
+              <Text
+                style={{
+                  color: COLORS.almostBlack,
+                  marginTop: 29,
+                  marginBottom: 19,
+                }}>
                 or sign up with
               </Text>
               <View style={{flexDirection: 'row', gap: 9}}>
                 <GoogleIcon />
                 <FacebookIcon />
               </View>
-              <View style={{flexDirection: 'row', paddingVertical:19}}>
+              <View style={{flexDirection: 'row', paddingVertical: 19}}>
                 <Text style={styles.footerText}>Don’t have an account?</Text>
                 <TouchableOpacity onPress={navigateToSignUp}>
                   <Text style={styles.footerLink}>Sign Up</Text>
@@ -73,7 +84,7 @@ export const SignIn = () => {
               </View>
             </View>
           </View>
-
+        </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );
