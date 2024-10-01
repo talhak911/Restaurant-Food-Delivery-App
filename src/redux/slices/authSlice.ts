@@ -4,6 +4,8 @@ import { ChangePasswordPayload} from '../../types/types';
 import { useQuery } from '@apollo/client';
 import { GetCurrentUserDocument } from '../../gql/graphql';
 import { client } from '../../providers/apolloProvider/apolloProvider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ToastAndroid } from 'react-native';
 
 const initialState:{user:any}= {
   user: null,
@@ -29,8 +31,8 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (_, { 
       query: GetCurrentUserDocument,
     });
     return response?.data.getCurrentUser;
-  } catch (error) {
-    return rejectWithValue(error);
+  } catch (error:any) {
+    return rejectWithValue(error.message);
   }
 });
 
@@ -77,6 +79,7 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+
   },
   extraReducers: builder => {
     builder.addCase(signIn.fulfilled, (state, action) => {
@@ -88,6 +91,10 @@ export const authSlice = createSlice({
     });
     builder.addCase(fetchUserData.fulfilled,(state,action)=>{
       state.user =action.payload
+    })
+    builder.addCase(fetchUserData.rejected,(state,action)=>{
+      ToastAndroid.show(action.payload as string,ToastAndroid.LONG)
+      state.user =null
     })
   },
 });

@@ -8,9 +8,13 @@ import {COLORS} from '../../constants/color';
 import {Width} from '../../utils/responsive';
 import MyProfileIcon from '../../assets/icons/myProfile';
 import {DrawerList} from '../../constants/constants';
-import { FontLeagueSpartan } from '../../constants/fonts';
+import { FONT_LEAGUE_SPARTAN } from '../../constants/fonts';
+import useDrawerContent from './useDrawerContent';
+
 
 function DrawerContent(props: any) {
+  const {NavigateTo,signOut}=useDrawerContent()
+  
   return (
     <View
       style={{
@@ -43,10 +47,10 @@ function DrawerContent(props: any) {
             }}
           />
           <View>
-            <Text style={{fontFamily:FontLeagueSpartan,fontWeight:"bold",fontSize: 33,lineHeight:33, color: COLORS.almostWhite}}>
+            <Text style={{fontFamily:FONT_LEAGUE_SPARTAN,fontWeight:"bold",fontSize: 33,lineHeight:33, color: COLORS.almostWhite}}>
               John Smith
             </Text>
-            <Text style={{fontFamily:FontLeagueSpartan,fontWeight:"bold",fontSize: 16,lineHeight:16, color: COLORS.yellow2}}>
+            <Text style={{fontFamily:FONT_LEAGUE_SPARTAN,fontWeight:"bold",fontSize: 16,lineHeight:16, color: COLORS.yellow2}}>
               Lorem@gamil.com
             </Text>
           </View>
@@ -54,8 +58,9 @@ function DrawerContent(props: any) {
         <View style={{marginTop: 35,
           
         }}>
-          {DrawerList.map(item => (
+          {DrawerList.map((item,index) => (
             <DrawerItem
+            key={index}
               style={{
                 width: Width(100),
                 borderBottomColor: COLORS.yellow2,
@@ -63,7 +68,7 @@ function DrawerContent(props: any) {
                 paddingVertical: 2,
               }}
               labelStyle={styles.labelStyle}
-              onPress={() => {}}
+              onPress={() => {NavigateTo(item.navigateTo)}}
               icon={() => <Text>{item.icon}</Text>}
               label={item.label}
             />
@@ -72,7 +77,7 @@ function DrawerContent(props: any) {
       </DrawerContentScrollView>
       <View style={styles.bottomDrawerSection}>
         <DrawerItem
-          onPress={() => {}}
+          onPress={signOut}
           icon={() => <LogoutIcon />}
           label="Sign Out"
           labelStyle={styles.labelStyle}

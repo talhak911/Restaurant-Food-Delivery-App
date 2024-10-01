@@ -1,3 +1,7 @@
-export const FontInter='Inter-VariableFont_opsz,wght'
-
-export const FontLeagueSpartan='LeagueSpartan-VariableFont_wght'
+export const FONT_INTER='Inter-VariableFont_opsz,wght'
+export const FONT_LEAGUE_SPARTAN='LeagueSpartan-VariableFont_wght'
+export const LEAGUE_SPARTAN_BOLD='LeagueSpartan-Bold'
+export const LEAGUE_SPARTAN_MEDIUM='LeagueSpartan-Medium'
+export const LEAGUE_SPARTAN_REGULAR='LeagueSpartan-Regular'
+export const LEAGUE_SPARTAN_SEMI_BOLD='LeagueSpartan-SemiBold'
+export const LEAGUE_SPARTAN_LIGHT='LeagueSpartan-Light'

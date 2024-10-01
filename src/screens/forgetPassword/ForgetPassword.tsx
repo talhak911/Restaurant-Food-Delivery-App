@@ -13,7 +13,9 @@ const ForgetPassword = () => {
     useForgetPassword();
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+      showsVerticalScrollIndicator={false}
+      >
         <View style={styles.containerContent}>
  
           {fields.map((field, index) => (
@@ -41,7 +43,7 @@ const ForgetPassword = () => {
 
 {!loadings &&
         <View style={{marginTop: Height(7), marginHorizontal: 16}}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center',marginBottom:12}}>
           <CustomButton
             loading={loadings}
             onPress={handleResetPassword}

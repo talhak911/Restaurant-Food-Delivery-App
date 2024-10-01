@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {Font, Height, Width} from '../../utils/responsive';
-import {FontInter, FontLeagueSpartan} from '../../constants/fonts';
+import {FONT_INTER, FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
 
 export default StyleSheet.create({
   container: {
@@ -20,7 +20,7 @@ export default StyleSheet.create({
     color: COLORS.almostBlack,
     fontSize: Font(24),
     fontWeight: 'bold',
-    fontFamily: FontLeagueSpartan,
+    fontFamily: FONT_LEAGUE_SPARTAN,
   },
 
   description: {

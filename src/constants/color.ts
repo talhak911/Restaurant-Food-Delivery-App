@@ -4,7 +4,7 @@ export const COLORS = {
   red: '#FD3C4A',
   green: '#00A86B',
   white: '#FCFCFC',
-  grey: '#91919F',
+
   lightPurple: '#EEE5FF',
   purple25: '#D3BDFF',
   purple: '#7F3DFF',
@@ -19,10 +19,13 @@ export const COLORS = {
   lightBlack: '#E3E5E5',
 
   //new here
+  grey: '#676767',
   black25: '#252525',
   yellow: '#F5CB58',
   yellow2:'#F3E9B5',
+  lightPink:'#FFD8C7',
   orange:'#E95322',
+  orange2:'#FFDECF',
   almostWhite:"#F8F8F8",
   almostBlack:'#391713'
 

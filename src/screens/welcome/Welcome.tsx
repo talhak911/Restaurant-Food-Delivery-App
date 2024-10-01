@@ -16,6 +16,7 @@ const Welcome = () => {
           justifyContent: 'center',
           // marginTop: rH(31),
           marginTop: Height(31),
+        //  marginTop: '50%',
         }}>
        <View style={{maxWidth:300,maxHeight:400}}>
        <WelcomeIcon />
@@ -32,7 +33,7 @@ const Welcome = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod.
         </Text>
-        <View style={{marginTop: Height(5), gap: 4}}>
+        <View style={{marginTop: Height(5), gap: 4,marginBottom:12}}>
           <CustomButton
             pH={Width(17)}
             bgColor={COLORS.yellow}

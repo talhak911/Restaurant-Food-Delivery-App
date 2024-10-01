@@ -51,6 +51,11 @@
 	<array>
 		<string>Inter-VariableFont_opsz,wght.ttf</string>
 		<string>LeagueSpartan-VariableFont_wght.ttf</string>
+		<string>LeagueSpartan-Bold.ttf</string>
+		<string>LeagueSpartan-Medium.ttf</string>
+		<string>LeagueSpartan-Regular.ttf</string>
+		<string>LeagueSpartan-SemiBold.ttf</string>
+		<string>LeagueSpartan-Light.ttf</string>
 	</array>
 </dict>
 </plist>

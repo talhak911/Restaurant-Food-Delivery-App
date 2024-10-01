@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {ActivityIndicator, DimensionValue, Text, TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../constants/color';
 import {responsiveWidth as rW} from "react-native-responsive-dimensions"
@@ -9,23 +9,27 @@ interface CustomButtonProps extends TouchableOpacityProps {
   bgColor?: string;
   textColor?: string;
   fontSize?: number,
-  pH?:number
+  pH?:number,
+  pV?:number,
+  width?:number|DimensionValue
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
   loading = false,
   onPress,
   title,
+  width,
   fontSize=24,
   bgColor = COLORS.orange,
   pH= rW(3),
+  pV=8,
   textColor = 'white',
   ...props 
 }) => {
   return (
     <TouchableOpacity
       disabled={loading}
-      style={[styles.button, {backgroundColor: bgColor,paddingHorizontal:pH}]}
+      style={[styles.button, {backgroundColor: bgColor,paddingHorizontal:pH,width,paddingVertical:pV}]}
       onPress={onPress}
       {...props}
     >

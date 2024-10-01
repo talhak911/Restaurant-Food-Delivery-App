@@ -1,11 +1,15 @@
-
+import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import { StackNavigationOptions, StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import {
+  StackNavigationOptions,
+  StackNavigationProp,
+  StackScreenProps,
+} from '@react-navigation/stack';
 import dayjs from 'dayjs';
-import { KeyboardTypeOptions } from 'react-native';
+import {KeyboardTypeOptions} from 'react-native';
 
 export type AttachmentModelProps = {
   visible: boolean;
@@ -37,12 +41,11 @@ export type AuthScreenOptions = {
   };
 }[];
 
-
-export type ScreenConfig ={
+export type ScreenConfig = {
   name: keyof StackNavigatorParamList;
   component: React.ComponentType<any>;
   options?: StackNavigationOptions;
-}
+};
 
 export type ChangePasswordPayload = {
   email: string;
@@ -50,15 +53,8 @@ export type ChangePasswordPayload = {
   newPassword: string;
 };
 
-
-
-
-
 // export type StackNavigationProp =
 //   NativeStackNavigationProp<StackNavigatorParamList>;
-
-export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
-
 
 export type CategoryColors = {
   [key: string]: string;
@@ -75,38 +71,26 @@ export type CategoryData = {
 };
 
 export type FinancialReportResult = {
-  currency:string|number
+  currency: string | number;
   expenses: CategoryData[];
   incomes: CategoryData[];
   totalExpense: string;
   totalIncome: string;
 };
 
-
-//new 
-
-
-
-
-
-
-
-
-
-
+//new
 
 export type TabParamsList = {
   Home: undefined;
-  Help:undefined;
-  Foods:undefined
-  Favoirite:undefined;
-  Orders:undefined
+  Help: undefined;
+  Foods: undefined;
+  Favoirite: undefined;
+  'My Orders': undefined;
 };
 
-
 export type StackNavigatorParamList = {
-Home:undefined
-Tab:undefined
+  Home: undefined;
+  Tab: undefined;
   // 'Detail Transaction': {
   //   headerColor: string;
   //   id: string | undefined;
@@ -117,41 +101,64 @@ Tab:undefined
   //   description: string;
   //   amount: string;
   // };
-
 };
 
+export type DrawerNavigatorParamList = {
+  Home: undefined;
+  Help: undefined;
+  Stack: undefined;
+  'My Profile': undefined;
+  'Delivery Address': undefined;
+  'Payment Method': undefined;
+  'Contact Us': undefined;
+  'Help & FAQs': undefined;
+  Settings: undefined;
+  Favoirite: undefined;
+  'My Orders': undefined;
+};
+export type DrawerNavigationProps =
+  DrawerNavigationProp<DrawerNavigatorParamList>;
+
+export type DrawerListType = {
+  icon: React.JSX.Element;
+  navigateTo: keyof DrawerNavigatorParamList;
+  label: string;
+};
+
+
 export type AuthStackParamList = {
-  OnBoarding:undefined,
-    Welcome:undefined,
-    "New Account": undefined;
-    "Log In": undefined;
-    'Verify Otp':{email:string},
-    VerifyEmail: undefined;
-    "Forget Password": undefined;
-  };
+  OnBoarding: undefined;
+  Welcome: undefined;
+  'New Account': undefined;
+  'Log In': undefined;
+  'Verify Otp': {email: string};
+  VerifyEmail: undefined;
+  'Forget Password': undefined;
+};
+
+export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
+
 export type FIELDS_TYPE = {
   label: string;
   value: string;
   onChange: (text: string) => void;
   placeholder: string;
- secureInput?: boolean;
+  secureInput?: boolean;
   keyboardType?: 'default' | 'numeric' | 'email-address';
   // secureTextEntry?:boolean
-}
-
+};
 
 export type CustomInputProps = {
-  secureInput?:boolean,
+  secureInput?: boolean;
   editable?: boolean;
-  label:string,
+  label: string;
   value: string;
-  keyboardType?:KeyboardTypeOptions
+  keyboardType?: KeyboardTypeOptions;
   placeHolder: string;
   onChange: (i: string) => void;
 };
 
-
 export type VerifyOtpProps = NativeStackScreenProps<
-AuthStackParamList,
+  AuthStackParamList,
   'Verify Otp'
 >;

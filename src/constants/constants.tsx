@@ -10,9 +10,16 @@ import { SignUp } from '../screens/signUp/SignUp';
 import Welcome from '../screens/welcome/Welcome';
 import {
   AuthScreenOptions,
+  DrawerListType,
+  DrawerNavigatorParamList,
 } from '../types/types';
 import { COLORS } from './color';
 import SettingsIcon from '../assets/icons/settings';
+import SnacksIcon from '../assets/icons/snacks';
+import MealIcon from '../assets/icons/meal';
+import VeganIcon from '../assets/icons/vegan';
+import DessertIcon from '../assets/icons/desserts';
+import DrinksIcon from '../assets/icons/drinks';
 
 
 export const MONTHS = [
@@ -218,7 +225,7 @@ export const TAB_SCREEN_OPTIONS = {
 
 //
 
-export const DrawerList = [
+export const DrawerList:DrawerListType[] = [
   {icon: <MyOrdersIcon/>, label: 'My Orders', navigateTo: 'My Orders'},
   {icon: <MyProfileIcon />, label: 'My Profile', navigateTo: 'My Profile'},
   {icon: <DeliveryAddressIcon/>, label: 'Delivery Address', navigateTo: 'Delivery Address'},
@@ -227,3 +234,11 @@ export const DrawerList = [
   {icon: <HelpAndFaqsIcon/>, label: 'Help & FAQs', navigateTo: 'Help & FAQs'},
   {icon: <SettingsIcon/>, label: 'Settings', navigateTo: 'Settings'},
 ];
+
+export const CATEGORIES=[
+  {icon:<SnacksIcon/>,label:'Snacks'},
+  {icon:<MealIcon/>,label:'Meal'},
+  {icon:<VeganIcon/>,label:'Vegan'},
+  {icon:<DessertIcon/>,label:'Dessert'},
+  {icon:<DrinksIcon/>,label:'Drinks'}
+]
