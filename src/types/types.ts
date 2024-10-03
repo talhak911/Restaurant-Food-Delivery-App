@@ -1,3 +1,4 @@
+import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
   NativeStackNavigationProp,
@@ -79,30 +80,62 @@ export type FinancialReportResult = {
 };
 
 //new
-
-export type TabParamsList = {
+export type TabPaths = {
   Home: undefined;
   Help: undefined;
   Foods: undefined;
   Favoirite: undefined;
   'My Orders': undefined;
+  'My Profile': undefined;
+  'Delivery Address': undefined;
+  'Payment Method': undefined;
+  'Contact Us': undefined;
+  'Help & FAQs': undefined;
+  Settings: undefined;
+
+}
+export type TabParamsList = {
+  Home: undefined;
+  Help: undefined;
+  Foods: undefined;
+  'Coming Soon':undefined;
+  Favoirite: undefined;
+  'My Orders': undefined;
+  'Food Detail': {
+    id: string;
+    picUrl: string | null | undefined;
+    name:string;
+    description: string;
+    price : string;
+  };
+  'My Profile': undefined;
+  'Delivery Address': undefined;
+  'Payment Method': undefined;
+  'Contact Us': undefined;
+  'Help & FAQs': undefined;
+  Settings: undefined;
+  'Password Setting':undefined
+
 };
 
 export type StackNavigatorParamList = {
   Home: undefined;
   Tab: undefined;
-  // 'Detail Transaction': {
-  //   headerColor: string;
-  //   id: string | undefined;
-  //   date: string;
-  //   type: 'income' | 'expense';
-  //   url: string | null | undefined;
-  //   category: string;
+  // 'Food Detail': {
+  //   id: string;
+  //   picUrl: string | null | undefined;
+  //   name:string;
   //   description: string;
-  //   amount: string;
+  //   price : string
+ 
   // };
 };
-
+export type TabNavigatorProps = BottomTabNavigationProp<TabParamsList>;
+export type StackNavigatorProps = NativeStackNavigationProp<StackNavigatorParamList>;
+export type FoodDetailsProps = BottomTabScreenProps<
+TabParamsList,
+  'Food Detail'
+>;
 export type DrawerNavigatorParamList = {
   Home: undefined;
   Help: undefined;
@@ -121,7 +154,7 @@ export type DrawerNavigationProps =
 
 export type DrawerListType = {
   icon: React.JSX.Element;
-  navigateTo: keyof DrawerNavigatorParamList;
+  navigateTo: keyof TabPaths;
   label: string;
 };
 

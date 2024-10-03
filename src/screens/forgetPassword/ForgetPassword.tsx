@@ -13,11 +13,8 @@ const ForgetPassword = () => {
     useForgetPassword();
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView
-      showsVerticalScrollIndicator={false}
-      >
+      <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.containerContent}>
- 
           {fields.map((field, index) => (
             <CustomInput
               key={index}
@@ -29,30 +26,31 @@ const ForgetPassword = () => {
               keyboardType={field.keyboardType}
             />
           ))}
-   {loadings?
-   <ActivityIndicator size={"large"}/>
-   :
-               <CustomButton
-               loading={loadings}
-               onPress={handleRequestOtp}
-               title="Get Otp"
-               pH={Width(6)}
-               // fontSize={Font(19)}
-             />}
+          {loadings ? (
+            <ActivityIndicator size={'large'} />
+          ) : (
+            <CustomButton
+              loading={loadings}
+              onPress={handleRequestOtp}
+              title="Get Otp"
+              //  pH={Width(6)}
+              // fontSize={Font(19)}
+            />
+          )}
         </View>
 
-{!loadings &&
-        <View style={{marginTop: Height(7), marginHorizontal: 16}}>
-        <View style={{alignItems: 'center',marginBottom:12}}>
-          <CustomButton
-            loading={loadings}
-            onPress={handleResetPassword}
-            title="Reset"
-            pH={Width(6)}
-          />
-        </View>
-      </View>
-}
+        {!loadings && (
+          <View style={{marginTop: Height(7), marginHorizontal: 16}}>
+            <View style={{alignItems: 'center', marginBottom: 12}}>
+              <CustomButton
+                loading={loadings}
+                onPress={handleResetPassword}
+                title="Reset"
+                pH={40}
+              />
+            </View>
+          </View>
+        )}
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );

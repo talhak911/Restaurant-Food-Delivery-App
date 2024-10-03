@@ -29,26 +29,6 @@ import {FIELDS_TYPE} from '../types/types';
 //   },
 // ];
 
-export const UPDATE_PROFILE_FIELDS = (
-  name: string,
-  setName: (text: string) => void,
-  email: string,
-  setEmail: (text: string) => void,
-): FIELDS_TYPE[] => [
-  {
-    label: 'Email',
-    value: email,
-    onChange: setEmail,
-    placeholder: 'Enter your email',
-    keyboardType: 'email-address',
-  },
-  {
-    label: 'Name',
-    value: name,
-    onChange: setName,
-    placeholder: 'Enter your name',
-  },
-];
 
 export const SIGN_UP_FIELDS = (
   name: string,
@@ -72,6 +52,43 @@ export const SIGN_UP_FIELDS = (
     onChange: setPassword,
     placeholder: 'Enter password',
     secureInput: true,
+  },
+  {
+    label: 'Email',
+    value: email,
+    onChange: setEmail,
+    placeholder: 'Enter Email',
+  },
+
+  {
+    label: 'Mobile Number',
+    value: phone,
+    onChange: setPhone,
+    placeholder: '03XXXXXXXXXX',
+    keyboardType:"numeric"
+  },
+];
+export const UPDATE_PROFILE_FIELDS = (
+  name: string,
+  setName: (text: string) => void,
+  email: string,
+  setEmail: (text: string) => void,
+  dob: string,
+  setDob: (text: string) => void,
+  phone:string,
+  setPhone:(text:string)=>void
+): FIELDS_TYPE[] => [
+  {
+    label: 'Full name',
+    value: name,
+    onChange: setName,
+    placeholder: 'Enter you name',
+  },
+  {
+    label: 'Password',
+    value: dob,
+    onChange: setDob,
+    placeholder: 'Enter DOB',
   },
   {
     label: 'Email',

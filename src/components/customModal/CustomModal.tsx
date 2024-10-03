@@ -1,8 +1,8 @@
-import {Animated, Modal, View} from 'react-native';
-import {useBottomModel} from './useBottomModel';
-import {styles} from './styles';
+import {Animated, Modal, StatusBar, View} from 'react-native';
+import {useCustomModal} from './useCustomModal';
+import {styles} from './CustomModalStyles';
 
-export const BottomModel = ({
+export const CustomModal = ({
   visible,
   element,
   onClose,
@@ -11,7 +11,8 @@ export const BottomModel = ({
   element: React.JSX.Element;
   onClose: () => void;
 }) => {
-  const {panResponder, translateY} = useBottomModel({visible, onClose});
+  const {panResponder, translateX} = useCustomModal({visible, onClose});
+  
   return (
     <Modal
       transparent={true}
@@ -20,10 +21,9 @@ export const BottomModel = ({
       onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <Animated.View
-          style={[styles.modalContent, {transform: [{translateY}]}]}
+          style={[styles.modalContent, {transform: [{translateX}]}]}
           {...panResponder.panHandlers}>
-          <View style={styles.line} />
-          <View>{element}</View>
+          <View style={{flex:1,width:'100%'}}>{element}</View>
         </Animated.View>
       </View>
     </Modal>

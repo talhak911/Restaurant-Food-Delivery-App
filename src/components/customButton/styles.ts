@@ -4,7 +4,7 @@ import { LEAGUE_SPARTAN_MEDIUM } from '../../constants/fonts';
 export const styles = StyleSheet.create({
   button: {
  
-    paddingHorizontal:30,
+    // paddingHorizontal:30,
     // minWidth:185,
     // paddingVertical:8,
     borderRadius: 30,
@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
  
   },
+  buttonContent:{alignItems: 'center', gap: 14, flexDirection: 'row'},
   buttonTitle: {
 fontFamily:LEAGUE_SPARTAN_MEDIUM
   },

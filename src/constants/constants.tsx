@@ -20,6 +20,10 @@ import MealIcon from '../assets/icons/meal';
 import VeganIcon from '../assets/icons/vegan';
 import DessertIcon from '../assets/icons/desserts';
 import DrinksIcon from '../assets/icons/drinks';
+import NotificationIcon from '../assets/icons/notification';
+import PasswordIcon from '../assets/icons/password';
+import AccountIcon from '../assets/icons/account';
+import NotificationsIcon from '../assets/icons/notifications';
 
 
 export const MONTHS = [
@@ -241,4 +245,21 @@ export const CATEGORIES=[
   {icon:<VeganIcon/>,label:'Vegan'},
   {icon:<DessertIcon/>,label:'Dessert'},
   {icon:<DrinksIcon/>,label:'Drinks'}
+]
+
+export const SETTINGS=[{
+  icon:<NotificationsIcon/>,
+  title:'Notifications Setting',
+  screen:"Coming Soon"
+},
+{
+  icon:<PasswordIcon/>,
+  title:'Password Setting',
+  screen:"Password Setting"
+},
+{
+  icon:<AccountIcon/>,
+  title:'Delete Account',
+  screen:"Coming Soon"
+},
 ]

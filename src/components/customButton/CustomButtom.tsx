@@ -1,17 +1,25 @@
 import React from 'react';
-import {ActivityIndicator, DimensionValue, Text, TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {
+  ActivityIndicator,
+  DimensionValue,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from 'react-native';
 import {styles} from './styles';
 import {COLORS} from '../../constants/color';
-import {responsiveWidth as rW} from "react-native-responsive-dimensions"
+import {responsiveWidth as rW} from 'react-native-responsive-dimensions';
 interface CustomButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   title: string;
   bgColor?: string;
   textColor?: string;
-  fontSize?: number,
-  pH?:number,
-  pV?:number,
-  width?:number|DimensionValue
+  fontSize?: number;
+  pH?: number;
+  pV?: number;
+  icon?: React.JSX.Element;
+  width?: number | DimensionValue;
 }
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
@@ -19,24 +27,41 @@ export const CustomButton: React.FC<CustomButtonProps> = ({
   onPress,
   title,
   width,
-  fontSize=24,
+  fontSize = 24,
   bgColor = COLORS.orange,
-  pH= rW(3),
-  pV=8,
+  pH = rW(3),
+  pV = 7,
+  icon,
   textColor = 'white',
-  ...props 
+  ...props
 }) => {
   return (
     <TouchableOpacity
       disabled={loading}
-      style={[styles.button, {backgroundColor: bgColor,paddingHorizontal:pH,width,paddingVertical:pV}]}
+      style={[
+        styles.button,
+        {
+          backgroundColor: bgColor,
+          paddingHorizontal: pH,
+          width,
+          paddingVertical: pV,
+        },
+      ]}
       onPress={onPress}
-      {...props}
-    >
+      {...props}>
       {loading ? (
         <ActivityIndicator size="large" color={COLORS.white} />
       ) : (
-        <Text style={[styles.buttonTitle, {color: textColor,fontSize}]}>{title}</Text>
+        <View style={styles.buttonContent}>
+          {icon}
+          <Text
+            style={[
+              styles.buttonTitle,
+              {color: textColor, fontSize, lineHeight: fontSize + 4},
+            ]}>
+            {title}
+          </Text>
+        </View>
       )}
     </TouchableOpacity>
   );
