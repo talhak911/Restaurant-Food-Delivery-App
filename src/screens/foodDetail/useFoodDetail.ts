@@ -1,19 +1,36 @@
 import { useState } from "react"
+import { useAppDispatch } from "../../hooks/useStore"
+import { updateCart } from "../../redux/slices/cartSlice"
+import { UpdateCartParams } from "../../types/types"
+import { ToastAndroid } from "react-native"
+import useCart from "../../hooks/useCart"
 
 const useFoodDetail = () => {
-const [items,setItems]=useState(1)
-
+const [quantity,setQuantity]=useState(1)
+const dispatch = useAppDispatch()
+const {openCart}= useCart()
 const addItems = ()=>{
-        setItems(items+1)
+        setQuantity(quantity+1)
 }
 const removeItems = ()=>{
-    if(items-1>0){
-        setItems(items-1)
+    if(quantity-1>0){
+        setQuantity(quantity-1)
     }
 }
+const addToCart=async({quantity,foodId}:UpdateCartParams)=>{
+    console.log("add te o tcar")
+
+    const res = await dispatch(updateCart({quantity,foodId}))
+    if(res.meta.requestStatus==='fulfilled'){
+        ToastAndroid.show("Item added",2)
+        openCart()
+    }
+
+}
   return {
-    items,
+    quantity,
     addItems,
+    addToCart,
     removeItems
   }
 }

@@ -72,8 +72,8 @@ fetchFoods(category:$category){
 }
 }
 `
-export const ADD_TO_CART =gql`
-mutation addToCart($quantity: Float!, $foodId: String!) {
-  addToCart(quantity:$quantity,foodId:$foodId)
+export const UPDATE_CART =gql`
+mutation updateCart($quantity: Float!, $foodId: String!) {
+  updateCart(quantity:$quantity,foodId:$foodId)
 }
 `

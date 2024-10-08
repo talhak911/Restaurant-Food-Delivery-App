@@ -25,9 +25,10 @@ import {CustomButton} from '../../components/customButton/CustomButtom';
 import BagIcon from '../../assets/icons/bag';
 import Ratings from '../../components/ratings/Ratings';
 import useFoodDetail from './useFoodDetail';
+import Cart from '../../components/cart/Cart';
 
 const FoodDetail = ({route}: FoodDetailsProps) => {
-  const {items,addItems,removeItems}=useFoodDetail()
+  const {quantity,addItems,removeItems,addToCart}=useFoodDetail()
   const {name, description, id, picUrl, price} = route.params;
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
@@ -70,12 +71,12 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
             <Text style={styles.price}>${price}</Text>
             <View style={styles.orderItemsContainer}>
               <TouchableOpacity
-              style={{opacity:items===1?0.4:1}}
+              style={{opacity:quantity===1?0.4:1}}
               onPress={removeItems}
               >
                 <RemoveIcon />
               </TouchableOpacity>
-              <Text style={styles.itemsNumber}>{items}</Text>
+              <Text style={styles.itemsNumber}>{quantity}</Text>
               <TouchableOpacity
                       onPress={addItems}
               >
@@ -120,6 +121,7 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
             backgroundColor: 'white',
           }}>
           <CustomButton
+            onPress={()=>{addToCart({quantity,foodId:id})}}
             icon={<BagIcon />}
             title="Add to Cart"
             fontSize={20}
