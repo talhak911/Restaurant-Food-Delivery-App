@@ -18,6 +18,7 @@ import Price from '../price/Price';
 import useCart from './useCart';
 
 const Cart = ({action}: {action: () => void}) => {
+  const {cartItems}= useCart()
   return (
     <View style={{flex: 1}}>
       <View
@@ -68,18 +69,16 @@ const Cart = ({action}: {action: () => void}) => {
     </View> */}
 
         <View style={{marginTop: 26, marginBottom: 50}}>
-          <CartCard
-            picUrl="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-            items="2"
-            name="Chiken"
-            price="12"
+ {cartItems?.map((item,index)=>
+            <CartCard
+            key={index}
+            picUrl={item.food.picture||''}
+            items={item.quantity.toString()}
+            name={item.food.name}
+            price={item.totalPrice.toString()}
           />
-          <CartCard
-            picUrl="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-            items="2"
-            name="Chiken"
-            price="12"
-          />
+ )}
+
         </View>
 
         <Price textColor={COLORS.almostWhite} price="33" />

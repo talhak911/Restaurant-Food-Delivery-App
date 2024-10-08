@@ -77,3 +77,18 @@ mutation updateCart($quantity: Float!, $foodId: String!) {
   updateCart(quantity:$quantity,foodId:$foodId)
 }
 `
+
+export const FETCH_CART=gql`
+query fetchCart{
+  fetchCart{
+    food{
+      id
+      name
+      picture
+      price
+    }
+    quantity
+    totalPrice
+  }
+}
+`
