@@ -108,7 +108,7 @@ const Foods = () => {
             style={{marginTop: 16,}}
             data={foods}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index}) => <FoodCard2 data={item} navigation={navigation}/>}
+            renderItem={({item}) => <FoodCard2 data={item} navigation={navigation}/>}
             contentContainerStyle={{
               paddingBottom: 110,
             }}
