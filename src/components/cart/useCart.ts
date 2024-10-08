@@ -6,16 +6,19 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useStore'
 import { fetchCart } from '../../redux/slices/cartSlice'
 
 const useCart = () => {
-  const cartItems = useAppSelector(state=>state.cart.cartItems)
+  const {cartItems,loading} = useAppSelector(state=>state.cart)
+  const totalPrice = cartItems?.reduce((pre, item) => pre + item.totalPrice, 0).toString();
     const dispatch = useAppDispatch()
   useEffect(()=>{
     dispatch(fetchCart())
-  })
+  },[])
     const navigation = useNavigation<TabNavigatorProps>()
   const navigateToConfirmOrder=()=>{
     navigation.navigate("Confirm Order")
   }
     return {cartItems,
+      loading,
+      totalPrice,
         navigateToConfirmOrder
   }
 }

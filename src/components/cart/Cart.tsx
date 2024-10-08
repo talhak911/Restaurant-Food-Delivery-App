@@ -16,9 +16,15 @@ import CartCard from '../cartCard/CartCard';
 import {CustomButton} from '../customButton/CustomButtom';
 import Price from '../price/Price';
 import useCart from './useCart';
+import AddToCart from '../../assets/icons/addToCart';
+import {Height} from '../../utils/responsive';
+import Loader from '../loader/Loader';
 
 const Cart = ({action}: {action: () => void}) => {
-  const {cartItems}= useCart()
+  const {cartItems, totalPrice,loading} = useCart();
+  if(loading){
+    return <Loader/>
+  }
   return (
     <View style={{flex: 1}}>
       <View
@@ -46,6 +52,7 @@ const Cart = ({action}: {action: () => void}) => {
           borderColor: COLORS.yellow,
         }}
       />
+          <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <Text
         style={{
           textAlign: 'center',
@@ -54,10 +61,11 @@ const Cart = ({action}: {action: () => void}) => {
           color: COLORS.almostWhite,
           marginTop: 18,
         }}>
-        Your cart is empty
+        {cartItems?.length && cartItems?.length > 0
+          ? `you have ${cartItems?.length} items in the cart`
+          : 'Your cart is empty'}
       </Text>
 
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
         {/* <View style={{alignItems:"center",justifyContent:"center",flex:1}}>
 
 <TouchableOpacity >
@@ -67,32 +75,53 @@ const Cart = ({action}: {action: () => void}) => {
     Want To Add Somethinng?
    </Text>
     </View> */}
-
-        <View style={{marginTop: 26, marginBottom: 50}}>
- {cartItems?.map((item,index)=>
-            <CartCard
-            key={index}
-            picUrl={item.food.picture||''}
-            items={item.quantity.toString()}
-            name={item.food.name}
-            price={item.totalPrice.toString()}
-          />
- )}
-
-        </View>
-
-        <Price textColor={COLORS.almostWhite} price="33" />
+        {cartItems?.length ? (
+          <View style={{marginTop: 26, marginBottom: 50}}>
+            {cartItems?.map((item, index) => (
+              <CartCard
+                key={index}
+                picUrl={item.food.picture || ''}
+                items={item.quantity.toString()}
+                name={item.food.name}
+                price={item.totalPrice.toString()}
+              />
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            <TouchableOpacity>
+              <AddToCart />
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontFamily: LEAGUE_SPARTAN_BOLD,
+                lineHeight: 26,
+                color: COLORS.almostWhite,
+                fontSize: 24,
+                marginBottom: Height(11),
+                textAlign: 'center',
+              }}>
+              Want To Add Somethinng?
+            </Text>
+          </View>
+        )}
+        {cartItems?.length && (
+          <Price textColor={COLORS.almostWhite} price={totalPrice ?? '0'} />
+        )}
       </ScrollView>
-      <View style={{alignItems: 'center', height: '15%'}}>
-        <CustomButton
-          onPress={action}
-          title="Checkout"
-          bgColor={COLORS.yellow}
-          pV={4}
-          pH={19}
-          textColor={COLORS.orange}
-        />
-      </View>
+      {cartItems?.length && (
+        <View style={{alignItems: 'center', height: '15%'}}>
+          <CustomButton
+            onPress={action}
+            title="Checkout"
+            bgColor={COLORS.yellow}
+            pV={4}
+            pH={19}
+            textColor={COLORS.orange}
+          />
+        </View>
+      )}
     </View>
   );
 };

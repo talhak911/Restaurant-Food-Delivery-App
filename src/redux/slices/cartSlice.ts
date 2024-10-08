@@ -8,8 +8,9 @@ import {
 import {client} from '../../providers/apolloProvider/apolloProvider';
 import {ToastAndroid} from 'react-native';
 
-const initialState: {cartItems: FetchCartQuery['fetchCart'] | null} = {
+const initialState: {cartItems: FetchCartQuery['fetchCart'] | null,loading:boolean} = {
   cartItems: null,
+  loading:false
 };
 
 export const updateCart = createAsyncThunk(
@@ -59,7 +60,11 @@ export const cartSlice = createSlice({
     });
     builder.addCase(fetchCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
+      state.loading=false
     });
+    builder.addCase(fetchCart.pending,(state)=>{
+      state.loading=true
+    })
   },
 });
 
