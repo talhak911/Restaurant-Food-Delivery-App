@@ -21,6 +21,7 @@
 		A3126750312D4772AF18AFC5 /* LeagueSpartan-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5006F5755ED248CB9B1CD725 /* LeagueSpartan-Regular.ttf */; };
 		5010E9AF08AD4A8F8C7F9925 /* LeagueSpartan-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 14A09334EA8F48D2977766B3 /* LeagueSpartan-SemiBold.ttf */; };
 		78920B2DCF8A40948072A166 /* LeagueSpartan-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9911E12EC2E941A893EBAD97 /* LeagueSpartan-Light.ttf */; };
+		985A5E4FA2764B24B9653714 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 400ED3ABF3DD4BC5854400DD /* Poppins-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		5006F5755ED248CB9B1CD725 /* LeagueSpartan-Regular.ttf */ = {isa = PBXFileReference; name = "LeagueSpartan-Regular.ttf"; path = "../src/assets/fonts/LeagueSpartan-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		14A09334EA8F48D2977766B3 /* LeagueSpartan-SemiBold.ttf */ = {isa = PBXFileReference; name = "LeagueSpartan-SemiBold.ttf"; path = "../src/assets/fonts/LeagueSpartan-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		9911E12EC2E941A893EBAD97 /* LeagueSpartan-Light.ttf */ = {isa = PBXFileReference; name = "LeagueSpartan-Light.ttf"; path = "../src/assets/fonts/LeagueSpartan-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		400ED3ABF3DD4BC5854400DD /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				5006F5755ED248CB9B1CD725 /* LeagueSpartan-Regular.ttf */,
 				14A09334EA8F48D2977766B3 /* LeagueSpartan-SemiBold.ttf */,
 				9911E12EC2E941A893EBAD97 /* LeagueSpartan-Light.ttf */,
+				400ED3ABF3DD4BC5854400DD /* Poppins-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				A3126750312D4772AF18AFC5 /* LeagueSpartan-Regular.ttf in Resources */,
 				5010E9AF08AD4A8F8C7F9925 /* LeagueSpartan-SemiBold.ttf in Resources */,
 				78920B2DCF8A40948072A166 /* LeagueSpartan-Light.ttf in Resources */,
+				985A5E4FA2764B24B9653714 /* Poppins-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

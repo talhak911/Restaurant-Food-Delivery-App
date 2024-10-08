@@ -1,4 +1,7 @@
-import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
   NativeStackNavigationProp,
@@ -6,28 +9,14 @@ import {
 } from '@react-navigation/native-stack';
 import {
   StackNavigationOptions,
-  StackNavigationProp,
-  StackScreenProps,
-} from '@react-navigation/stack';
-import dayjs from 'dayjs';
-import {KeyboardTypeOptions} from 'react-native';
 
-export type AttachmentModelProps = {
-  visible: boolean;
-  onClose: () => void;
-  onCameraPress: () => void;
-  onImagePress: () => void;
-  onDocumentPress: () => void;
-};
-export type NavigateToDetailTransaction = {
-  id: string | undefined;
-  type: 'income' | 'expense';
-  description: string;
-  url: string | null | undefined;
-  amount: number;
-  date: string;
-  category: string;
-};
+} from '@react-navigation/stack';
+
+import {KeyboardTypeOptions} from 'react-native';
+import { GetCurrentUserQuery, OrderStatus, Role } from '../gql/graphql';
+
+
+
 export type voidFunction = () => void;
 
 export type AuthScreenOptions = {
@@ -60,24 +49,8 @@ export type ChangePasswordPayload = {
 export type CategoryColors = {
   [key: string]: string;
 };
-export type BarGraphProps = {
-  total: number;
-  item: CategoryData;
-  type: 'income' | 'expense';
-};
-export type CategoryData = {
-  amount: number;
-  color: string;
-  category: string;
-};
 
-export type FinancialReportResult = {
-  currency: string | number;
-  expenses: CategoryData[];
-  incomes: CategoryData[];
-  totalExpense: string;
-  totalIncome: string;
-};
+
 
 //new
 export type TabPaths = {
@@ -90,23 +63,24 @@ export type TabPaths = {
   'Delivery Address': undefined;
   'Payment Method': undefined;
   'Contact Us': undefined;
+  'Confirm Order': undefined;
   'Help & FAQs': undefined;
   Settings: undefined;
-
-}
+};
 export type TabParamsList = {
   Home: undefined;
   Help: undefined;
   Foods: undefined;
-  'Coming Soon':undefined;
+  'Coming Soon': undefined;
   Favoirite: undefined;
   'My Orders': undefined;
+  'Confirm Order': undefined;
   'Food Detail': {
     id: string;
     picUrl: string | null | undefined;
-    name:string;
+    name: string;
     description: string;
-    price : string;
+    price: string;
   };
   'My Profile': undefined;
   'Delivery Address': undefined;
@@ -114,8 +88,7 @@ export type TabParamsList = {
   'Contact Us': undefined;
   'Help & FAQs': undefined;
   Settings: undefined;
-  'Password Setting':undefined
-
+  'Password Setting': undefined;
 };
 
 export type StackNavigatorParamList = {
@@ -127,13 +100,22 @@ export type StackNavigatorParamList = {
   //   name:string;
   //   description: string;
   //   price : string
- 
+
   // };
 };
+
+export type RestaurntTabsParamsList ={
+  Home:undefined
+  // 'Add Food':undefined
+  // Profile:undefined
+
+}
+export type RestaurantTabNavigatorProps = BottomTabNavigationProp<RestaurntTabsParamsList>;
 export type TabNavigatorProps = BottomTabNavigationProp<TabParamsList>;
-export type StackNavigatorProps = NativeStackNavigationProp<StackNavigatorParamList>;
+export type StackNavigatorProps =
+  NativeStackNavigationProp<StackNavigatorParamList>;
 export type FoodDetailsProps = BottomTabScreenProps<
-TabParamsList,
+  TabParamsList,
   'Food Detail'
 >;
 export type DrawerNavigatorParamList = {
@@ -157,7 +139,6 @@ export type DrawerListType = {
   navigateTo: keyof TabPaths;
   label: string;
 };
-
 
 export type AuthStackParamList = {
   OnBoarding: undefined;
@@ -195,3 +176,51 @@ export type VerifyOtpProps = NativeStackScreenProps<
   AuthStackParamList,
   'Verify Otp'
 >;
+
+export type reduxUser =GetCurrentUserQuery["getCurrentUser"]
+// export type reduxUser ={
+// __typename?: "User";
+// dateOfBirth: any;
+// name: string;
+// id: string;
+// email: string;
+// phone: string;
+// role: Role;
+// verification: boolean;
+// customer?: {
+//     __typename?: "Customer";
+//     address: Array<string>;
+//     picture?: string | null;
+//     cart: Array<{
+//         __typename?: "OrderItemCart";
+//         id: number;
+//         foodId: string;
+//         totalPrice: number;
+//         food: {
+//             __typename?: "Food";
+//             name: string;
+//             price: number;
+//             id: string;
+//         };
+//     }>;
+// } | null;
+// restaurant?: {
+//     __typename?: "Restaurant";
+//     name?: string | null;
+//     location?: string | null;
+//     operatingHours?: string | null;
+//     orders: Array<{
+//         __typename?: "Order";
+//         id: number;
+//         customerId: string;
+//         restaurantId: string;
+//         totalPrice: number;
+//         deliveryAddress: string;
+//         deliveryPerson?: string | null;
+//         deliveryTime?: any | null;
+//         status: OrderStatus;
+//         createdAt: any;
+//         foods: any;
+//     }>;
+// } | null;
+// } | null | undefined

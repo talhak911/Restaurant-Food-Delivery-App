@@ -48,7 +48,7 @@ export const useSignUp = () => {
           data: {
             email,
             password,
-            phone: Number(phone),
+            phone,
             name,
             role,
             dateOfBirth: dob,

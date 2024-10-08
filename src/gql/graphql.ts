@@ -68,11 +68,9 @@ export type AggregateRestaurant = {
 
 export type AggregateUser = {
   __typename?: 'AggregateUser';
-  _avg?: Maybe<UserAvgAggregate>;
   _count?: Maybe<UserCountAggregate>;
   _max?: Maybe<UserMaxAggregate>;
   _min?: Maybe<UserMinAggregate>;
-  _sum?: Maybe<UserSumAggregate>;
 };
 
 export type CreateManyAndReturnCustomer = {
@@ -138,7 +136,7 @@ export type CreateManyAndReturnUser = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
-  phone: Scalars['Int']['output'];
+  phone: Scalars['String']['output'];
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role: Role;
@@ -1421,7 +1419,7 @@ export type MutationSignUpArgs = {
 
 export type MutationUpdateCustomerArgs = {
   name?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['Float']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -3521,7 +3519,7 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  phone: Scalars['Int']['output'];
+  phone: Scalars['String']['output'];
   restaurant?: Maybe<Restaurant>;
   role: Role;
   verification: Scalars['Boolean']['output'];
@@ -3535,15 +3533,6 @@ export type UserCustomerArgs = {
 
 export type UserRestaurantArgs = {
   where?: InputMaybe<RestaurantWhereInput>;
-};
-
-export type UserAvgAggregate = {
-  __typename?: 'UserAvgAggregate';
-  phone?: Maybe<Scalars['Float']['output']>;
-};
-
-export type UserAvgOrderByAggregateInput = {
-  phone?: InputMaybe<SortOrder>;
 };
 
 export type UserCountAggregate = {
@@ -3580,7 +3569,7 @@ export type UserCreateInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phone: Scalars['Int']['input'];
+  phone: Scalars['String']['input'];
   restaurant?: InputMaybe<RestaurantCreateNestedOneWithoutUserInput>;
   role: Role;
 };
@@ -3591,7 +3580,7 @@ export type UserCreateManyInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phone: Scalars['Int']['input'];
+  phone: Scalars['String']['input'];
   role: Role;
 };
 
@@ -3623,7 +3612,7 @@ export type UserCreateWithoutCustomerInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phone: Scalars['Int']['input'];
+  phone: Scalars['String']['input'];
   restaurant?: InputMaybe<RestaurantCreateNestedOneWithoutUserInput>;
   role: Role;
 };
@@ -3635,23 +3624,21 @@ export type UserCreateWithoutRestaurantInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];
-  phone: Scalars['Int']['input'];
+  phone: Scalars['String']['input'];
   role: Role;
 };
 
 export type UserGroupBy = {
   __typename?: 'UserGroupBy';
-  _avg?: Maybe<UserAvgAggregate>;
   _count?: Maybe<UserCountAggregate>;
   _max?: Maybe<UserMaxAggregate>;
   _min?: Maybe<UserMinAggregate>;
-  _sum?: Maybe<UserSumAggregate>;
   dateOfBirth: Scalars['DateTimeISO']['output'];
   email: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
-  phone: Scalars['Int']['output'];
+  phone: Scalars['String']['output'];
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role: Role;
@@ -3667,7 +3654,7 @@ export type UserMaxAggregate = {
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
-  phone?: Maybe<Scalars['Int']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role?: Maybe<Role>;
@@ -3693,7 +3680,7 @@ export type UserMinAggregate = {
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
-  phone?: Maybe<Scalars['Int']['output']>;
+  phone?: Maybe<Scalars['String']['output']>;
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role?: Maybe<Role>;
@@ -3713,11 +3700,9 @@ export type UserMinOrderByAggregateInput = {
 };
 
 export type UserOrderByWithAggregationInput = {
-  _avg?: InputMaybe<UserAvgOrderByAggregateInput>;
   _count?: InputMaybe<UserCountOrderByAggregateInput>;
   _max?: InputMaybe<UserMaxOrderByAggregateInput>;
   _min?: InputMaybe<UserMinOrderByAggregateInput>;
-  _sum?: InputMaybe<UserSumOrderByAggregateInput>;
   dateOfBirth?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
@@ -3768,17 +3753,8 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: InputMaybe<StringWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
   password?: InputMaybe<StringWithAggregatesFilter>;
-  phone?: InputMaybe<IntWithAggregatesFilter>;
+  phone?: InputMaybe<StringWithAggregatesFilter>;
   role?: InputMaybe<EnumRoleWithAggregatesFilter>;
-};
-
-export type UserSumAggregate = {
-  __typename?: 'UserSumAggregate';
-  phone?: Maybe<Scalars['Int']['output']>;
-};
-
-export type UserSumOrderByAggregateInput = {
-  phone?: InputMaybe<SortOrder>;
 };
 
 export type UserUpdateInput = {
@@ -3788,7 +3764,7 @@ export type UserUpdateInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<IntFieldUpdateOperationsInput>;
+  phone?: InputMaybe<StringFieldUpdateOperationsInput>;
   restaurant?: InputMaybe<RestaurantUpdateOneWithoutUserNestedInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
 };
@@ -3799,7 +3775,7 @@ export type UserUpdateManyMutationInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<IntFieldUpdateOperationsInput>;
+  phone?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
 };
 
@@ -3835,7 +3811,7 @@ export type UserUpdateWithoutCustomerInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<IntFieldUpdateOperationsInput>;
+  phone?: InputMaybe<StringFieldUpdateOperationsInput>;
   restaurant?: InputMaybe<RestaurantUpdateOneWithoutUserNestedInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
 };
@@ -3847,7 +3823,7 @@ export type UserUpdateWithoutRestaurantInput = {
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  phone?: InputMaybe<IntFieldUpdateOperationsInput>;
+  phone?: InputMaybe<StringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
 };
 
@@ -3873,7 +3849,7 @@ export type UserWhereInput = {
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringFilter>;
-  phone?: InputMaybe<IntFilter>;
+  phone?: InputMaybe<StringFilter>;
   restaurant?: InputMaybe<RestaurantNullableRelationFilter>;
   role?: InputMaybe<EnumRoleFilter>;
 };
@@ -3888,7 +3864,7 @@ export type UserWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<StringFilter>;
   password?: InputMaybe<StringFilter>;
-  phone?: InputMaybe<IntFilter>;
+  phone?: InputMaybe<StringFilter>;
   restaurant?: InputMaybe<RestaurantNullableRelationFilter>;
   role?: InputMaybe<EnumRoleFilter>;
 };
@@ -3936,7 +3912,22 @@ export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: bo
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', dateOfBirth: any, name: string, id: string, email: string, phone: number, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<string>, picture?: string | null, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } | null };
+export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', dateOfBirth: any, name: string, id: string, email: string, phone: string, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<string>, picture?: string | null, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } | null };
+
+export type FetchFoodsQueryVariables = Exact<{
+  category?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type FetchFoodsQuery = { __typename?: 'Query', fetchFoods: Array<{ __typename?: 'Food', id: string, name: string, description: string, category: FoodCategory, price: number, picture?: string | null, restaurantId: string }> };
+
+export type AddToCartMutationVariables = Exact<{
+  quantity: Scalars['Float']['input'];
+  foodId: Scalars['String']['input'];
+}>;
+
+
+export type AddToCartMutation = { __typename?: 'Mutation', addToCart: boolean };
 
 
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
@@ -3945,3 +3936,5 @@ export const VerifyAccountDocument = {"kind":"Document","definitions":[{"kind":"
 export const RequestOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"requestOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}]}}]} as unknown as DocumentNode<RequestOtpMutation, RequestOtpMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"otp"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"otp"},"value":{"kind":"Variable","name":{"kind":"Name","value":"otp"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"verification"}},{"kind":"Field","name":{"kind":"Name","value":"customer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"cart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"foodId"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
+export const FetchFoodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchFoods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fetchFoods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantId"}}]}}]}}]} as unknown as DocumentNode<FetchFoodsQuery, FetchFoodsQueryVariables>;
+export const AddToCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addToCart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addToCart"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"Argument","name":{"kind":"Name","value":"foodId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}}}]}]}}]} as unknown as DocumentNode<AddToCartMutation, AddToCartMutationVariables>;

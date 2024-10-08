@@ -239,14 +239,14 @@ export const DrawerList:DrawerListType[] = [
   {icon: <SettingsIcon/>, label: 'Settings', navigateTo: 'Settings'},
 ];
 
-export const CATEGORIES=[
+export const CATEGORIES:{icon:React.JSX.Element,label:FilterBy}[]=[
   {icon:<SnacksIcon/>,label:'Snacks'},
   {icon:<MealIcon/>,label:'Meal'},
   {icon:<VeganIcon/>,label:'Vegan'},
   {icon:<DessertIcon/>,label:'Dessert'},
   {icon:<DrinksIcon/>,label:'Drinks'}
 ]
-
+export type FilterBy='Snacks'|'Meal'|'Vegan'|'Dessert'|'Drinks'
 export const SETTINGS=[{
   icon:<NotificationsIcon/>,
   title:'Notifications Setting',

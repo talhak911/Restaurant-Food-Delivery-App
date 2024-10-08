@@ -7,7 +7,7 @@ import FoodIcon from '../../assets/icons/food';
 import FavouriteIcon from '../../assets/icons/favourite';
 import TabOrderIcon from '../../assets/icons/tabOrder';
 import HelpIcon from '../../assets/icons/help';
-import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import { Text, TouchableOpacity, View} from 'react-native';
 import BackIcon from '../../assets/icons/back';
 import MyOrder from '../../screens/myOrder/MyOrder';
 import {LEAGUE_SPARTAN_BOLD} from '../../constants/fonts';
@@ -16,15 +16,14 @@ import Profile from '../../screens/profile/Profile';
 import Settings from '../../screens/settings/Settings';
 import ComingSoon from '../../screens/comingSoon/ComingSoon';
 import ChangePassword from '../../screens/changePassword/ChangePassword';
+import ConfirmOrder from '../../screens/confirmOrder/ConfirmOrder';
+import Foods from '../../screens/foods/Foods';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator<TabParamsList>();
 
   return (
     <Tab.Navigator
-      // screenOptions={{
-      //     tabBarShowLabel:false,
-
       screenOptions={({navigation}) => ({
         tabBarShowLabel: false,
         tabBarStyle: {
@@ -61,6 +60,7 @@ export const TabNavigator = () => {
           </TouchableOpacity>
         ),
       })}>
+
       <Tab.Screen
         key={'Home'}
         name={'Home'}
@@ -70,8 +70,8 @@ export const TabNavigator = () => {
       <Tab.Screen
         key={'Foods'}
         name={'Foods'}
-        options={{tabBarIcon: () => <FoodIcon />}}
-        component={ComingSoon}
+        options={{tabBarIcon: () => <FoodIcon />, headerShown: false}}
+        component={Foods}
       />
       <Tab.Screen
         key={'Favoirite'}
@@ -134,6 +134,15 @@ export const TabNavigator = () => {
           tabBarButton: () => null,
         }}
       />
+      <Tab.Screen
+        key={'Confirm Order'}
+        name={'Confirm Order'}
+        component={ConfirmOrder}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+
     </Tab.Navigator>
   );
 };

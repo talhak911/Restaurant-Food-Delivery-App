@@ -13,6 +13,7 @@ export const SIGN_IN = gql`
     signIn(email: $email, password: $password)
   }
 `;
+
 export const VERIFY_ACCOUNT = gql`
   mutation verifyAccount($email: String!, $otp: String!) {
     verifyAccount(email: $email, otp: $otp)
@@ -57,3 +58,22 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
+ 
+export const FETCH_FOODS =gql`
+query fetchFoods($category: String){
+fetchFoods(category:$category){
+  id
+  name
+  description
+  category
+  price
+  picture
+  restaurantId
+}
+}
+`
+export const ADD_TO_CART =gql`
+mutation addToCart($quantity: Float!, $foodId: String!) {
+  addToCart(quantity:$quantity,foodId:$foodId)
+}
+`

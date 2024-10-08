@@ -1,13 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-
-import { ChangePasswordPayload} from '../../types/types';
-import { useQuery } from '@apollo/client';
+import { ChangePasswordPayload, reduxUser} from '../../types/types';
 import { GetCurrentUserDocument } from '../../gql/graphql';
 import { client } from '../../providers/apolloProvider/apolloProvider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ToastAndroid } from 'react-native';
 
-const initialState:{user:any}= {
+const initialState:{user:reduxUser}= {
   user: null,
 };
 
@@ -30,7 +27,9 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (_, { 
     const response = await client.query({
       query: GetCurrentUserDocument,
     });
-    return response?.data.getCurrentUser;
+
+  return response?.data?.getCurrentUser;
+
   } catch (error:any) {
     return rejectWithValue(error.message);
   }
@@ -82,9 +81,9 @@ export const authSlice = createSlice({
 
   },
   extraReducers: builder => {
-    builder.addCase(signIn.fulfilled, (state, action) => {
-      state.user = action.payload;
-    });
+    // builder.addCase(signIn.fulfilled, (state, action) => {
+    //   state.user = action.payload;
+    // });
 
     builder.addCase(signOut.fulfilled, state => {
       state.user = null;
