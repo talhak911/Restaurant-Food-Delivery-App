@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAppDispatch } from "../../hooks/useStore"
 import { updateCart } from "../../redux/slices/cartSlice"
 import { UpdateCartParams } from "../../types/types"
 import { ToastAndroid } from "react-native"
 import useCart from "../../hooks/useCart"
 
-const useFoodDetail = () => {
+const useFoodDetail = (foodId: string) => {
 const [quantity,setQuantity]=useState(1)
+useEffect(()=>{
+  setQuantity(1)
+},[foodId])
 const dispatch = useAppDispatch()
 const {openCart}= useCart()
 const addItems = ()=>{

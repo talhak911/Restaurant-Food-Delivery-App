@@ -28,8 +28,8 @@ import useFoodDetail from './useFoodDetail';
 import Cart from '../../components/cart/Cart';
 
 const FoodDetail = ({route}: FoodDetailsProps) => {
-  const {quantity,addItems,removeItems,addToCart}=useFoodDetail()
   const {name, description, id, picUrl, price} = route.params;
+  const {quantity,addItems,removeItems,addToCart}=useFoodDetail(id)
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View style={styles.topContainer}>
@@ -86,7 +86,7 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
           </View>
 
           <Text style={styles.headingText}>Description</Text>
-          <Text style={[styles.lightText, {fontSize: 16}]}>
+          <Text style={[styles.lightText, {fontSize: 16,lineHeight:22}]}>
          {description}
           </Text>
           <Text style={[styles.headingText, {marginTop: 36}]}>
