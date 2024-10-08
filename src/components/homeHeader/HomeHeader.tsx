@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import CartIcon from '../../assets/icons/cart';
 import NotificationIcon from '../../assets/icons/notification';
@@ -9,13 +15,13 @@ import {
   LEAGUE_SPARTAN_BOLD,
   LEAGUE_SPARTAN_MEDIUM,
 } from '../../constants/fonts';
-import {CustomModal} from '../customModal/CustomModal';
-import Cart from '../cart/Cart';
 import useHomeHeader from './useHomeHeader';
+import useCart from '../../hooks/useCart';
 
-const HomeHeader = ({greetingShown}:{greetingShown?:boolean}) => {
-
-  const {cartVisible,navigateToConfirmOrder,onClose,setCartVisible}= useHomeHeader()
+const HomeHeader = ({greetingShown}: {greetingShown?: boolean}) => {
+  const {openCart} = useCart();
+  const {cartVisible, navigateToConfirmOrder, onClose, setCartVisible} =
+    useHomeHeader();
   return (
     <View
       style={{
@@ -55,40 +61,37 @@ const HomeHeader = ({greetingShown}:{greetingShown?:boolean}) => {
         </View>
 
         <View style={{flexDirection: 'row', gap: 7, justifyContent: 'center'}}>
-         <TouchableOpacity
-         onPress={()=>{setCartVisible(true)}}
-         >
-         <CartIcon />
-         </TouchableOpacity>
+          <TouchableOpacity onPress={openCart}>
+            <CartIcon />
+          </TouchableOpacity>
           <NotificationIcon />
           <UserIcon />
         </View>
       </View>
-      <CustomModal element={<Cart action={navigateToConfirmOrder}/>} visible={cartVisible} onClose={onClose} />
-      
-{greetingShown &&
-  <View>
-  <Text
-        style={{
-          color: COLORS.almostWhite,
-          fontFamily: LEAGUE_SPARTAN_BOLD,
-          fontSize: 30,
-          lineHeight: 30,
-          marginTop: 16,
-        }}>
-        Good Morning
-      </Text>
-      <Text
-        style={{
-          color: COLORS.orange,
-          fontSize: 13,
-          fontFamily: LEAGUE_SPARTAN_MEDIUM,
-          lineHeight: 13,
-        }}>
-        Rise and Shine! It's Breakfast Time
-      </Text>
-  </View>
-}
+
+      {greetingShown && (
+        <View>
+          <Text
+            style={{
+              color: COLORS.almostWhite,
+              fontFamily: LEAGUE_SPARTAN_BOLD,
+              fontSize: 30,
+              lineHeight: 30,
+              marginTop: 16,
+            }}>
+            Good Morning
+          </Text>
+          <Text
+            style={{
+              color: COLORS.orange,
+              fontSize: 13,
+              fontFamily: LEAGUE_SPARTAN_MEDIUM,
+              lineHeight: 13,
+            }}>
+            Rise and Shine! It's Breakfast Time
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

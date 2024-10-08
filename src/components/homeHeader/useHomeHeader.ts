@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { TabNavigatorProps, TabParamsList } from '../../types/types'
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs'
+import { TabNavigatorProps } from '../../types/types'
 
 const useHomeHeader = () => {
   const [cartVisible,setCartVisible]=useState(false)

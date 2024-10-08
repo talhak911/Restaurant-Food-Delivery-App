@@ -224,3 +224,12 @@ export type reduxUser =GetCurrentUserQuery["getCurrentUser"]
 //     }>;
 // } | null;
 // } | null | undefined
+
+export type CartContextProps= {
+  cartVisible: boolean;
+  openCart: () => void;
+  closeCart: () => void;
+}
+
+//for apis 
+export type UpdateCartParams ={quantity:number,foodId:string}

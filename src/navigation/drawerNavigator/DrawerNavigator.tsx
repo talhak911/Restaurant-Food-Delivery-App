@@ -8,18 +8,19 @@ import DrawerContent from '../../components/drawerContent/DrawerContent';
 // import StackNavigator from '../stackNavigator/StackNavigator';
 import MyOrder from '../../screens/myOrder/MyOrder';
 import {DrawerNavigatorParamList} from '../../types/types';
-import { TabNavigator } from '../tabNavigator/TabNavigator';
+import {TabNavigator} from '../tabNavigator/TabNavigator';
+import {CartProvider} from '../../context/cartContext/CartContext';
 
 export default function DrawerNavigator() {
   const Drawer = createDrawerNavigator<DrawerNavigatorParamList>();
   return (
-    <NavigationContainer>
-      <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.yellow}/>
+    <>
+      <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.yellow} />
       <Drawer.Navigator
         drawerContent={props => <DrawerContent {...props} />}
         screenOptions={({navigation}) => ({
           headerShadowVisible: false,
-           statusBarColor: COLORS.yellow,
+          statusBarColor: COLORS.yellow,
           headerTitleAlign: 'center',
           headerTitleStyle: {color: 'white'},
           headerStyle: {
@@ -68,6 +69,6 @@ export default function DrawerNavigator() {
         {/* <Drawer.Screen name="My Profile" component={Profile} /> */}
         <Drawer.Screen name="My Orders" component={MyOrder} />
       </Drawer.Navigator>
-    </NavigationContainer>
+    </>
   );
 }
