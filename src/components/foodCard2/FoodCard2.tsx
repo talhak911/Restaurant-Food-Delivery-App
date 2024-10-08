@@ -53,7 +53,8 @@ const FoodCard2 = ({
         </View>
         <Text style={styles.price}>${price}</Text>
       </View>
-      <Text style={styles.description}>{description}</Text>
+      <Text   numberOfLines={1}
+  ellipsizeMode="tail" style={styles.description}>{description}</Text>
     </TouchableOpacity>
   );
 };
