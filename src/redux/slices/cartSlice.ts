@@ -34,6 +34,7 @@ export const fetchCart = createAsyncThunk(
   async (_, {rejectWithValue}) => {
     try {
       const response = await client.query({
+        fetchPolicy:'no-cache',
         query: FetchCartDocument,
       });
       console.log('updatecart action redu');
