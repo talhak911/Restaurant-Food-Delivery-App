@@ -1,41 +1,40 @@
-import { useEffect, useState } from "react"
-import { useAppDispatch } from "../../hooks/useStore"
-import { updateCart } from "../../redux/slices/cartSlice"
-import { UpdateCartParams } from "../../types/types"
-import { ToastAndroid } from "react-native"
-import useCart from "../../hooks/useCart"
+import {useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
+import {updateCart} from '../../redux/slices/cartSlice';
+import {UpdateCartParams} from '../../types/types';
+import {ToastAndroid} from 'react-native';
+import useCart from '../../hooks/useCart';
 
 const useFoodDetail = (foodId: string) => {
-const [quantity,setQuantity]=useState(1)
-useEffect(()=>{
-  setQuantity(1)
-},[foodId])
-const dispatch = useAppDispatch()
-const {openCart}= useCart()
-const addItems = ()=>{
-        setQuantity(quantity+1)
-}
-const removeItems = ()=>{
-    if(quantity-1>0){
-        setQuantity(quantity-1)
+  const loading = useAppSelector(state => state.cart.loadingItem);
+  const [quantity, setQuantity] = useState(1);
+  useEffect(() => {
+    setQuantity(1);
+  }, [foodId]);
+  const dispatch = useAppDispatch();
+  const {openCart} = useCart();
+  const addItems = () => {
+    setQuantity(quantity + 1);
+  };
+  const removeItems = () => {
+    if (quantity - 1 > 0) {
+      setQuantity(quantity - 1);
     }
-}
-const addToCart=async({quantity,foodId}:UpdateCartParams)=>{
-    console.log("add te o tcar")
-
-    const res = await dispatch(updateCart({quantity,foodId}))
-    if(res.meta.requestStatus==='fulfilled'){
-        ToastAndroid.show("Item added",2)
-        openCart()
+  };
+  const addToCart = async ({quantity, foodId}: UpdateCartParams) => {
+    const res = await dispatch(updateCart({quantity, foodId}));
+    if (res.meta.requestStatus === 'fulfilled') {
+      ToastAndroid.show('Item added', 2);
+      openCart();
     }
-
-}
+  };
   return {
+    loading,
     quantity,
     addItems,
     addToCart,
-    removeItems
-  }
-}
+    removeItems,
+  };
+};
 
-export default useFoodDetail
+export default useFoodDetail;

@@ -1,5 +1,4 @@
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -25,18 +24,18 @@ import {CustomButton} from '../../components/customButton/CustomButtom';
 import BagIcon from '../../assets/icons/bag';
 import Ratings from '../../components/ratings/Ratings';
 import useFoodDetail from './useFoodDetail';
-import Cart from '../../components/cart/Cart';
-import { BlinkingImage } from '../../components/loading/Loading';
+import {BlinkingImage} from '../../components/loading/Loading';
 
 const FoodDetail = ({route}: FoodDetailsProps) => {
   const {name, description, id, picUrl, price} = route.params;
-  const {quantity,addItems,removeItems,addToCart}=useFoodDetail(id)
+  const {quantity, loading, addItems, removeItems, addToCart} =
+    useFoodDetail(id);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View style={styles.topContainer}>
         <View style={styles.topLeftContainer}>
           <GoBack />
-          <View style={{alignItems:"flex-start"}}>
+          <View style={{alignItems: 'flex-start'}}>
             <Text style={styles.name}>{name}</Text>
             <View>
               <Ratings ratings="4.2" />
@@ -58,47 +57,36 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
             paddingHorizontal: 35,
             paddingVertical: 30,
           }}>
-          {/* <Image
+          <BlinkingImage
             style={{
               objectFit: 'cover',
               borderRadius: 36,
               height: 223,
               width: '100%',
             }}
-            source={{uri: picUrl || ''}}
-          /> */}
-          <BlinkingImage
-                      style={{
-                        objectFit: 'cover',
-                        borderRadius: 36,
-                        height: 223,
-                        width: '100%',
-                      }}
-                      placeholder='food'
-                      uri={picUrl}
+            placeholder="food"
+            uri={picUrl}
           />
 
           <View style={styles.middleContainer}>
             <Text style={styles.price}>${price}</Text>
             <View style={styles.orderItemsContainer}>
               <TouchableOpacity
-              style={{opacity:quantity===1?0.4:1}}
-              onPress={removeItems}
-              >
+                disabled={quantity === 1}
+                style={{opacity: quantity === 1 ? 0.4 : 1}}
+                onPress={removeItems}>
                 <RemoveIcon />
               </TouchableOpacity>
               <Text style={styles.itemsNumber}>{quantity}</Text>
-              <TouchableOpacity
-                      onPress={addItems}
-              >
+              <TouchableOpacity onPress={addItems}>
                 <AddIcon />
               </TouchableOpacity>
             </View>
           </View>
 
           <Text style={styles.headingText}>Description</Text>
-          <Text style={[styles.lightText, {fontSize: 16,lineHeight:22}]}>
-         {description}
+          <Text style={[styles.lightText, {fontSize: 16, lineHeight: 22}]}>
+            {description}
           </Text>
           <Text style={[styles.headingText, {marginTop: 36}]}>
             Add on ingredients
@@ -132,7 +120,10 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
             backgroundColor: 'white',
           }}>
           <CustomButton
-            onPress={()=>{addToCart({quantity,foodId:id})}}
+            loading={loading}
+            onPress={() => {
+              addToCart({quantity, foodId: id});
+            }}
             icon={<BagIcon />}
             title="Add to Cart"
             fontSize={20}
