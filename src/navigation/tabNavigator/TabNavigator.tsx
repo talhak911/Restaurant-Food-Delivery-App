@@ -18,6 +18,8 @@ import ComingSoon from '../../screens/comingSoon/ComingSoon';
 import ChangePassword from '../../screens/changePassword/ChangePassword';
 import ConfirmOrder from '../../screens/confirmOrder/ConfirmOrder';
 import Foods from '../../screens/foods/Foods';
+import DeliveryAddress from '../../screens/deliveryAddress/DeliveryAddress';
+import AddAddress from '../../screens/addAddress/AddAddress';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator<TabParamsList>();
@@ -64,7 +66,7 @@ export const TabNavigator = () => {
       <Tab.Screen
         key={'Home'}
         name={'Home'}
-        options={{tabBarIcon: () => <HomeIcon />, headerShown: false}}
+        options={{tabBarIcon: () => <HomeIcon/>, headerShown: false}}
         component={Home}
       />
       <Tab.Screen
@@ -138,6 +140,22 @@ export const TabNavigator = () => {
         key={'Confirm Order'}
         name={'Confirm Order'}
         component={ConfirmOrder}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        key={'Delivery Address'}
+        name={'Delivery Address'}
+        component={DeliveryAddress}
+        options={{
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        key={'Add New Address'}
+        name={'Add New Address'}
+        component={AddAddress}
         options={{
           tabBarButton: () => null,
         }}

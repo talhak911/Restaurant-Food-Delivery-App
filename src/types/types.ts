@@ -89,6 +89,7 @@ export type TabParamsList = {
   'Help & FAQs': undefined;
   Settings: undefined;
   'Password Setting': undefined;
+  'Add New Address':undefined
 };
 
 export type StackNavigatorParamList = {
