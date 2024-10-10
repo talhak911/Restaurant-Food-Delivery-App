@@ -21,9 +21,9 @@ import {Height} from '../../utils/responsive';
 import Loader from '../loader/Loader';
 
 const Cart = ({action}: {action: () => void}) => {
-  const {cartItems, totalPrice,loading} = useCart();
-  if(loading){
-    return <Loader/>
+  const {cartItems, totalPrice, loading} = useCart();
+  if (loading) {
+    return <Loader />;
   }
   return (
     <View style={{flex: 1}}>
@@ -52,30 +52,20 @@ const Cart = ({action}: {action: () => void}) => {
           borderColor: COLORS.yellow,
         }}
       />
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontFamily: LEAGUE_SPARTAN_MEDIUM,
-          fontSize: 20,
-          color: COLORS.almostWhite,
-          marginTop: 18,
-        }}>
-        {cartItems?.length && cartItems?.length > 0
-          ? `you have ${cartItems?.length} items in the cart`
-          : 'Your cart is empty'}
-      </Text>
-
-        {/* <View style={{alignItems:"center",justifyContent:"center",flex:1}}>
-
-<TouchableOpacity >
-    <AddToCart/>
-   </TouchableOpacity>
-   <Text style={{fontFamily:LEAGUE_SPARTAN_BOLD,lineHeight:26,color:COLORS.almostWhite,fontSize:24,marginBottom:Height(11),textAlign:"center"}}>
-    Want To Add Somethinng?
-   </Text>
-    </View> */}
-        {cartItems?.length ? (
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontFamily: LEAGUE_SPARTAN_MEDIUM,
+            fontSize: 20,
+            color: COLORS.almostWhite,
+            marginTop: 18,
+          }}>
+          {cartItems?.length! > 0
+            ? `you have ${cartItems?.length} items in the cart`
+            : 'Your cart is empty'}
+        </Text>
+        {cartItems?.length! > 1 ? (
           <View style={{marginTop: 26, marginBottom: 50}}>
             {cartItems?.map((item, index) => (
               <CartCard
@@ -106,11 +96,11 @@ const Cart = ({action}: {action: () => void}) => {
             </Text>
           </View>
         )}
-        {cartItems?.length && (
+        {cartItems?.length! > 1 && (
           <Price textColor={COLORS.almostWhite} price={totalPrice ?? '0'} />
         )}
       </ScrollView>
-      {cartItems?.length && (
+      {cartItems?.length! > 1 && (
         <View style={{alignItems: 'center', height: '15%'}}>
           <CustomButton
             onPress={action}
