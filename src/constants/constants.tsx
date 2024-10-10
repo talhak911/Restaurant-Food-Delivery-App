@@ -52,6 +52,7 @@ export const DAYS = [
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
+  foodPlaceholder:require('../assets/images/foodPlaceholder.png')
 };
 
 // export const SCREEN_CONFIGS: ScreenConfig[] = [

@@ -26,6 +26,7 @@ import BagIcon from '../../assets/icons/bag';
 import Ratings from '../../components/ratings/Ratings';
 import useFoodDetail from './useFoodDetail';
 import Cart from '../../components/cart/Cart';
+import { BlinkingImage } from '../../components/loading/Loading';
 
 const FoodDetail = ({route}: FoodDetailsProps) => {
   const {name, description, id, picUrl, price} = route.params;
@@ -57,7 +58,7 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
             paddingHorizontal: 35,
             paddingVertical: 30,
           }}>
-          <Image
+          {/* <Image
             style={{
               objectFit: 'cover',
               borderRadius: 36,
@@ -65,6 +66,16 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
               width: '100%',
             }}
             source={{uri: picUrl || ''}}
+          /> */}
+          <BlinkingImage
+                      style={{
+                        objectFit: 'cover',
+                        borderRadius: 36,
+                        height: 223,
+                        width: '100%',
+                      }}
+                      placeholder='food'
+                      uri={picUrl}
           />
 
           <View style={styles.middleContainer}>

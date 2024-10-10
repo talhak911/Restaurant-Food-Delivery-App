@@ -8,6 +8,7 @@ import {
 } from '../../constants/fonts';
 import Ratings from '../ratings/Ratings';
 import { TabNavigatorProps } from '../../types/types';
+import { BlinkingImage } from '../loading/Loading';
 
 const FoodCard2 = ({
   data,
@@ -26,11 +27,16 @@ const FoodCard2 = ({
         paddingBottom: 20,
         borderColor: COLORS.lightPink,
       }}>
-      <Image
+      {/* <Image
         style={{borderRadius: 36, width: '100%', height: 174}}
         source={{
           uri:picture ||'',
         }}
+      /> */}
+      <BlinkingImage
+      placeholder='food'
+ style={{borderRadius: 36, width: '100%', height: 174}}
+ uri={picture}
       />
       <View
         style={{
