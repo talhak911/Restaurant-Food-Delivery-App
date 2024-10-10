@@ -22,6 +22,7 @@ const documents = {
     "\nquery fetchFoods($category: String){\nfetchFoods(category:$category){\n  id\n  name\n  description\n  category\n  price\n  picture\n  restaurantId\n}\n}\n": types.FetchFoodsDocument,
     "\nmutation updateCart($quantity: Float!, $foodId: String!) {\n  updateCart(quantity:$quantity,foodId:$foodId)\n}\n": types.UpdateCartDocument,
     "\nquery fetchCart{\n  fetchCart{\n    food{\n      id\n      name\n      picture\n      price\n    }\n    quantity\n    totalPrice\n  }\n}\n": types.FetchCartDocument,
+    "\nmutation removeFromCart($foodId:String!){\nremoveFromCart(foodId:$foodId)\n}\n": types.RemoveFromCartDocument,
 };
 
 /**
@@ -74,6 +75,10 @@ export function gql(source: "\nmutation updateCart($quantity: Float!, $foodId: S
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nquery fetchCart{\n  fetchCart{\n    food{\n      id\n      name\n      picture\n      price\n    }\n    quantity\n    totalPrice\n  }\n}\n"): (typeof documents)["\nquery fetchCart{\n  fetchCart{\n    food{\n      id\n      name\n      picture\n      price\n    }\n    quantity\n    totalPrice\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation removeFromCart($foodId:String!){\nremoveFromCart(foodId:$foodId)\n}\n"): (typeof documents)["\nmutation removeFromCart($foodId:String!){\nremoveFromCart(foodId:$foodId)\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

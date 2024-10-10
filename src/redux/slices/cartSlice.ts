@@ -3,28 +3,47 @@ import {UpdateCartParams} from '../../types/types';
 import {
   FetchCartDocument,
   FetchCartQuery,
+  RemoveFromCartDocument,
   UpdateCartDocument,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
 import {ToastAndroid} from 'react-native';
 
-const initialState: {cartItems: FetchCartQuery['fetchCart'] | null,loading:boolean} = {
+const initialState: {
+  cartItems: FetchCartQuery['fetchCart'] | null;
+  loading: boolean;
+  loadingItem: boolean;
+} = {
   cartItems: null,
-  loading:false
+  loading: false,
+  loadingItem: false,
 };
 
 export const updateCart = createAsyncThunk(
   'cart/updateCart',
-  async ({quantity, foodId}: UpdateCartParams, {rejectWithValue}) => {
+  async ({quantity, foodId}: UpdateCartParams, {rejectWithValue, dispatch}) => {
     try {
       const response = await client.mutate({
         mutation: UpdateCartDocument,
         variables: {foodId, quantity},
       });
-      console.log('updatecart action redu');
       return response?.data?.updateCart;
     } catch (error: any) {
-      console.log(error);
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const deleteItem = createAsyncThunk(
+  'cart/deleteItem',
+  async (foodId: string, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await client.mutate({
+        mutation: RemoveFromCartDocument,
+        variables: {foodId},
+      });
+      dispatch(deleteItemFromCart(foodId));
+      return response?.data?.removeFromCart;
+    } catch (error: any) {
       return rejectWithValue(error.message);
     }
   },
@@ -34,13 +53,11 @@ export const fetchCart = createAsyncThunk(
   async (_, {rejectWithValue}) => {
     try {
       const response = await client.query({
-        fetchPolicy:'no-cache',
+        fetchPolicy: 'no-cache',
         query: FetchCartDocument,
       });
-      console.log('updatecart action redu');
       return response?.data?.fetchCart;
     } catch (error: any) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   },
@@ -50,23 +67,67 @@ export const cartSlice = createSlice({
   name: 'cartSlice',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
-      state.cartItems;
+    addOneItemToCart: (state, action) => {
+      console.log('the action is ', action);
+      const item = state.cartItems?.find(
+        item => item.food.id === action.payload,
+      );
+
+      if (item) {
+        item.quantity += 1;
+        item.totalPrice = parseFloat(
+          (item.totalPrice + item.food.price).toFixed(2),
+        );
+      }
+    },
+    removeOneItemFromCart: (state, action) => {
+      const item = state.cartItems?.find(
+        item => item.food.id === action.payload,
+      );
+
+      if (item) {
+        item.totalPrice = parseFloat(
+          (item.totalPrice - item.food.price).toFixed(2),
+        );
+      }
+    },
+    deleteItemFromCart: (state, action) => {
+      console.log(action.payload);
+      state.cartItems = state.cartItems
+        ? state.cartItems.filter(item => item.food.id !== action.payload)
+        : null;
     },
   },
   extraReducers: builder => {
-    builder.addCase(updateCart.fulfilled, (state, action) => {});
-    builder.addCase(updateCart.rejected, (_, action) => {
+    builder.addCase(deleteItem.fulfilled, state => {
+      state.loadingItem = false;
+    });
+    builder.addCase(deleteItem.pending, state => {
+      state.loadingItem = true;
+    });
+    builder.addCase(deleteItem.rejected, (state, action) => {
+      state.loadingItem = false;
+      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+    });
+    builder.addCase(updateCart.fulfilled, state => {
+      state.loadingItem = false;
+    });
+    builder.addCase(updateCart.pending, state => {
+      state.loadingItem = true;
+    });
+    builder.addCase(updateCart.rejected, (state, action) => {
+      state.loadingItem = false;
       ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
     });
     builder.addCase(fetchCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
-      state.loading=false
+      state.loading = false;
     });
-    builder.addCase(fetchCart.pending,(state)=>{
-      state.loading=true
-    })
+    builder.addCase(fetchCart.pending, state => {
+      state.loading = true;
+    });
   },
 });
-
+export const {removeOneItemFromCart, addOneItemToCart, deleteItemFromCart} =
+  cartSlice.actions;
 export default cartSlice.reducer;

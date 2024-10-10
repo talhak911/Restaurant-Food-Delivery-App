@@ -1,6 +1,6 @@
 import React, {createContext, ReactNode} from 'react';
 import {CustomModal} from '../../components/customModal/CustomModal';
-import Cart from '../../components/cart/Cart';
+import Cart from '../../components/cart/CartComponent';
 import useCartContext from './useCartContext';
 import {CartContextProps} from '../../types/types';
 

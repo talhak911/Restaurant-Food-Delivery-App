@@ -15,13 +15,13 @@ import {COLORS} from '../../constants/color';
 import CartCard from '../cartCard/CartCard';
 import {CustomButton} from '../customButton/CustomButtom';
 import Price from '../price/Price';
-import useCart from './useCart';
+import useCartComponent from './useCartComponent';
 import AddToCart from '../../assets/icons/addToCart';
 import {Height} from '../../utils/responsive';
 import Loader from '../loader/Loader';
 
-const Cart = ({action}: {action: () => void}) => {
-  const {cartItems, totalPrice, loading} = useCart();
+const CartComponent = ({action}: {action: () => void}) => {
+  const {cartItems, totalPrice, loading,navigateToFoods,navigateToConfirmOrder} = useCartComponent();
   if (loading) {
     return <Loader />;
   }
@@ -65,22 +65,25 @@ const Cart = ({action}: {action: () => void}) => {
             ? `you have ${cartItems?.length} items in the cart`
             : 'Your cart is empty'}
         </Text>
-        {cartItems?.length! > 1 ? (
+        {cartItems?.length! > 0 ? (
           <View style={{marginTop: 26, marginBottom: 50}}>
             {cartItems?.map((item, index) => (
               <CartCard
                 key={index}
-                picUrl={item.food.picture || ''}
-                items={item.quantity.toString()}
-                name={item.food.name}
-                price={item.totalPrice.toString()}
+                foodId={item?.food?.id}
+                picUrl={item?.food?.picture}
+                items={item?.quantity.toString()}
+                name={item?.food?.name}
+                price={item?.totalPrice?.toString()}
               />
             ))}
           </View>
         ) : (
           <View
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={navigateToFoods}
+            >
               <AddToCart />
             </TouchableOpacity>
             <Text
@@ -96,11 +99,11 @@ const Cart = ({action}: {action: () => void}) => {
             </Text>
           </View>
         )}
-        {cartItems?.length! > 1 && (
+        {cartItems?.length! > 0 && (
           <Price textColor={COLORS.almostWhite} price={totalPrice ?? '0'} />
         )}
       </ScrollView>
-      {cartItems?.length! > 1 && (
+      {cartItems?.length! > 0 && (
         <View style={{alignItems: 'center', height: '15%'}}>
           <CustomButton
             onPress={action}
@@ -116,7 +119,7 @@ const Cart = ({action}: {action: () => void}) => {
   );
 };
 
-export default Cart;
+export default CartComponent;
 
 export const styles = StyleSheet.create({
   priceContainer: {

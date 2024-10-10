@@ -6,14 +6,14 @@ import {
   LEAGUE_SPARTAN_MEDIUM,
 } from '../../constants/fonts';
 import PencilIcon from '../../assets/icons/pencil';
-import {CustomInput} from '../../components/customInput/CustomInput';
 import {TextInput} from 'react-native-gesture-handler';
 import {CustomButton} from '../../components/customButton/CustomButtom';
-import CartCard from '../../components/cartCard/CartCard';
-import ConfirmOrderCart from '../../components/confirmOrderCard/ConfirmOrderCart';
+import ConfirmOrderCard from '../../components/confirmOrderCard/ConfirmOrderCard';
 import Price from '../../components/price/Price';
+import useConfirmOrder from './useConfirmOrder';
 
 const ConfirmOrder = () => {
+  const {cartItems, totalPrice} = useConfirmOrder();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View
@@ -73,7 +73,6 @@ const ConfirmOrder = () => {
               <Text
                 style={{
                   fontFamily: LEAGUE_SPARTAN_MEDIUM,
-                  // lineHeight:26,
                   fontSize: 20,
                   color: COLORS.almostBlack,
                 }}>
@@ -91,24 +90,19 @@ const ConfirmOrder = () => {
             </View>
 
             <View style={{paddingTop: 12}}>
-              <ConfirmOrderCart
-                items="2"
-                price="20.00"
-                name="Straberry shake"
-                picUrl="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-              />
-              <ConfirmOrderCart
-                items="2"
-                price="20.00"
-                name="Straberry shake"
-                picUrl="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-              />
+              {cartItems?.map((item, index) => (
+                <ConfirmOrderCard
+                  key={index}
+                  items={item.quantity.toString()}
+                  price={item.totalPrice.toString()}
+                  name={item.food.name}
+                  picUrl={item.food.picture}
+                  foodId={item.food.id}
+                />
+              ))}
             </View>
 
-            <Price
-            price='33'
-            textColor={COLORS.almostBlack}
-            />
+            <Price price={totalPrice || '0'} textColor={COLORS.almostBlack} />
           </View>
         </ScrollView>
       </View>
@@ -119,3 +113,6 @@ const ConfirmOrder = () => {
 export default ConfirmOrder;
 
 const styles = StyleSheet.create({});
+
+
+

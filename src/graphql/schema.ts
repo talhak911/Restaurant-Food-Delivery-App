@@ -92,3 +92,8 @@ query fetchCart{
   }
 }
 `
+export const REMOVE_ITEM_FROM_CART=gql`
+mutation removeFromCart($foodId:String!){
+removeFromCart(foodId:$foodId)
+}
+`

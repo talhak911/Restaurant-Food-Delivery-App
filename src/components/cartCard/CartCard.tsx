@@ -8,21 +8,31 @@ import {
 import {COLORS} from '../../constants/color';
 import RemoveSmallIcon from '../../assets/icons/removeSmall';
 import AddSmallIcon from '../../assets/icons/addSmall';
+import { BlinkingImage } from '../loading/Loading';
+import useUpdateCartItems from '../../hooks/useUpdateItems';
 
 const CartCard = ({
   picUrl,
   name,
   price,
   items,
+  foodId
 }: {
-  picUrl: string;
+  picUrl?: string|null;
   name: string;
   price: string;
   items: string;
+  foodId:string
 }) => {
+  const {addOneItem,removeOneItem,loading}=useUpdateCartItems()
   return (
     <View style={styles.cardContainer}>
-      <Image style={styles.image} source={{uri: picUrl}} />
+      {/* <Image style={styles.image} source={{uri: picUrl}} /> */}
+      <BlinkingImage
+      placeholder='food'
+      style={styles.image}
+      uri={picUrl}
+      />
       <View style={{flex: 1}}>
         <View style={styles.spaceBetween}>
           <Text style={styles.name}>{name} strawberry</Text>
@@ -34,11 +44,19 @@ const CartCard = ({
         <View style={styles.spaceBetween}>
           <Text style={styles.price}>${price}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-            <TouchableOpacity>
+            <TouchableOpacity
+            disabled={loading ||Number(items)===1}
+
+            style={{opacity:Number(items)===1?0.4:1}}
+            onPress={()=>{removeOneItem(foodId)}}
+            >
               <RemoveSmallIcon />
             </TouchableOpacity>
             <Text style={styles.items}>{items}</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+                disabled={loading}
+            onPress={()=>{addOneItem(foodId)}}
+            >
               <AddSmallIcon />
             </TouchableOpacity>
           </View>
