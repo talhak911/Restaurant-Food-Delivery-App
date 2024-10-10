@@ -12,7 +12,7 @@ export const CustomModal = ({
   onClose: () => void;
 }) => {
   const {panResponder, translateX} = useCustomModal({visible, onClose});
-  
+
   return (
     <Modal
       transparent={true}
@@ -23,7 +23,7 @@ export const CustomModal = ({
         <Animated.View
           style={[styles.modalContent, {transform: [{translateX}]}]}
           {...panResponder.panHandlers}>
-          <View style={{flex:1,width:'100%'}}>{element}</View>
+          <View style={{flex: 1, width: '100%'}}>{element}</View>
         </Animated.View>
       </View>
     </Modal>
