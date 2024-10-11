@@ -34,10 +34,14 @@ const useHome = () => {
       price,
     });
   };
+  const navigateToFoods=()=>{
+    navigation.navigate('Foods')
+  }
   return {
     foods,
     bestSeller,
     recommended,
+    navigateToFoods,
     navigateToFoodDetail,
   };
 };

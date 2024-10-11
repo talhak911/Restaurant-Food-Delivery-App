@@ -1,4 +1,11 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import {
@@ -11,9 +18,17 @@ import {CustomButton} from '../../components/customButton/CustomButtom';
 import ConfirmOrderCard from '../../components/confirmOrderCard/ConfirmOrderCard';
 import Price from '../../components/price/Price';
 import useConfirmOrder from './useConfirmOrder';
+import CustomDropdown from '../../components/customDropDown2/CustomDropDown';
 
 const ConfirmOrder = () => {
-  const {cartItems, totalPrice} = useConfirmOrder();
+  const {
+    cartItems,
+    totalPrice,
+    addresses,
+    address,
+    navigateToAddAddress,
+    onChangeAddress,
+  } = useConfirmOrder();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View
@@ -32,7 +47,7 @@ const ConfirmOrder = () => {
               paddingBottom: 30,
               paddingHorizontal: 35,
             }}>
-            <View style={{flexDirection: 'row', gap: 6, alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', gap: 6, alignItems: 'center',marginBottom:23}}>
               <Text
                 style={{
                   fontFamily: LEAGUE_SPARTAN_BOLD,
@@ -44,7 +59,7 @@ const ConfirmOrder = () => {
               </Text>
               <PencilIcon />
             </View>
-
+{/* 
             <TextInput
               style={{
                 backgroundColor: COLORS.yellow2,
@@ -58,8 +73,42 @@ const ConfirmOrder = () => {
               onChange={() => {}}
               placeholder="Address"
               editable={false}
+            /> */}
+            <CustomDropdown
+              items={addresses!}
+              onSelect={onChangeAddress}
+              selectedValue={address!}
             />
-
+            {addresses?.length! < 1 && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 30,
+                  marginTop: 10,
+                }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: COLORS.almostBlack,
+                    fontWeight: '500',
+                  }}>
+                  Add Address in the settings
+                </Text>
+                <TouchableOpacity
+                onPress={navigateToAddAddress}
+                >
+                  <Text
+                    style={{
+                      color: COLORS.orange,
+                      borderBottomWidth: 1,
+                      borderColor: COLORS.orange,
+                    }}>
+                    Add Address
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
             <View
               style={{
                 paddingBottom: 19,
@@ -103,6 +152,16 @@ const ConfirmOrder = () => {
             </View>
 
             <Price price={totalPrice || '0'} textColor={COLORS.almostBlack} />
+      <View style={{alignItems:"center"}}>
+      <CustomButton
+          title='Place Order'
+          bgColor={COLORS.orange2}
+          textColor={COLORS.orange}
+          fontSize={23}
+          pH={23}
+  />
+      </View>
+          
           </View>
         </ScrollView>
       </View>
@@ -113,6 +172,3 @@ const ConfirmOrder = () => {
 export default ConfirmOrder;
 
 const styles = StyleSheet.create({});
-
-
-

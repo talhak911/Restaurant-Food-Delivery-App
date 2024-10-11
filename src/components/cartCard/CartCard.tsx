@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {
   LEAGUE_SPARTAN_LIGHT,
@@ -8,7 +8,7 @@ import {
 import {COLORS} from '../../constants/color';
 import RemoveSmallIcon from '../../assets/icons/removeSmall';
 import AddSmallIcon from '../../assets/icons/addSmall';
-import { BlinkingImage } from '../loading/Loading';
+import {BlinkingImage} from '../loading/Loading';
 import useUpdateCartItems from '../../hooks/useUpdateItems';
 
 const CartCard = ({
@@ -16,26 +16,21 @@ const CartCard = ({
   name,
   price,
   items,
-  foodId
+  foodId,
 }: {
-  picUrl?: string|null;
+  picUrl?: string | null;
   name: string;
   price: string;
   items: string;
-  foodId:string
+  foodId: string;
 }) => {
-  const {addOneItem,removeOneItem,loading}=useUpdateCartItems()
+  const {addOneItem, removeOneItem, loading} = useUpdateCartItems();
   return (
     <View style={styles.cardContainer}>
-      {/* <Image style={styles.image} source={{uri: picUrl}} /> */}
-      <BlinkingImage
-      placeholder='food'
-      style={styles.image}
-      uri={picUrl}
-      />
+      <BlinkingImage placeholder="food" style={styles.image} uri={picUrl} />
       <View style={{flex: 1}}>
         <View style={styles.spaceBetween}>
-          <Text style={styles.name}>{name} strawberry</Text>
+          <Text style={styles.name}>{name}</Text>
           <View style={{alignItems: 'flex-end'}}>
             <Text style={styles.date}>DD/MM/YY</Text>
             <Text style={styles.date}>Time</Text>
@@ -45,18 +40,19 @@ const CartCard = ({
           <Text style={styles.price}>${price}</Text>
           <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
             <TouchableOpacity
-            disabled={loading ||Number(items)===1}
-
-            style={{opacity:Number(items)===1?0.4:1}}
-            onPress={()=>{removeOneItem(foodId)}}
-            >
+              disabled={loading || Number(items) === 1}
+              style={{opacity: Number(items) === 1 ? 0.4 : 1}}
+              onPress={() => {
+                removeOneItem(foodId);
+              }}>
               <RemoveSmallIcon />
             </TouchableOpacity>
             <Text style={styles.items}>{items}</Text>
             <TouchableOpacity
-                disabled={loading}
-            onPress={()=>{addOneItem(foodId)}}
-            >
+              disabled={loading}
+              onPress={() => {
+                addOneItem(foodId);
+              }}>
               <AddSmallIcon />
             </TouchableOpacity>
           </View>

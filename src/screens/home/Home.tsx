@@ -15,7 +15,8 @@ import FoodCard from '../../components/foodCard/FoodCard';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
 
 const Home = () => {
-  const {navigateToFoodDetail, foods, bestSeller, recommended} = useHome();
+  const {navigateToFoodDetail, navigateToFoods, bestSeller, recommended} =
+    useHome();
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
@@ -40,6 +41,7 @@ const Home = () => {
             }}>
             {CATEGORIES.map((item, index) => (
               <TouchableOpacity
+                onPress={navigateToFoods}
                 style={{alignItems: 'center', gap: 4}}
                 key={index}>
                 {item.icon}
@@ -64,6 +66,7 @@ const Home = () => {
               Best Seller
             </Text>
             <TouchableOpacity
+              onPress={navigateToFoods}
               style={{flexDirection: 'row', alignItems: 'center', gap: 11}}>
               <Text
                 style={{
@@ -77,35 +80,37 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              marginTop: 14,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              gap: 11,
-              overflow: 'hidden',
-            }}>
-            {bestSeller?.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  navigateToFoodDetail({
-                    id: item.id,
-                    description: item.description,
-                    name: item.name,
-                    picUrl: item.picture,
-                    price: item.price.toString(),
-                  });
-                }}>
-                <FoodCard
-                  height={108}
-                  width={72}
-                  price={item.price.toString()}
-                  uri={item.picture}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View
+              style={{
+                marginTop: 14,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                gap: 11,
+                overflow: 'hidden',
+              }}>
+              {bestSeller?.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    navigateToFoodDetail({
+                      id: item.id,
+                      description: item.description,
+                      name: item.name,
+                      picUrl: item.picture,
+                      price: item.price.toString(),
+                    });
+                  }}>
+                  <FoodCard
+                    height={108}
+                    width={72}
+                    price={item.price.toString()}
+                    uri={item.picture}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
         </View>
 
         <View style={{flex: 1, backgroundColor: 'white', paddingVertical: 20}}>
@@ -127,29 +132,30 @@ const Home = () => {
             }}>
             Recommended
           </Text>
-
-          <View style={{flexDirection: 'row', gap: 7, paddingVertical: 9}}>
-            {recommended?.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  navigateToFoodDetail({
-                    id: item.id,
-                    description: item.description,
-                    name: item.name,
-                    picUrl: item.picture,
-                    price: item.price.toString(),
-                  });
-                }}>
-                <FoodCard
-                  uri={item.picture}
-                  height={140}
-                  width={159}
-                  price={item.price.toString()}
-                />
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={{flexDirection: 'row', gap: 7, paddingVertical: 9}}>
+              {recommended?.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    navigateToFoodDetail({
+                      id: item.id,
+                      description: item.description,
+                      name: item.name,
+                      picUrl: item.picture,
+                      price: item.price.toString(),
+                    });
+                  }}>
+                  <FoodCard
+                    uri={item.picture}
+                    height={140}
+                    width={159}
+                    price={item.price.toString()}
+                  />
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
         </View>
       </ScrollView>
     </SafeAreaView>
