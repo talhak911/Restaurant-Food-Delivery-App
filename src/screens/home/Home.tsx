@@ -1,13 +1,9 @@
-import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import useHome from './useHome';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../../constants/color';
-import SearchFilterIcon from '../../assets/icons/searchFilter';
-import {Width} from '../../utils/responsive';
-import CartIcon from '../../assets/icons/cart';
-import NotificationIcon from '../../assets/icons/notification';
-import UserIcon from '../../assets/icons/user';
+
 import {
   LEAGUE_SPARTAN_MEDIUM,
   LEAGUE_SPARTAN_SEMI_BOLD,
@@ -19,7 +15,7 @@ import FoodCard from '../../components/foodCard/FoodCard';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
 
 const Home = () => {
-  const {navigateToFoodDetail} = useHome();
+  const {navigateToFoodDetail, foods, bestSeller, recommended} = useHome();
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
@@ -89,24 +85,26 @@ const Home = () => {
               gap: 11,
               overflow: 'hidden',
             }}>
-            <TouchableOpacity
-              onPress={() => {
-                navigateToFoodDetail({
-                  id: '34',
-                  description: 'one two three',
-                  name: 'Pizza xl',
-                  picUrl:
-                    'https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain',
-                  price: '399',
-                });
-              }}>
-              <FoodCard
-                height={108}
-                width={72}
-                price="70"
-                uri="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-              />
-            </TouchableOpacity>
+            {bestSeller?.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  navigateToFoodDetail({
+                    id: item.id,
+                    description: item.description,
+                    name: item.name,
+                    picUrl: item.picture,
+                    price: item.price.toString(),
+                  });
+                }}>
+                <FoodCard
+                  height={108}
+                  width={72}
+                  price={item.price.toString()}
+                  uri={item.picture}
+                />
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
 
@@ -114,7 +112,6 @@ const Home = () => {
           <Carousel />
         </View>
 
-        {/* Reccomended */}
         <View
           style={{
             paddingHorizontal: 35,
@@ -132,12 +129,26 @@ const Home = () => {
           </Text>
 
           <View style={{flexDirection: 'row', gap: 7, paddingVertical: 9}}>
-            <FoodCard
-              uri="https://th.bing.com/th/id/OIP.btBHwMCK_Vjw8pjpjjExTwHaEK?rs=1&pid=ImgDetMain"
-              height={140}
-              width={159}
-              price="300"
-            />
+            {recommended?.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  navigateToFoodDetail({
+                    id: item.id,
+                    description: item.description,
+                    name: item.name,
+                    picUrl: item.picture,
+                    price: item.price.toString(),
+                  });
+                }}>
+                <FoodCard
+                  uri={item.picture}
+                  height={140}
+                  width={159}
+                  price={item.price.toString()}
+                />
+              </TouchableOpacity>
+            ))}
           </View>
         </View>
       </ScrollView>

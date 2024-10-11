@@ -1,18 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {TabNavigatorProps} from '../../types/types';
-import {useEffect} from 'react';
-import {fetchFoods} from '../../redux/slices/foodSlice';
 
-const useHome = () => {
-  const dispatch = useAppDispatch();
-  const foods = useAppSelector(state => state.foods.foods);
-  useEffect(() => {
-    dispatch(fetchFoods({}));
-  }, []);
-  const bestSeller = foods?.slice(0, 4);
-  const recommended = foods?.slice(4, 6);
+const useSliderItem = () => {
   const navigation = useNavigation<TabNavigatorProps>();
+
   const navigateToFoodDetail = ({
     id,
     description,
@@ -35,11 +26,8 @@ const useHome = () => {
     });
   };
   return {
-    foods,
-    bestSeller,
-    recommended,
     navigateToFoodDetail,
   };
 };
 
-export default useHome;
+export default useSliderItem;

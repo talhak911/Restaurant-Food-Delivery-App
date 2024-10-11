@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import AddressCard from '../../components/addressCard/AddressCard';
@@ -35,17 +35,17 @@ const DeliveryAddress = () => {
                 address={item.address}
               />
             ))}
-            <View style={{alignItems: 'center', marginTop: 150}}>
-              <CustomButton
-                title="Add new Address"
-                bgColor={COLORS.orange2}
-                fontSize={17}
-                textColor={COLORS.orange}
-                onPress={navigateToAddAddress}
-              />
-            </View>
           </View>
         </ScrollView>
+        <View style={{alignItems: 'center', marginTop: 120, paddingBottom: 30}}>
+          <CustomButton
+            title="Add new Address"
+            bgColor={COLORS.orange2}
+            fontSize={17}
+            textColor={COLORS.orange}
+            onPress={navigateToAddAddress}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

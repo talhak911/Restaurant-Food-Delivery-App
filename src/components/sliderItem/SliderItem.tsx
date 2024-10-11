@@ -1,46 +1,41 @@
-// import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-// import React from 'react'
-// import { Width } from '../../utils/responsive'
-
-// const {width} = Dimensions.get("screen")
-// const SliderItem = ({item,index}:{item:string,index:number}) => {
-//   return (
-//     <View style={styles.itemContainer}>
-//         <Image
-//         style={{objectFit:"cover"}}
-//         source={{uri:item,height:128,width:Width(80)}}/>
-//     </View>
-//   )
-// }
-
-// export default SliderItem
-
-// const styles = StyleSheet.create({
-//     itemContainer:{
-//         justifyContent:'center',
-//         alignItems:'center',
-//         gap:20,
-//         backgroundColor:"red",
-//         flex:1
-//     }
-// })
-
-
-import {Dimensions, Image, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import React from 'react';
-import {Width} from '../../utils/responsive'; // Assuming you have a responsive utility
+import useSliderItem from './useSliderItem';
+import {FetchFoodsQuery} from '../../gql/graphql';
+import {IMAGES} from '../../constants/constants';
 
-
-
-const SliderItem = ({item,index}:{item:string,index:number}) => {
-    const {width} = useWindowDimensions()
+const SliderItem = ({
+  item: {id, name, description, price, picture},
+  index,
+}: {
+  item: FetchFoodsQuery['fetchFoods'][number];
+  index: number;
+}) => {
+  const {navigateToFoodDetail} = useSliderItem();
+  const {width} = useWindowDimensions();
   return (
-    <View style={[styles.itemContainer,{width}]}>
+    <TouchableOpacity
+      key={index}
+      onPress={() => {
+        navigateToFoodDetail({
+          id,
+          description,
+          name,
+          picUrl: picture,
+          price: price.toString(),
+        });
+      }}
+      style={[styles.itemContainer, {width}]}>
       <Image
         style={styles.image}
-        source={{uri: item}}
+        source={picture ? {uri: picture} : IMAGES.foodPlaceholder.toString()}
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -48,14 +43,14 @@ export default SliderItem;
 
 const styles = StyleSheet.create({
   itemContainer: {
-  justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white', // You can set the background color
+    backgroundColor: 'white',
   },
   image: {
     width: '81%',
     height: 128,
-    borderRadius:20,
-    objectFit:"cover"
+    borderRadius: 20,
+    objectFit: 'cover',
   },
 });
