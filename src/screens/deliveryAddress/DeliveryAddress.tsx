@@ -6,12 +6,7 @@ import {CustomButton} from '../../components/customButton/CustomButtom';
 import useDeliveryAddress from './useDeliveryAddress';
 
 const DeliveryAddress = () => {
-  const addresses = [
-    {name: 'My Home', address: 'faisalabad pakistan 123 df fOO'},
-    {name: 'My Home', address: 'faisalabad pakistan 123 df fOO'},
-    {name: 'My Home', address: 'faisalabad pakistan 123 df fOO'},
-  ];
-  const {navigateToAddAddress}=useDeliveryAddress()
+  const {navigateToAddAddress, addresses} = useDeliveryAddress();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View
@@ -33,14 +28,14 @@ const DeliveryAddress = () => {
             <View
               style={{borderBottomWidth: 1, borderColor: COLORS.lightPink}}
             />
-            {addresses.map((item, index) => (
+            {addresses?.map((item, index) => (
               <AddressCard
                 key={index}
                 name={item.name}
                 address={item.address}
               />
             ))}
-            <View style={{alignItems: 'center',marginTop:150}}>
+            <View style={{alignItems: 'center', marginTop: 150}}>
               <CustomButton
                 title="Add new Address"
                 bgColor={COLORS.orange2}

@@ -7,7 +7,7 @@ import useAddAddress from './useAddAddress';
 import {CustomButton} from '../../components/customButton/CustomButtom';
 
 const AddAddress = () => {
-  const {fields, onChange} = useAddAddress();
+  const {fields, onChange,addAddress,loading} = useAddAddress();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <View
@@ -41,7 +41,7 @@ const AddAddress = () => {
                 />
               ))}
             </View>
-            <CustomButton title="Apply" pH={40} pV={4} fontSize={17} />
+            <CustomButton title="Apply" pH={40} pV={4} fontSize={17} onPress={addAddress} loading={loading}/>
           </View>
         </ScrollView>
       </View>

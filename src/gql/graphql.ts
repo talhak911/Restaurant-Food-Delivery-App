@@ -75,7 +75,7 @@ export type AggregateUser = {
 
 export type CreateManyAndReturnCustomer = {
   __typename?: 'CreateManyAndReturnCustomer';
-  address?: Maybe<Array<Scalars['String']['output']>>;
+  address?: Maybe<Array<Scalars['JSON']['output']>>;
   id: Scalars['String']['output'];
   picture?: Maybe<Scalars['String']['output']>;
   user: User;
@@ -148,7 +148,7 @@ export type CreateManyAndReturnUser = {
 export type Customer = {
   __typename?: 'Customer';
   _count?: Maybe<CustomerCount>;
-  address: Array<Scalars['String']['output']>;
+  address: Array<Scalars['JSON']['output']>;
   cart: Array<OrderItemCart>;
   id: Scalars['String']['output'];
   orders: Array<Order>;
@@ -174,6 +174,13 @@ export type CustomerOrdersArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<OrderWhereInput>;
+};
+
+export type CustomerAddress = {
+  __typename?: 'CustomerAddress';
+  address: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
 };
 
 export type CustomerCount = {
@@ -275,7 +282,7 @@ export type CustomerCreateWithoutUserInput = {
 };
 
 export type CustomerCreateaddressInput = {
-  set: Array<Scalars['String']['input']>;
+  set: Array<Scalars['JSON']['input']>;
 };
 
 export type CustomerGroupBy = {
@@ -283,7 +290,7 @@ export type CustomerGroupBy = {
   _count?: Maybe<CustomerCountAggregate>;
   _max?: Maybe<CustomerMaxAggregate>;
   _min?: Maybe<CustomerMinAggregate>;
-  address?: Maybe<Array<Scalars['String']['output']>>;
+  address?: Maybe<Array<Scalars['JSON']['output']>>;
   id: Scalars['String']['output'];
   picture?: Maybe<Scalars['String']['output']>;
 };
@@ -348,7 +355,7 @@ export type CustomerScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<CustomerScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<CustomerScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<CustomerScalarWhereWithAggregatesInput>>;
-  address?: InputMaybe<StringNullableListFilter>;
+  address?: InputMaybe<JsonNullableListFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   picture?: InputMaybe<StringNullableWithAggregatesFilter>;
 };
@@ -429,8 +436,8 @@ export type CustomerUpdateWithoutUserInput = {
 };
 
 export type CustomerUpdateaddressInput = {
-  push?: InputMaybe<Array<Scalars['String']['input']>>;
-  set?: InputMaybe<Array<Scalars['String']['input']>>;
+  push?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  set?: InputMaybe<Array<Scalars['JSON']['input']>>;
 };
 
 export type CustomerUpsertWithoutCartInput = {
@@ -455,7 +462,7 @@ export type CustomerWhereInput = {
   AND?: InputMaybe<Array<CustomerWhereInput>>;
   NOT?: InputMaybe<Array<CustomerWhereInput>>;
   OR?: InputMaybe<Array<CustomerWhereInput>>;
-  address?: InputMaybe<StringNullableListFilter>;
+  address?: InputMaybe<JsonNullableListFilter>;
   cart?: InputMaybe<OrderItemCartListRelationFilter>;
   id?: InputMaybe<StringFilter>;
   orders?: InputMaybe<OrderListRelationFilter>;
@@ -467,7 +474,7 @@ export type CustomerWhereUniqueInput = {
   AND?: InputMaybe<Array<CustomerWhereInput>>;
   NOT?: InputMaybe<Array<CustomerWhereInput>>;
   OR?: InputMaybe<Array<CustomerWhereInput>>;
-  address?: InputMaybe<StringNullableListFilter>;
+  address?: InputMaybe<JsonNullableListFilter>;
   cart?: InputMaybe<OrderItemCartListRelationFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
   orders?: InputMaybe<OrderListRelationFilter>;
@@ -1093,6 +1100,14 @@ export type JsonFilter = {
   string_starts_with?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type JsonNullableListFilter = {
+  equals?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  has?: InputMaybe<Scalars['JSON']['input']>;
+  hasEvery?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  hasSome?: InputMaybe<Array<Scalars['JSON']['input']>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type JsonWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedJsonFilter>;
@@ -1114,7 +1129,7 @@ export type JsonWithAggregatesFilter = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addCustomerAddress: Scalars['Boolean']['output'];
+  addCustomerAddress: Array<CustomerAddress>;
   addFoodItem: Scalars['Boolean']['output'];
   assignDeliveryPerson: Order;
   cancelOrder: Scalars['String']['output'];
@@ -1137,6 +1152,7 @@ export type Mutation = {
   createOneOrderItemCart: OrderItemCart;
   createOneRestaurant: Restaurant;
   createOneUser: User;
+  deleteCustomerAddress: Scalars['Boolean']['output'];
   deleteManyCustomer: AffectedRowsOutput;
   deleteManyFood: AffectedRowsOutput;
   deleteManyOrder: AffectedRowsOutput;
@@ -1185,6 +1201,7 @@ export type Mutation = {
 
 export type MutationAddCustomerAddressArgs = {
   address: Scalars['String']['input'];
+  name: Scalars['String']['input'];
 };
 
 
@@ -1309,6 +1326,11 @@ export type MutationCreateOneRestaurantArgs = {
 
 export type MutationCreateOneUserArgs = {
   data: UserCreateInput;
+};
+
+
+export type MutationDeleteCustomerAddressArgs = {
+  addressId: Scalars['String']['input'];
 };
 
 
@@ -2675,6 +2697,7 @@ export type Query = {
   foods: Array<Food>;
   getCurrentUser?: Maybe<User>;
   getCustomer?: Maybe<Customer>;
+  getCustomerAddress: Array<CustomerAddress>;
   getFood?: Maybe<Food>;
   getOrder?: Maybe<Order>;
   getOrderItemCart?: Maybe<OrderItemCart>;
@@ -3468,14 +3491,6 @@ export type StringNullableFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type StringNullableListFilter = {
-  equals?: InputMaybe<Array<Scalars['String']['input']>>;
-  has?: InputMaybe<Scalars['String']['input']>;
-  hasEvery?: InputMaybe<Array<Scalars['String']['input']>>;
-  hasSome?: InputMaybe<Array<Scalars['String']['input']>>;
-  isEmpty?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type StringNullableWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntNullableFilter>;
   _max?: InputMaybe<NestedStringNullableFilter>;
@@ -3912,7 +3927,7 @@ export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: bo
 export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', dateOfBirth: any, name: string, id: string, email: string, phone: string, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<string>, picture?: string | null, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } | null };
+export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', dateOfBirth: any, name: string, id: string, email: string, phone: string, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<any>, picture?: string | null, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } | null };
 
 export type FetchFoodsQueryVariables = Exact<{
   category?: InputMaybe<Scalars['String']['input']>;
@@ -3941,6 +3956,14 @@ export type RemoveFromCartMutationVariables = Exact<{
 
 export type RemoveFromCartMutation = { __typename?: 'Mutation', removeFromCart: boolean };
 
+export type AddCustomerAddressMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  address: Scalars['String']['input'];
+}>;
+
+
+export type AddCustomerAddressMutation = { __typename?: 'Mutation', addCustomerAddress: Array<{ __typename?: 'CustomerAddress', id: string, name: string, address: string }> };
+
 
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
 export const SignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<SignInMutation, SignInMutationVariables>;
@@ -3952,3 +3975,4 @@ export const FetchFoodsDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const UpdateCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCart"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"Argument","name":{"kind":"Name","value":"foodId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}}}]}]}}]} as unknown as DocumentNode<UpdateCartMutation, UpdateCartMutationVariables>;
 export const FetchCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchCart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fetchCart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}}]}}]}}]} as unknown as DocumentNode<FetchCartQuery, FetchCartQueryVariables>;
 export const RemoveFromCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeFromCart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeFromCart"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"foodId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}}}]}]}}]} as unknown as DocumentNode<RemoveFromCartMutation, RemoveFromCartMutationVariables>;
+export const AddCustomerAddressDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addCustomerAddress"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addCustomerAddress"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"address"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"address"}}]}}]}}]} as unknown as DocumentNode<AddCustomerAddressMutation, AddCustomerAddressMutationVariables>;

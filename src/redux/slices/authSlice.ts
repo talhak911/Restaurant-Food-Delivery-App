@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { ChangePasswordPayload, reduxUser} from '../../types/types';
-import { GetCurrentUserDocument } from '../../gql/graphql';
+import { AddCustomerAddressDocument, GetCurrentUserDocument } from '../../gql/graphql';
 import { client } from '../../providers/apolloProvider/apolloProvider';
 import { ToastAndroid } from 'react-native';
 
@@ -29,6 +29,19 @@ export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (_, { 
     });
 
   return response?.data?.getCurrentUser;
+
+  } catch (error:any) {
+    return rejectWithValue(error.message);
+  }
+});
+export const addCustomerAddress = createAsyncThunk('auth/addCustomerAddress', async ({name,address}:{name:string,address:string}, { rejectWithValue }) => {
+  try {
+    const response = await client.mutate({
+      mutation: AddCustomerAddressDocument,
+      variables:{name,address}
+    });
+
+  return response?.data?.addCustomerAddress;
 
   } catch (error:any) {
     return rejectWithValue(error.message);
@@ -85,6 +98,12 @@ export const authSlice = createSlice({
     //   state.user = action.payload;
     // });
 
+    builder.addCase(addCustomerAddress.fulfilled, (state,action) => {
+      if (state.user?.customer && action.payload) {
+        state.user.customer.address = action.payload; // Update the addresses in the state
+      }
+    });
+   ;
     builder.addCase(signOut.fulfilled, state => {
       state.user = null;
     });

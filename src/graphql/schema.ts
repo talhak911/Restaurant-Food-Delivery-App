@@ -97,3 +97,13 @@ mutation removeFromCart($foodId:String!){
 removeFromCart(foodId:$foodId)
 }
 `
+
+export const ADD_CUSTOMER_ADDRESS=gql`
+mutation addCustomerAddress($name:String!,$address:String!){
+  addCustomerAddress(name:$name,address:$address){
+    id
+    name
+    address
+  }
+}
+`
