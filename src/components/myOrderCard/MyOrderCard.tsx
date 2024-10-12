@@ -1,11 +1,15 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {LEAGUE_SPARTAN_LIGHT, LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
+import {
+  LEAGUE_SPARTAN_LIGHT,
+  LEAGUE_SPARTAN_MEDIUM,
+} from '../../constants/fonts';
 import {COLORS} from '../../constants/color';
 import {CustomButton} from '../customButton/CustomButtom';
 import TickIcon from '../../assets/icons/tick';
-import {OrderStatus} from '../../screens/myOrder/useMyOrders';
 import CrossIcon from '../../assets/icons/cross';
+import {OrderStatus} from '../../gql/graphql';
+import { styles } from './MyOrderCardStyles';
 
 const MyOrderCard = ({
   picUrl,
@@ -23,25 +27,20 @@ const MyOrderCard = ({
   items: string;
 }) => {
   return (
-    <View
-      style={styles.cardContainer}>
+    <View style={styles.cardContainer}>
       <Image
         style={{borderRadius: 20}}
         source={{uri: picUrl, height: 108, width: 71}}
       />
-      <View
-        style={styles.containerContent}>
-        <View style={{gap: 3, flex: 1}}>
-          <Text
-            style={styles.title}>
-            {title}
-          </Text>
+      <View style={styles.containerContent}>
+        <View style={styles.leftContentContainer}>
+          <Text style={styles.title}>{title}</Text>
           <Text>{dateTime}</Text>
-          {orderStatus !== 'Active' && (
+          {orderStatus !== OrderStatus.Active && (
             <View style={styles.orderStatusContainer}>
-              {orderStatus === 'Completed' && <TickIcon />}
-              {orderStatus === 'Cancelled' && <CrossIcon />}
-              <Text style={{color:COLORS.orange,fontFamily:LEAGUE_SPARTAN_LIGHT}}>Order {orderStatus}</Text>
+              {orderStatus == OrderStatus.Delivered && <TickIcon />}
+              {orderStatus == OrderStatus.Canceled && <CrossIcon />}
+              <Text style={styles.orderStatus}>Order {orderStatus}</Text>
             </View>
           )}
           <CustomButton
@@ -52,14 +51,11 @@ const MyOrderCard = ({
             pV={5}
           />
         </View>
-        <View style={{gap: 3, alignItems: 'flex-end'}}>
-          <Text
-            style={styles.price}>
-            ${price}
-          </Text>
+        <View style={styles.rightContentContainer}>
+          <Text style={styles.price}>${price}</Text>
           <Text style={{paddingBottom: 23}}>{items} items</Text>
 
-          <View style={{flex: 1, justifyContent: 'flex-end'}}>
+          <View style={styles.orderAgainButton}>
             <CustomButton
               title="Order Again"
               fontSize={15}
@@ -76,30 +72,3 @@ const MyOrderCard = ({
 };
 
 export default MyOrderCard;
-
-export const styles = StyleSheet.create({
-    cardContainer:{
-        width: '100%',
-        flexDirection: 'row',
-        gap: 13,
-        alignItems: 'center',
-      },
-      containerContent:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      },
-    price:{
-        fontFamily: LEAGUE_SPARTAN_MEDIUM,
-        color: COLORS.orange,
-        fontSize: 20,
-      },
-    orderStatusContainer:{flexDirection: 'row', gap: 3, alignItems: 'center'},
-    title:{
-        flex: 1,
-        fontFamily: LEAGUE_SPARTAN_MEDIUM,
-        color: COLORS.almostBlack,
-        fontSize: 20,
-      }
-});
