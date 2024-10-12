@@ -26,7 +26,9 @@ const ConfirmOrder = () => {
     totalPrice,
     addresses,
     address,
+    loading,
     navigateToAddAddress,
+    handlePlaceOrder,
     onChangeAddress,
   } = useConfirmOrder();
   return (
@@ -154,8 +156,10 @@ const ConfirmOrder = () => {
             <Price price={totalPrice || '0'} textColor={COLORS.almostBlack} />
       <View style={{alignItems:"center"}}>
       <CustomButton
+      onPress={handlePlaceOrder}
           title='Place Order'
           bgColor={COLORS.orange2}
+          loading={loading}
           textColor={COLORS.orange}
           fontSize={23}
           pH={23}

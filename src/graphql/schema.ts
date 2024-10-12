@@ -107,3 +107,28 @@ mutation addCustomerAddress($name:String!,$address:String!){
   }
 }
 `
+export const PLACE_ORDER = gql`
+mutation placeOrder($deliveryAddress: String!) {
+  placeOrder(deliveryAddress:$deliveryAddress) {
+    totalPrice
+    foods
+  }
+}
+`
+
+export const FETCH_ORDERS = gql`
+query fetchOrders($status: String) {
+    fetchOrders(status: $status) {
+        id
+        totalPrice
+        foods
+        status
+        deliveryPerson
+        deliveryTime
+        customerId
+        restaurantId
+        deliveryAddress
+        createdAt
+    }
+}
+`

@@ -1,41 +1,15 @@
-// import dayjs from 'dayjs';
-// import {DAYS, MONTHS} from '../constants/constants';
+export const toPascalCase = (str: string) => {
+  return str
+    .toLowerCase()
+    .replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substring(1));
+};
 
-// export const getTransactionLabel = (date: dayjs.ConfigType) => {
-//   if (dayjs(date).isSame(dayjs(), 'day')) {
-//     return 'Today';
-//   } else if (dayjs(date).isSame(dayjs().subtract(1, 'day'), 'day')) {
-//     return 'Yesterday';
-//   } else if (dayjs(date).isSame(dayjs(), 'week')) {
-//     return 'This Week';
-//   } else if (dayjs(date).isSame(dayjs().subtract(1, 'week'), 'week')) {
-//     return 'Last Week';
-//   } else if (dayjs(date).isSame(dayjs(), 'month')) {
-//     return 'This Month';
-//   } else if (dayjs(date).isSame(dayjs().subtract(1, 'month'), 'month')) {
-//     return 'Last Month';
-//   } else {
-//     return 'Older';
-//   }
-// };
-
-// export const isValidEmail = (email: string): boolean => {
-//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   return emailRegex.test(email);
-// };
-
-// export const formatDate = (date: Date) => {
-//   const weekday = DAYS[date.getDay()];
-//   const day = date.getDate();
-//   const month = MONTHS[date.getMonth()];
-//   const year = date.getFullYear();
-//   const hour = date.getHours().toString().padStart(2, '0');
-//   const minute = date.getMinutes().toString().padStart(2, '0');
-
-//   return `${weekday} ${day} ${month} ${year} ${hour}:${minute}`;
-// };
-
-// export const getMonth = () => {
-//   const month = MONTHS[new Date().getMonth()];
-//   return month;
-// };
+export const formatDate = (dateString: string | Date) => {
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  }).format(new Date(dateString));
+};

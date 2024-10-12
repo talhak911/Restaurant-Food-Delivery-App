@@ -234,3 +234,23 @@ export type CartContextProps= {
 
 //for apis 
 export type UpdateCartParams ={quantity:number,foodId:string}
+
+export type Food = {
+  id: string;
+  name: string;
+  price: number;
+  picture: string;
+  category: string;
+  description: string;
+  restaurantId: string;
+};
+
+// Type for each food item in the order
+export type FoodItem = {
+  id: number;
+  food: Food;
+  foodId: string;
+  quantity: number;
+  customerId: string;
+  totalPrice: number;
+};

@@ -97,6 +97,9 @@ export const cartSlice = createSlice({
         ? state.cartItems.filter(item => item.food.id !== action.payload)
         : null;
     },
+    emptyCart:(state)=>{
+      state.cartItems=null
+    }
   },
   extraReducers: builder => {
     builder.addCase(deleteItem.fulfilled, state => {
@@ -128,6 +131,6 @@ export const cartSlice = createSlice({
     });
   },
 });
-export const {removeOneItemFromCart, addOneItemToCart, deleteItemFromCart} =
+export const {removeOneItemFromCart, addOneItemToCart, deleteItemFromCart,emptyCart} =
   cartSlice.actions;
 export default cartSlice.reducer;

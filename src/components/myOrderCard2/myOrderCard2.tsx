@@ -11,7 +11,7 @@ import TickIcon from '../../assets/icons/tick';
 import CrossIcon from '../../assets/icons/cross';
 import OrderItemCard from '../orderItemCard/OrderItemCard';
 import {FoodItem} from '../../types/types';
-import { OrderStatus } from '../../gql/graphql';
+import {OrderStatus} from '../../gql/graphql';
 
 const MyOrderCard2 = ({
   foods,
@@ -24,23 +24,32 @@ const MyOrderCard2 = ({
   orderStatus: OrderStatus;
   totalPrice: string;
 }) => {
-  console.log("THe statsu sis " , orderStatus)
   return (
     <View style={styles.cardContainer}>
       <View style={{flexDirection: 'row', gap: 16, alignItems: 'center'}}>
-      {orderStatus !== OrderStatus.Active && (
-            <View style={styles.orderStatusContainer}>
-                {orderStatus == OrderStatus.Delivered && <TickIcon />}
-                {orderStatus == OrderStatus.Canceled && <CrossIcon />}
+        {orderStatus !== OrderStatus.Active && (
+          <View style={styles.orderStatusContainer}>
+            {orderStatus == OrderStatus.Delivered && <TickIcon />}
+            {orderStatus == OrderStatus.Canceled && <CrossIcon />}
             <Text
-              style={{color: COLORS.orange, fontFamily: LEAGUE_SPARTAN_LIGHT,textTransform:"capitalize"}}>
+              style={{
+                color: COLORS.orange,
+                fontFamily: LEAGUE_SPARTAN_LIGHT,
+                textTransform: 'capitalize',
+              }}>
               Order {orderStatus}
             </Text>
           </View>
         )}
-        <Text>{dateTime}</Text>
+        <Text
+          style={{fontFamily: LEAGUE_SPARTAN_LIGHT, color: COLORS.almostBlack}}>
+          {dateTime}
+        </Text>
       </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        style={{alignSelf: 'center'}}
+        horizontal
+        showsHorizontalScrollIndicator={false}>
         <View
           style={{
             marginTop: 12,
@@ -61,26 +70,46 @@ const MyOrderCard2 = ({
         </View>
       </ScrollView>
 
-      <View style={{marginTop:8,alignItems:"center",flexDirection:"row",justifyContent:"space-around"}}>
-      <CustomButton
-            title="Leave a review"
-            fontSize={15}
-            width={120}
-            pH={12}
-            pV={5}
-          />
-          <View style={{flexDirection:"row",alignItems:"center",gap:7}}>
-<Text style={{fontFamily:LEAGUE_SPARTAN_MEDIUM,fontSize:16,color:COLORS.orange}}>Total</Text>
-<Text style={{fontFamily:LEAGUE_SPARTAN_SEMI_BOLD,fontSize:18,color:COLORS.orange}}>${totalPrice}</Text>
-          </View>
-         <CustomButton
-              title="Order Again"
-              fontSize={15}
-              bgColor={COLORS.orange2}
-              textColor={COLORS.orange}
-              pH={12}
-              pV={5}
-            />
+      <View
+        style={{
+          marginTop: 8,
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+        }}>
+        <CustomButton
+          title="Leave a review"
+          fontSize={15}
+          width={120}
+          pH={12}
+          pV={5}
+        />
+        <View style={{flexDirection: 'row', alignItems: 'center', gap: 7}}>
+          <Text
+            style={{
+              fontFamily: LEAGUE_SPARTAN_MEDIUM,
+              fontSize: 16,
+              color: COLORS.orange,
+            }}>
+            Total
+          </Text>
+          <Text
+            style={{
+              fontFamily: LEAGUE_SPARTAN_SEMI_BOLD,
+              fontSize: 18,
+              color: COLORS.orange,
+            }}>
+            ${totalPrice}
+          </Text>
+        </View>
+        <CustomButton
+          title="Order Again"
+          fontSize={15}
+          bgColor={COLORS.orange2}
+          textColor={COLORS.orange}
+          pH={12}
+          pV={5}
+        />
       </View>
     </View>
   );
