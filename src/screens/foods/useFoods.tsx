@@ -10,7 +10,7 @@ import { fetchFoods } from '../../redux/slices/foodSlice';
 const useFoods = () => {
   const [activeButton,setActionButton]=useState<FilterBy|null>(null)
     const dispatch = useAppDispatch()
-    const foods = useAppSelector(state=>state.foods.foods)
+    const foods = useAppSelector(state=>state.foods.filteredFoods)
     useEffect(()=>{
       dispatch(fetchFoods({category:activeButton?.toUpperCase() as FoodCategory}))
     },[activeButton])

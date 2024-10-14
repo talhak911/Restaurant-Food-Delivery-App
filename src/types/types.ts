@@ -1,6 +1,5 @@
 import {
   BottomTabNavigationProp,
-  BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
@@ -9,12 +8,11 @@ import {
 } from '@react-navigation/native-stack';
 import {
   StackNavigationOptions,
-  StackNavigationProp,
   StackScreenProps,
 } from '@react-navigation/stack';
 
 import {KeyboardTypeOptions} from 'react-native';
-import {GetCurrentUserQuery, OrderStatus, Role} from '../gql/graphql';
+import {FetchFoodsQuery, GetCurrentUserQuery, OrderStatus, Role} from '../gql/graphql';
 
 export type voidFunction = () => void;
 
@@ -264,3 +262,7 @@ export type FoodItem = {
   customerId: string;
   totalPrice: number;
 };
+export type FoodState = {
+  foods: FetchFoodsQuery['fetchFoods'] | null;
+  filteredFoods: FetchFoodsQuery['fetchFoods'] | null;
+}

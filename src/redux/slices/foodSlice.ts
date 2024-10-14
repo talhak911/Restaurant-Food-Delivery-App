@@ -3,13 +3,14 @@ import {
   FetchFoodsDocument,
   FetchFoodsQuery,
   FoodCategory,
-  GetCurrentUserDocument,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
 import {ToastAndroid} from 'react-native';
+import { FoodState } from '../../types/types';
 
-const initialState: {foods: FetchFoodsQuery['fetchFoods'] | null} = {
+const initialState:FoodState  = {
   foods: null,
+  filteredFoods: null,
 };
 
 export const fetchFoods = createAsyncThunk(
@@ -21,7 +22,10 @@ export const fetchFoods = createAsyncThunk(
         variables: {category},
       });
 
-      return response?.data?.fetchFoods;
+      const data = response?.data?.fetchFoods;
+      if (category) {
+        return {filtered: true,data};
+      } else return {filtered: false, data};
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -34,7 +38,12 @@ export const foodSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchFoods.fulfilled, (state, action) => {
-      state.foods = action.payload;
+      if (action.payload.filtered) {
+        state.filteredFoods=action.payload.data;
+      } else {
+        state.foods = action.payload.data;
+        state.filteredFoods=action.payload.data;
+      }
     });
     builder.addCase(fetchFoods.rejected, (_, action) => {
       ToastAndroid.show(action.payload as string, ToastAndroid.LONG);

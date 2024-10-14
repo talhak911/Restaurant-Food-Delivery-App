@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
-import {TabNavigatorProps} from '../../types/types';
+import {StackNavigatorProps, TabNavigatorProps} from '../../types/types';
 import {useEffect} from 'react';
 import {fetchFoods} from '../../redux/slices/foodSlice';
 
@@ -10,9 +10,12 @@ const useHome = () => {
   useEffect(() => {
     dispatch(fetchFoods({}));
   }, []);
+
   const bestSeller = foods?.slice(0, 4);
   const recommended = foods?.slice(4, 6);
-  const navigation = useNavigation<TabNavigatorProps>();
+
+  const navigation = useNavigation<StackNavigatorProps>();
+  const tabNavigation = useNavigation<TabNavigatorProps>()
   const navigateToFoodDetail = ({
     id,
     description,
@@ -35,7 +38,7 @@ const useHome = () => {
     });
   };
   const navigateToFoods=()=>{
-    navigation.navigate('Foods')
+    tabNavigation.navigate('Foods')
   }
   return {
     foods,
