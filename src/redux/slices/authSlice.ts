@@ -1,10 +1,13 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import { ChangePasswordPayload, reduxUser} from '../../types/types';
-import { AddCustomerAddressDocument, GetCurrentUserDocument } from '../../gql/graphql';
-import { client } from '../../providers/apolloProvider/apolloProvider';
-import { ToastAndroid } from 'react-native';
+import {ChangePasswordPayload, reduxUser} from '../../types/types';
+import {
+  AddCustomerAddressDocument,
+  GetCurrentUserDocument,
+} from '../../gql/graphql';
+import {client} from '../../providers/apolloProvider/apolloProvider';
+import {ToastAndroid} from 'react-native';
 
-const initialState:{user:reduxUser}= {
+const initialState: {user: reduxUser} = {
   user: null,
 };
 
@@ -15,38 +18,41 @@ export const signIn = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-
-      
-    } catch (error: any) {
-    }
-
+    } catch (error: any) {}
   },
 );
-export const fetchUserData = createAsyncThunk('auth/fetchUserData', async (_, { rejectWithValue }) => {
-  try {
-    const response = await client.query({
-      query: GetCurrentUserDocument,
-    });
+export const fetchUserData = createAsyncThunk(
+  'auth/fetchUserData',
+  async (_, {rejectWithValue}) => {
+    try {
+      const response = await client.query({
+        fetchPolicy: 'cache-first',
+        query: GetCurrentUserDocument,
+      });
+      return response?.data?.getCurrentUser;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const addCustomerAddress = createAsyncThunk(
+  'auth/addCustomerAddress',
+  async (
+    {name, address}: {name: string; address: string},
+    {rejectWithValue},
+  ) => {
+    try {
+      const response = await client.mutate({
+        mutation: AddCustomerAddressDocument,
+        variables: {name, address},
+      });
 
-  return response?.data?.getCurrentUser;
-
-  } catch (error:any) {
-    return rejectWithValue(error.message);
-  }
-});
-export const addCustomerAddress = createAsyncThunk('auth/addCustomerAddress', async ({name,address}:{name:string,address:string}, { rejectWithValue }) => {
-  try {
-    const response = await client.mutate({
-      mutation: AddCustomerAddressDocument,
-      variables:{name,address}
-    });
-
-  return response?.data?.addCustomerAddress;
-
-  } catch (error:any) {
-    return rejectWithValue(error.message);
-  }
-});
+      return response?.data?.addCustomerAddress;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
@@ -55,12 +61,9 @@ export const signUp = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-     
-    } catch (error: any) {
-    
-  }}
+    } catch (error: any) {}
+  },
 );
-
 
 export const changePassword = createAsyncThunk(
   'auth/changePassword',
@@ -69,20 +72,13 @@ export const changePassword = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-    
     } catch (error: any) {
-      console.log(error);
-  
       return rejectWithValue(error.message);
     }
   },
 );
 
-
-
-export const signOut = createAsyncThunk('auth/signOut', async () => {
- 
-});
+export const signOut = createAsyncThunk('auth/signOut', async () => {});
 
 export const authSlice = createSlice({
   name: 'authSlice',
@@ -91,29 +87,27 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-
   },
   extraReducers: builder => {
     // builder.addCase(signIn.fulfilled, (state, action) => {
     //   state.user = action.payload;
     // });
 
-    builder.addCase(addCustomerAddress.fulfilled, (state,action) => {
+    builder.addCase(addCustomerAddress.fulfilled, (state, action) => {
       if (state.user?.customer && action.payload) {
         state.user.customer.address = action.payload; // Update the addresses in the state
       }
     });
-   ;
     builder.addCase(signOut.fulfilled, state => {
       state.user = null;
     });
-    builder.addCase(fetchUserData.fulfilled,(state,action)=>{
-      state.user =action.payload
-    })
-    builder.addCase(fetchUserData.rejected,(state,action)=>{
-      ToastAndroid.show(action.payload as string,ToastAndroid.LONG)
-      state.user =null
-    })
+    builder.addCase(fetchUserData.fulfilled, (state, action) => {
+      state.user = action.payload;
+    });
+    builder.addCase(fetchUserData.rejected, (state, action) => {
+      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+      state.user = null;
+    });
   },
 });
 

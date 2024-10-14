@@ -1,20 +1,19 @@
 import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {useAppDispatch} from '../../hooks/useStore';
-import {fetchUserData, setUser, signIn} from '../../redux/slices/authSlice';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AuthStackParamList} from '../../types/types';
-import {SIGN_IN_FIELDS, SIGN_UP_FIELDS} from '../../constants/inputFields';
+import {fetchUserData} from '../../redux/slices/authSlice';
+import {AuthNavigationProp} from '../../types/types';
+import {SIGN_IN_FIELDS} from '../../constants/inputFields';
 import {validateSignInForm} from '../../utils/validation';
-import {useMutation, useQuery} from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import {SignInDocument} from '../../gql/graphql';
 import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export const useSignIn = () => {
-  type SignInNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
+import {client} from '../../providers/apolloProvider/apolloProvider';
 
+export const useSignIn = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<SignInNavigationProp>();
+  const navigation = useNavigation<AuthNavigationProp>();
   const navigateToSignUp = () => {
     navigation.navigate('New Account');
   };
@@ -39,15 +38,12 @@ export const useSignIn = () => {
           password,
         },
       });
-      const token = response.data?.signIn; // Assuming the signIn mutation returns a token
+      const token = response.data?.signIn;
       if (token) {
-        // Store token in AsyncStorage
+        await client.clearStore();
         await AsyncStorage.setItem('authToken', token);
-         
-        dispatch(fetchUserData());
 
-        // Navigate to the main part othe app
-        // navigation.navigate('Home');
+        await dispatch(fetchUserData());
         ToastAndroid.show('Login successful', ToastAndroid.SHORT);
       }
       console.log('the token is ', response.data?.signIn);
@@ -60,20 +56,6 @@ export const useSignIn = () => {
   };
   const fields = SIGN_IN_FIELDS(email, setEmail, password, setPassword);
 
-  // const [signIn, {loadings, error}] = useQuery(SignInDocument);
-
-  //     const {data} = await signUp({
-  //       variables: {
-  //         data: {
-  //           email,
-  //           password,
-  //           phone: Number(phone),
-  //           name,
-  //           role,
-  //           dateOfBirth: dob,
-  //         },
-  //       },
-  //     });
   return {
     setEmail,
     setPassword,
