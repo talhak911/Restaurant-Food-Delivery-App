@@ -1,66 +1,75 @@
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-
-import {useNavigation} from '@react-navigation/native';
 import LogoutIcon from '../../assets/icons/logout';
 import {COLORS} from '../../constants/color';
 import {Width} from '../../utils/responsive';
-import MyProfileIcon from '../../assets/icons/myProfile';
 import {DrawerList} from '../../constants/constants';
-import { FONT_LEAGUE_SPARTAN } from '../../constants/fonts';
+import {FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
 import useDrawerContent from './useDrawerContent';
-
+import {BlinkingImage} from '../loading/Loading';
 
 function DrawerContent(props: any) {
-  const {NavigateTo,signOut}=useDrawerContent()
-  
+  const {user, NavigateTo, signOut} = useDrawerContent();
+
   return (
     <View
       style={{
         flex: 1,
         width: '100%',
         backgroundColor: COLORS.orange,
-        borderTopLeftRadius: 60, 
+        borderTopLeftRadius: 60,
         borderBottomLeftRadius: 60,
-         paddingLeft: 20,
-         paddingRight: 41,
+        paddingLeft: 20,
+        paddingRight: 41,
         paddingBottom: 91,
         paddingTop: 65,
       }}>
-      <DrawerContentScrollView
-        {...props}
-        style={
-          {
-
-          }
-        }>
-        <View style={{paddingLeft:13,flexDirection: 'row', gap: 23, alignItems: 'center'}}>
-          <View
+      <DrawerContentScrollView {...props} style={{}}>
+        <View
+          style={{
+            paddingLeft: 13,
+            flexDirection: 'row',
+            gap: 23,
+            alignItems: 'center',
+          }}>
+          <BlinkingImage
             style={{
               height: 50,
               width: 50,
               borderRadius: 25,
-     
-              // paddingRight: 41
-              backgroundColor: 'yellow',
             }}
+            uri={user?.customer?.picture}
+            placeholder="profile"
           />
+          {user?.customer?.picture}
           <View>
-            <Text style={{fontFamily:FONT_LEAGUE_SPARTAN,fontWeight:"bold",fontSize: 33,lineHeight:33, color: COLORS.almostWhite}}>
-              John Smith
+            <Text
+              style={{
+                fontFamily: FONT_LEAGUE_SPARTAN,
+                fontWeight: 'bold',
+                fontSize: 33,
+                lineHeight: 33,
+                color: COLORS.almostWhite,
+              }}>
+              {user?.name}
             </Text>
-            <Text style={{fontFamily:FONT_LEAGUE_SPARTAN,fontWeight:"bold",fontSize: 16,lineHeight:16, color: COLORS.yellow2}}>
-              Lorem@gamil.com
+            <Text
+              style={{
+                fontFamily: FONT_LEAGUE_SPARTAN,
+                fontWeight: 'bold',
+                fontSize: 16,
+                lineHeight: 16,
+                color: COLORS.yellow2,
+              }}>
+              {user?.email}
             </Text>
           </View>
         </View>
-        <View style={{marginTop: 35,
-          
-        }}>
-          {DrawerList.map((item,index) => (
+        <View style={{marginTop: 35}}>
+          {DrawerList.map((item, index) => (
             <DrawerItem
-            key={index}
+              key={index}
               style={{
                 width: Width(100),
                 borderBottomColor: COLORS.yellow2,
@@ -68,7 +77,9 @@ function DrawerContent(props: any) {
                 paddingVertical: 2,
               }}
               labelStyle={styles.labelStyle}
-              onPress={() => {NavigateTo(item.navigateTo)}}
+              onPress={() => {
+                NavigateTo(item.navigateTo);
+              }}
               icon={() => <Text>{item.icon}</Text>}
               label={item.label}
             />
@@ -91,14 +102,11 @@ export default DrawerContent;
 const styles = StyleSheet.create({
   bottomDrawerSection: {
     marginBottom: 15,
-    marginLeft:9
-
+    marginLeft: 9,
   },
-  labelStyle:{
+  labelStyle: {
     width: '100%', // Ensure label takes up full width
     color: COLORS.yellow2,
     fontSize: 24,
-
-
-  }
+  },
 });
