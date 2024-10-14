@@ -1,8 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../types/types';
-import {AUTH_SCREENS} from '../../constants/constants';
-import OnBoarding from '../../screens/onBoarding/OnBoarding';
 import {SignUp} from '../../screens/signUp/SignUp';
 import {COLORS} from '../../constants/color';
 import Welcome from '../../screens/welcome/Welcome';
@@ -53,16 +51,4 @@ export default function AuthNavigator() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
-
-{
-  /* {AUTH_SCREENS.map(screen => ( */
-}
-{
-  /* <Stack.Screen
-            key={screen.name}
-            name={screen.name as keyof AuthStackParamList}
-            component={screen.component}
-            options={screen.options}
-          /> */
 }

@@ -1,15 +1,10 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
 import {COLORS} from '../../constants/color';
 import BackIcon from '../../assets/icons/back';
 import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
-import Profile from '../../screens/profile/Profile';
 import DrawerContent from '../../components/drawerContent/DrawerContent';
-// import StackNavigator from '../stackNavigator/StackNavigator';
-import MyOrder from '../../screens/myOrder/MyOrder';
 import {DrawerNavigatorParamList} from '../../types/types';
 import {TabNavigator} from '../tabNavigator/TabNavigator';
-import {CartProvider} from '../../context/cartContext/CartContext';
 
 export default function DrawerNavigator() {
   const Drawer = createDrawerNavigator<DrawerNavigatorParamList>();
@@ -45,13 +40,7 @@ export default function DrawerNavigator() {
               <BackIcon />
             </TouchableOpacity>
           ),
-          // headerRight: () => {
-          //   return (
-          //     <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          //       <BackIcon />
-          //     </TouchableOpacity>
-          //   );
-          // },
+
           drawerStatusBarAnimation: 'fade',
           drawerPosition: 'right',
           drawerStyle: {
@@ -62,12 +51,10 @@ export default function DrawerNavigator() {
           },
         })}>
         <Drawer.Screen
-          name="Stack"
+          name="Tab"
           options={{headerShown: false}}
           component={TabNavigator}
         />
-        {/* <Drawer.Screen name="My Profile" component={Profile} /> */}
-        <Drawer.Screen name="My Orders" component={MyOrder} />
       </Drawer.Navigator>
     </>
   );

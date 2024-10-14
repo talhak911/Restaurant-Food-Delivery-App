@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native"
-import { TabNavigatorProps, TabParamsList, TabPaths } from "../../types/types"
+import { StackNavigatorParamList, StackNavigatorProps, TabNavigatorProps, TabParamsList, StackPaths } from "../../types/types"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useAppDispatch } from "../../hooks/useStore"
 import { setUser } from "../../redux/slices/authSlice"
@@ -7,8 +7,8 @@ import { setUser } from "../../redux/slices/authSlice"
 const useDrawerContent = () => {
     const dispath = useAppDispatch()
   const navagation = useNavigation<TabNavigatorProps>()
- const NavigateTo =(path:keyof TabPaths)=>{
-    navagation.navigate(path ) 
+ const NavigateTo =(path:keyof StackNavigatorParamList)=>{
+    navagation.navigate("Stack",{screen:path} ) 
   }
 
 const signOut = async()=>{

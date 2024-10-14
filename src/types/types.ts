@@ -9,13 +9,12 @@ import {
 } from '@react-navigation/native-stack';
 import {
   StackNavigationOptions,
-
+  StackNavigationProp,
+  StackScreenProps,
 } from '@react-navigation/stack';
 
 import {KeyboardTypeOptions} from 'react-native';
-import { GetCurrentUserQuery, OrderStatus, Role } from '../gql/graphql';
-
-
+import {GetCurrentUserQuery, OrderStatus, Role} from '../gql/graphql';
 
 export type voidFunction = () => void;
 
@@ -50,14 +49,12 @@ export type CategoryColors = {
   [key: string]: string;
 };
 
-
-
 //new
-export type TabPaths = {
+export type StackPaths = {
   Home: undefined;
-  Help: undefined;
-  Foods: undefined;
-  Favoirite: undefined;
+  // Help: undefined;
+  // Foods: undefined;
+  // Favoirite: undefined;
   'My Orders': undefined;
   'My Profile': undefined;
   'Delivery Address': undefined;
@@ -68,12 +65,26 @@ export type TabPaths = {
   Settings: undefined;
 };
 export type TabParamsList = {
-  Home: undefined;
+  Stack: {
+    screen: keyof StackNavigatorParamList; // Allow specifying the screen in Stack
+    params?: StackNavigatorParamList[keyof StackNavigatorParamList]; // Optionally pass params to the target screen
+  };
   Help: undefined;
   Foods: undefined;
-  'Coming Soon': undefined;
   Favoirite: undefined;
   'My Orders': undefined;
+  // 'My Profile': undefined;
+  // 'Delivery Address': undefined;
+  // 'Payment Method': undefined;
+  // 'Contact Us': undefined;
+  // 'Help & FAQs': undefined;
+  // Settings: undefined;
+  // 'Password Setting': undefined;
+  // 'Add New Address':undefined
+};
+
+export type StackNavigatorParamList = {
+  Home: undefined;
   'Confirm Order': undefined;
   'Food Detail': {
     id: string;
@@ -82,19 +93,17 @@ export type TabParamsList = {
     description: string;
     price: string;
   };
+  'My Orders': undefined;
+  'Coming Soon': undefined;
   'My Profile': undefined;
   'Delivery Address': undefined;
   'Payment Method': undefined;
   'Contact Us': undefined;
   'Help & FAQs': undefined;
-  Settings: undefined;
+   Settings: undefined;
   'Password Setting': undefined;
-  'Add New Address':undefined
-};
-
-export type StackNavigatorParamList = {
-  Home: undefined;
-  Tab: undefined;
+  'Add New Address': undefined;
+  // Tab: undefined;
   // 'Food Detail': {
   //   id: string;
   //   picUrl: string | null | undefined;
@@ -105,39 +114,40 @@ export type StackNavigatorParamList = {
   // };
 };
 
-export type RestaurntTabsParamsList ={
-  Home:undefined
+export type RestaurntTabsParamsList = {
+  Home: undefined;
   // 'Add Food':undefined
   // Profile:undefined
-
-}
-export type RestaurantTabNavigatorProps = BottomTabNavigationProp<RestaurntTabsParamsList>;
+};
+export type RestaurantTabNavigatorProps =
+  BottomTabNavigationProp<RestaurntTabsParamsList>;
 export type TabNavigatorProps = BottomTabNavigationProp<TabParamsList>;
 export type StackNavigatorProps =
   NativeStackNavigationProp<StackNavigatorParamList>;
-export type FoodDetailsProps = BottomTabScreenProps<
-  TabParamsList,
+export type FoodDetailsProps = StackScreenProps<
+  StackNavigatorParamList,
   'Food Detail'
 >;
 export type DrawerNavigatorParamList = {
-  Home: undefined;
-  Help: undefined;
-  Stack: undefined;
-  'My Profile': undefined;
-  'Delivery Address': undefined;
-  'Payment Method': undefined;
-  'Contact Us': undefined;
-  'Help & FAQs': undefined;
-  Settings: undefined;
-  Favoirite: undefined;
-  'My Orders': undefined;
+  Tab: undefined;
+  // Home: undefined;
+  // Help: undefined;
+  // Stack: undefined;
+  // 'My Profile': undefined;
+  // 'Delivery Address': undefined;
+  // 'Payment Method': undefined;
+  // 'Contact Us': undefined;
+  // 'Help & FAQs': undefined;
+  // Settings: undefined;
+  // Favoirite: undefined;
+  // 'My Orders': undefined;
 };
 export type DrawerNavigationProps =
   DrawerNavigationProp<DrawerNavigatorParamList>;
 
 export type DrawerListType = {
   icon: React.JSX.Element;
-  navigateTo: keyof TabPaths;
+  navigateTo: keyof StackPaths;
   label: string;
 };
 
@@ -178,7 +188,7 @@ export type VerifyOtpProps = NativeStackScreenProps<
   'Verify Otp'
 >;
 
-export type reduxUser =GetCurrentUserQuery["getCurrentUser"]
+export type reduxUser = GetCurrentUserQuery['getCurrentUser'];
 // export type reduxUser ={
 // __typename?: "User";
 // dateOfBirth: any;
@@ -226,14 +236,14 @@ export type reduxUser =GetCurrentUserQuery["getCurrentUser"]
 // } | null;
 // } | null | undefined
 
-export type CartContextProps= {
+export type CartContextProps = {
   cartVisible: boolean;
   openCart: () => void;
   closeCart: () => void;
-}
+};
 
-//for apis 
-export type UpdateCartParams ={quantity:number,foodId:string}
+//for apis
+export type UpdateCartParams = {quantity: number; foodId: string};
 
 export type Food = {
   id: string;

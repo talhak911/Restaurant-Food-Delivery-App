@@ -7,7 +7,7 @@ import DownArrowIcon from '../../assets/icons/downArrow';
 import {LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
 import {SETTINGS} from '../../constants/constants';
 import useSettings from './useSettings';
-import { TabPaths } from '../../types/types';
+import { StackPaths } from '../../types/types';
 
 const Settings = () => {
     const {navigateTo}=useSettings()
@@ -27,7 +27,7 @@ const Settings = () => {
           <View style={{gap: 22}}>
             {SETTINGS.map((item, index) => (
               <TouchableOpacity
-              onPress={()=>{navigateTo(item.screen as keyof TabPaths)}}
+              onPress={()=>{navigateTo(item.screen as keyof StackPaths)}}
                 key={index}
                 style={{flexDirection: 'row', gap: 18, alignItems: 'center'}}>
                 <View>{item.icon}</View>

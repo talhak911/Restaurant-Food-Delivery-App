@@ -1,25 +1,18 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabParamsList} from '../../types/types';
-import Home from '../../screens/home/Home';
 import {COLORS} from '../../constants/color';
 import HomeIcon from '../../assets/icons/home';
 import FoodIcon from '../../assets/icons/food';
 import FavouriteIcon from '../../assets/icons/favourite';
 import TabOrderIcon from '../../assets/icons/tabOrder';
 import HelpIcon from '../../assets/icons/help';
-import { Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import BackIcon from '../../assets/icons/back';
 import MyOrder from '../../screens/myOrder/MyOrder';
 import {LEAGUE_SPARTAN_BOLD} from '../../constants/fonts';
-import FoodDetail from '../../screens/foodDetail/FoodDetail';
-import Profile from '../../screens/profile/Profile';
-import Settings from '../../screens/settings/Settings';
 import ComingSoon from '../../screens/comingSoon/ComingSoon';
-import ChangePassword from '../../screens/changePassword/ChangePassword';
-import ConfirmOrder from '../../screens/confirmOrder/ConfirmOrder';
 import Foods from '../../screens/foods/Foods';
-import DeliveryAddress from '../../screens/deliveryAddress/DeliveryAddress';
-import AddAddress from '../../screens/addAddress/AddAddress';
+import StackNavigator from '../stackNavigator/StackNavigator';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator<TabParamsList>();
@@ -62,12 +55,11 @@ export const TabNavigator = () => {
           </TouchableOpacity>
         ),
       })}>
-
       <Tab.Screen
-        key={'Home'}
-        name={'Home'}
-        options={{tabBarIcon: () => <HomeIcon/>, headerShown: false}}
-        component={Home}
+        key={'Stack'}
+        name={'Stack'}
+        options={{tabBarIcon: () => <HomeIcon />, headerShown: false}}
+        component={StackNavigator}
       />
       <Tab.Screen
         key={'Foods'}
@@ -94,73 +86,6 @@ export const TabNavigator = () => {
         options={{tabBarIcon: () => <HelpIcon />}}
         component={ComingSoon}
       />
-      <Tab.Screen
-        key={'Food Detail'}
-        name={'Food Detail'}
-        component={FoodDetail}
-        options={{
-          tabBarButton: () => null,
-          headerShown: false,
-        }}
-      />
-
-      <Tab.Screen
-        key={'My Profile'}
-        name={'My Profile'}
-        component={Profile}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Settings'}
-        name={'Settings'}
-        component={Settings}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Coming Soon'}
-        name={'Coming Soon'}
-        component={ComingSoon}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Password Setting'}
-        name={'Password Setting'}
-        component={ChangePassword}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Confirm Order'}
-        name={'Confirm Order'}
-        component={ConfirmOrder}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Delivery Address'}
-        name={'Delivery Address'}
-        component={DeliveryAddress}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        key={'Add New Address'}
-        name={'Add New Address'}
-        component={AddAddress}
-        options={{
-          tabBarButton: () => null,
-        }}
-      />
-
     </Tab.Navigator>
   );
 };

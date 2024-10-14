@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native"
-import { TabNavigatorProps, TabPaths } from "../../types/types"
+import { TabNavigatorProps, StackPaths } from "../../types/types"
 
 const useSettings = () => {
     const navigation = useNavigation<TabNavigatorProps>()
- const navigateTo=(screen:keyof TabPaths)=>{
+ const navigateTo=(screen:keyof StackPaths)=>{
 navigation.navigate(screen)
  }
  

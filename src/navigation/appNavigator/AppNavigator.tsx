@@ -7,9 +7,7 @@ import {CartProvider} from '../../context/cartContext/CartContext';
 
 export default function AppNavigator() {
   const {initializing, user} = useAppNavigator();
-  console.log('the user is ', user);
   if (initializing) return null;
-
   return user?.role === 'CUSTOMER' ? (
     <NavigationContainer>
       <CartProvider>
