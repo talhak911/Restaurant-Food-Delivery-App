@@ -1,30 +1,35 @@
-import { useState } from "react";
+import {useState} from 'react';
+import {useAppSelector} from '../../hooks/useStore';
 
 const useProfile = () => {
-  // Define the fields with proper typing
+  const user = useAppSelector(state => state.auth.user);
   const [fields, setFields] = useState<{
     'Full Name': string;
     'Date of Birth': string;
-    'Email': string;
+    Email: string;
     'Phone Number': string;
   }>({
-    'Full Name': '',
-    'Date of Birth': '',
-    'Email': '',
-    'Phone Number': ''
+    'Full Name': user?.name || '',
+    'Date of Birth': user?.dateOfBirth || '',
+    Email: user?.email || '',
+    'Phone Number': user?.phone || '',
   });
 
-  // Handle input changes by key (since we don't have 'name' in RN)
+  const handleDateChange = (date: string) => {
+    setFields({...fields, 'Date of Birth': date});
+  };
+
   const onChange = (key: keyof typeof fields, value: string) => {
     setFields({
       ...fields,
-      [key]: value, // Dynamically update the correct field
+      [key]: value,
     });
   };
 
   return {
-    fields,  // Return fields to use in your component
-    onChange,  // Return onChange handler
+    handleDateChange,
+    fields,
+    onChange,
   };
 };
 

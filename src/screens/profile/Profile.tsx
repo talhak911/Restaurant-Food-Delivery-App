@@ -1,13 +1,13 @@
-import {View, Text, ScrollView, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import {View, ScrollView, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import useProfile from './useProfile';
-import CameraIcon from '../../assets/icons/camera';
-import { CustomButton } from '../../components/customButton/CustomButtom';
+import CameraIcon from '../../assets/icons/camera';import { CustomButton } from '../../components/customButton/CustomButtom';
+import DateInput from '../../components/dateInput/DateInput';
 
 const Profile = () => {
-  const {fields,onChange}=useProfile()
+  const {fields,onChange,handleDateChange}=useProfile()
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -43,7 +43,10 @@ const Profile = () => {
             onChange={(text) => onChange(item as keyof typeof fields, text)} 
             placeHolder={item} 
           />
-        )}
+        )}          
+<DateInput date={fields['Date of Birth']}
+setDate={handleDateChange}
+/>
           </View>
         </View>
       </ScrollView>

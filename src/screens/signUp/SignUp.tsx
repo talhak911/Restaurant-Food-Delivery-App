@@ -7,43 +7,35 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {useSignUp} from './useSignUp';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Checkbox} from '../../components/checkBox/CheckBox';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import {CustomButton} from '../../components/customButton/CustomButtom';
-import {SignUpGoogle} from '../../components/signUpGoogle.tsx/SignUpGoogle';
 import {COLORS} from '../../constants/color';
 import CustomDropdown from '../../components/customDropDown/CustomDropDown';
 import {Role} from '../../gql/graphql';
-import {responsiveWidth} from 'react-native-responsive-dimensions';
 import {Height, Width} from '../../utils/responsive';
 import FacebookIcon from '../../assets/icons/facebook';
 import GoogleIcon from '../../assets/icons/google';
+import DateInput from '../../components/dateInput/DateInput';
 
 export const SignUp = () => {
   const {
     navigateToSignIn,
-  
 
     handleSignUp,
     fields,
     role,
     loading,
     selectRole,
-
-    isDatePickerVisible,
+    handleDateChange,
     dob,
-    hideDatePicker,
-    showDatePicker,
-    handleConfirm,
   } = useSignUp();
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <KeyboardAwareScrollView
-         contentContainerStyle={{flexGrow:1}}
-       keyboardShouldPersistTaps="always"
+        contentContainerStyle={{flexGrow: 1}}
+        keyboardShouldPersistTaps="always"
         style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.gap}>
@@ -59,24 +51,8 @@ export const SignUp = () => {
               />
             ))}
 
-            <TouchableOpacity onPress={showDatePicker}>
-              <CustomInput
-                value={dob.split('T')[0]}
-                onChange={() => {}}
-                placeHolder="Date of Birth"
-                label="Date of Birth"
-                keyboardType="default"
-                editable={false}
-              />
-            </TouchableOpacity>
+            <DateInput date={dob} setDate={handleDateChange} />
 
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              maximumDate={new Date()}
-            />
             <CustomDropdown
               label="Role"
               items={[{value: Role.Customer}, {value: Role.Restaurant}]}
@@ -117,7 +93,6 @@ export const SignUp = () => {
                   <Text style={styles.footerLink}>Log in</Text>
                 </TouchableOpacity>
               </View>
-              {/* <SignUpGoogle loading={loadings} setLoading={setLoading} /> */}
             </View>
           )}
         </View>

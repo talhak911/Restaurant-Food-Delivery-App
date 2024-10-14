@@ -9,29 +9,15 @@ import {ToastAndroid} from 'react-native';
 import {validateSignUpForm} from '../../utils/validation';
 
 export const useSignUp = () => {
-  const dispatch = useAppDispatch();
   const navigation = useNavigation<AuthNavigationProp>();
 
   const navigateToSignIn = () => {
     navigation.navigate('Log In');
   };
-
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-  const handleDateChange = (date: string) => {
+   const handleDateChange = (date: string) => {
     setDob(date);
   };
-  const handleConfirm = (date: Date) => {
-    handleDateChange(date.toISOString());
-    hideDatePicker();
-  };
+
   const selectRole = (e: Role) => {
     setRole(e);
   };
@@ -44,6 +30,7 @@ export const useSignUp = () => {
 
     try {
       const {data} = await signUp({
+        fetchPolicy:"no-cache",
         variables: {
           data: {
             email,
@@ -89,12 +76,10 @@ export const useSignUp = () => {
     handleSignUp,
     selectRole,
     loading,
-    hideDatePicker,
     fields,
     role,
     dob,
-    handleConfirm,
-    isDatePickerVisible,
-    showDatePicker,
+    handleDateChange,
+
   };
 };

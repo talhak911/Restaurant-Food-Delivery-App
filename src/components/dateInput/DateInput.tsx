@@ -10,12 +10,13 @@ const DateInput = ({
   date: string;
   setDate:(date: string) => void
 }) => {
+
   const {handleConfirm, hideDatePicker, showDatePicker, isDatePickerVisible} =
-    useDateInput({date,setDate});
+    useDateInput({setDate});
   return (
     <View>
       <TouchableOpacity onPress={showDatePicker}>
-        <CustomInput
+        <CustomInput 
           value={date.split('T')[0]}
           onChange={() => {}}
           placeHolder="Date of Birth"
