@@ -35,13 +35,10 @@ export type ScreenConfig = {
 };
 
 export type ChangePasswordPayload = {
-  email: string;
   currentPassword: string;
   newPassword: string;
 };
 
-// export type StackNavigationProp =
-//   NativeStackNavigationProp<StackNavigatorParamList>;
 
 export type CategoryColors = {
   [key: string]: string;

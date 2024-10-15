@@ -27,6 +27,7 @@ const documents = {
     "\nmutation placeOrder($deliveryAddress: String!) {\n  placeOrder(deliveryAddress:$deliveryAddress) {\n    totalPrice\n    foods\n  }\n}\n": types.PlaceOrderDocument,
     "\nquery fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n        id\n        totalPrice\n        foods\n        status\n        deliveryPerson\n        deliveryTime\n        customerId\n        restaurantId\n        deliveryAddress\n        createdAt\n    }\n}\n": types.FetchOrdersDocument,
     "\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n": types.UpdateCustomerDocument,
+    "\nmutation changePassword($password:String!,$newPassword:String!){\n  changePassword(password:$password,newPassword:$newPassword)\n}\n": types.ChangePasswordDocument,
 };
 
 /**
@@ -99,6 +100,10 @@ export function gql(source: "\nquery fetchOrders($status: String) {\n    fetchOr
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n"): (typeof documents)["\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation changePassword($password:String!,$newPassword:String!){\n  changePassword(password:$password,newPassword:$newPassword)\n}\n"): (typeof documents)["\nmutation changePassword($password:String!,$newPassword:String!){\n  changePassword(password:$password,newPassword:$newPassword)\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

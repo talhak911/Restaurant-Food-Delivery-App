@@ -2,12 +2,14 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {ChangePasswordPayload, reduxUser} from '../../types/types';
 import {
   AddCustomerAddressDocument,
+  ChangePasswordDocument,
   GetCurrentUserDocument,
   UpdateCustomerDocument,
   UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
 import {ToastAndroid} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 const initialState: {user: reduxUser} = {
   user: null,
@@ -65,7 +67,7 @@ export const updateCustomer = createAsyncThunk(
       phone,
       picture,
     }: {name?: string; dateOfBirth?: string; phone?: string; picture?: string},
-    {rejectWithValue, getState},
+    {rejectWithValue},
   ) => {
     try {
       const data: UpdateCustomerMutationVariables = {};
@@ -109,10 +111,16 @@ export const signUp = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'auth/changePassword',
   async (
-    {email, currentPassword, newPassword}: ChangePasswordPayload,
+    {currentPassword, newPassword}: ChangePasswordPayload,
     {rejectWithValue},
   ) => {
     try {
+      const response = await client.mutate({
+        mutation: ChangePasswordDocument,
+        variables: {password: currentPassword, newPassword},
+      });
+
+      return response?.data?.changePassword;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -146,7 +154,7 @@ export const authSlice = createSlice({
       state.user = action.payload;
     });
     builder.addCase(fetchUserData.rejected, (state, action) => {
-      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+      Toast.show({type: 'error', text1: action.payload as string});
       state.user = null;
     });
     builder.addCase(updateCustomer.fulfilled, (state, action) => {
@@ -166,7 +174,13 @@ export const authSlice = createSlice({
       }
     });
     builder.addCase(updateCustomer.rejected, (state, action) => {
-      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+      Toast.show({type: 'error', text1: action.payload as string});
+    });
+    builder.addCase(changePassword.fulfilled, () => {
+      Toast.show({type: 'success', text1: 'Password changed successfully'});
+    });
+    builder.addCase(changePassword.rejected, (state, action) => {
+      Toast.show({type: 'error', text1: action.payload as string});
     });
   },
 });

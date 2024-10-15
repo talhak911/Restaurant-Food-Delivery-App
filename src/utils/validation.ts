@@ -90,6 +90,31 @@ export const validateOtp = (email: string, otp: string) => {
 
   return true;
 };
+export const validateChangePasswordForm = (
+  fields: {
+    'Current Password':string,
+    'New Password':string,
+    'Confirm New Password':string
+  }) => {
+  if (!fields['Current Password'] || !fields['New Password'] || !fields['Confirm New Password']) {
+    Toast.show({type: 'error', text1: 'All fields are required'});
+    return false;
+  }
+
+  if (fields['New Password'].length < 8) {
+    Toast.show({
+      type: 'error',
+      text1: 'New password must be at least 8 digits',
+    });
+    return false;
+  }
+  if (fields['New Password'] !== fields['Confirm New Password']) {
+    Toast.show({type: 'error', text1: 'Confirm password does not match'});
+    return false;
+  }
+
+  return true;
+};
 
 export const validateForgetPasswordForm = (
   email: string,
@@ -141,7 +166,7 @@ export const validateProfile = (fields: {
     return false;
   }
 
-  if (fields['Phone Number'].length<10) {
+  if (fields['Phone Number'].length < 10) {
     Toast.show({type: 'error', text1: 'Phone Number should be valid'});
     return false;
   }

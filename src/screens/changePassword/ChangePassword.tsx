@@ -13,7 +13,7 @@ import {LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
 import {CustomButton} from '../../components/customButton/CustomButtom';
 
 const ChangePassword = () => {
-  const {fields, onChange} = useChangePassword();
+  const {fields, onChange,loading,handleChangePassword} = useChangePassword();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
@@ -60,6 +60,8 @@ const ChangePassword = () => {
             <CustomButton title="Change Password" 
             fontSize={17}
             pH={36}
+            onPress={handleChangePassword}
+            loading={loading}
             />
           </View>
       </ScrollView>
