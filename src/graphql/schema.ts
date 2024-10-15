@@ -132,3 +132,8 @@ query fetchOrders($status: String) {
     }
 }
 `
+export const UPDATE_CUSTOMER=gql`
+mutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){
+  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)
+}
+`

@@ -3,6 +3,8 @@ import {ChangePasswordPayload, reduxUser} from '../../types/types';
 import {
   AddCustomerAddressDocument,
   GetCurrentUserDocument,
+  UpdateCustomerDocument,
+  UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
 import {ToastAndroid} from 'react-native';
@@ -35,6 +37,7 @@ export const fetchUserData = createAsyncThunk(
     }
   },
 );
+
 export const addCustomerAddress = createAsyncThunk(
   'auth/addCustomerAddress',
   async (
@@ -48,6 +51,44 @@ export const addCustomerAddress = createAsyncThunk(
       });
 
       return response?.data?.addCustomerAddress;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const updateCustomer = createAsyncThunk(
+  'auth/updateCustomer',
+  async (
+    {
+      name,
+      dateOfBirth,
+      phone,
+      picture,
+    }: {name?: string; dateOfBirth?: string; phone?: string; picture?: string},
+    {rejectWithValue, getState},
+  ) => {
+    try {
+      const data: UpdateCustomerMutationVariables = {};
+      if (name) {
+        data.name = name;
+      }
+      if (dateOfBirth) {
+        data.dateOfBirth = dateOfBirth;
+      }
+      if (phone) {
+        data.phone = phone;
+      }
+      if (picture) {
+        data.picture = picture;
+      }
+      const response = await client.mutate({
+        mutation: UpdateCustomerDocument,
+        variables: data,
+      });
+
+      if (response?.data?.updateCustomer) {
+        return data;
+      }
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -107,6 +148,25 @@ export const authSlice = createSlice({
     builder.addCase(fetchUserData.rejected, (state, action) => {
       ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
       state.user = null;
+    });
+    builder.addCase(updateCustomer.fulfilled, (state, action) => {
+      if (state.user) {
+        if (action.payload?.name) {
+          state.user.name = action.payload?.name;
+        }
+        if (action.payload?.dateOfBirth) {
+          state.user.dateOfBirth = action.payload?.dateOfBirth;
+        }
+        if (action.payload?.picture && state.user.customer) {
+          state.user.customer.picture = action.payload?.picture;
+        }
+        if (action.payload?.phone) {
+          state.user.phone = action.payload?.phone;
+        }
+      }
+    });
+    builder.addCase(updateCustomer.rejected, (state, action) => {
+      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
     });
   },
 });

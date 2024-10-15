@@ -26,6 +26,7 @@ const documents = {
     "\nmutation addCustomerAddress($name:String!,$address:String!){\n  addCustomerAddress(name:$name,address:$address){\n    id\n    name\n    address\n  }\n}\n": types.AddCustomerAddressDocument,
     "\nmutation placeOrder($deliveryAddress: String!) {\n  placeOrder(deliveryAddress:$deliveryAddress) {\n    totalPrice\n    foods\n  }\n}\n": types.PlaceOrderDocument,
     "\nquery fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n        id\n        totalPrice\n        foods\n        status\n        deliveryPerson\n        deliveryTime\n        customerId\n        restaurantId\n        deliveryAddress\n        createdAt\n    }\n}\n": types.FetchOrdersDocument,
+    "\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n": types.UpdateCustomerDocument,
 };
 
 /**
@@ -94,6 +95,10 @@ export function gql(source: "\nmutation placeOrder($deliveryAddress: String!) {\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\nquery fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n        id\n        totalPrice\n        foods\n        status\n        deliveryPerson\n        deliveryTime\n        customerId\n        restaurantId\n        deliveryAddress\n        createdAt\n    }\n}\n"): (typeof documents)["\nquery fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n        id\n        totalPrice\n        foods\n        status\n        deliveryPerson\n        deliveryTime\n        customerId\n        restaurantId\n        deliveryAddress\n        createdAt\n    }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n"): (typeof documents)["\nmutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){\n  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
