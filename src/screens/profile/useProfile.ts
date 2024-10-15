@@ -2,6 +2,9 @@ import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {updateCustomer} from '../../redux/slices/authSlice';
+import {uploadImage} from '../../utils/uploadImage';
+import {validateProfile} from '../../utils/validation';
+import {PROFILE_FIELDS} from '../../constants/inputFields';
 
 const useProfile = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +16,7 @@ const useProfile = () => {
     Email: user?.email || '',
     'Phone Number': user?.phone || '',
   };
-
+  const profilePic = user?.customer?.picture;
   const [fields, setFields] = useState({
     'Full Name': initialFields['Full Name'],
     'Date of Birth': initialFields['Date of Birth'],
@@ -44,12 +47,15 @@ const useProfile = () => {
   };
 
   const handleUpdateProfile = async () => {
+    if (!validateProfile(fields)) {
+      return;
+    }
     setLoading(true);
     const updateData: {
       name?: string;
       dateOfBirth?: string;
       phone?: string;
-      picture?: string;
+      picture?: string | undefined;
     } = {};
 
     if (fields['Full Name'] !== initialFields['Full Name']) {
@@ -65,9 +71,9 @@ const useProfile = () => {
     }
 
     if (picture) {
-      updateData.picture = picture; 
+      const downloadURL = await uploadImage(picture);
+      updateData.picture = downloadURL;
     }
-
 
     if (Object.keys(updateData).length > 0) {
       await dispatch(updateCustomer(updateData));
@@ -75,9 +81,13 @@ const useProfile = () => {
 
     setLoading(false);
   };
+  const fieldConfig = PROFILE_FIELDS(fields, onChange);
+
   return {
     handleDateChange,
+    profilePic,
     fields,
+    fieldConfig,
     onChange,
     handleUpdateProfile,
     picture,

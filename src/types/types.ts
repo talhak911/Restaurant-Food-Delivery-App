@@ -162,13 +162,13 @@ export type AuthStackParamList = {
 export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
 
 export type FIELDS_TYPE = {
-  label: string;
+  label?: string;
   value: string;
   onChange: (text: string) => void;
   placeholder: string;
   secureInput?: boolean;
   keyboardType?: 'default' | 'numeric' | 'email-address';
-  // secureTextEntry?:boolean
+ editable?:boolean
 };
 
 export type CustomInputProps = {
@@ -187,52 +187,6 @@ export type VerifyOtpProps = NativeStackScreenProps<
 >;
 
 export type reduxUser = GetCurrentUserQuery['getCurrentUser'];
-// export type reduxUser ={
-// __typename?: "User";
-// dateOfBirth: any;
-// name: string;
-// id: string;
-// email: string;
-// phone: string;
-// role: Role;
-// verification: boolean;
-// customer?: {
-//     __typename?: "Customer";
-//     address: Array<string>;
-//     picture?: string | null;
-//     cart: Array<{
-//         __typename?: "OrderItemCart";
-//         id: number;
-//         foodId: string;
-//         totalPrice: number;
-//         food: {
-//             __typename?: "Food";
-//             name: string;
-//             price: number;
-//             id: string;
-//         };
-//     }>;
-// } | null;
-// restaurant?: {
-//     __typename?: "Restaurant";
-//     name?: string | null;
-//     location?: string | null;
-//     operatingHours?: string | null;
-//     orders: Array<{
-//         __typename?: "Order";
-//         id: number;
-//         customerId: string;
-//         restaurantId: string;
-//         totalPrice: number;
-//         deliveryAddress: string;
-//         deliveryPerson?: string | null;
-//         deliveryTime?: any | null;
-//         status: OrderStatus;
-//         createdAt: any;
-//         foods: any;
-//     }>;
-// } | null;
-// } | null | undefined
 
 export type CartContextProps = {
   cartVisible: boolean;

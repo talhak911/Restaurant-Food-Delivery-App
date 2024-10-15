@@ -137,3 +137,8 @@ mutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$pic
   updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)
 }
 `
+export const CHANGE_PASSWORD=gql`
+mutation changePassword($password:String!,$newPassword:String!){
+  changePassword(password:$password,newPassword:$newPassword)
+}
+`

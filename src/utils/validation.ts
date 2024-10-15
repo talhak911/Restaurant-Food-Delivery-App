@@ -1,5 +1,6 @@
 import {ToastAndroid} from 'react-native';
 import {Role} from '../gql/graphql';
+import Toast from 'react-native-toast-message';
 
 export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,13 +24,10 @@ export const validateSignUpForm = (
     ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
     return false;
   }
-if(!password ){
-  ToastAndroid.show(
-    'Enter Password',
-    ToastAndroid.SHORT,
-  );
-  return false;
-}
+  if (!password) {
+    ToastAndroid.show('Enter Password', ToastAndroid.SHORT);
+    return false;
+  }
   if (password.length < 8) {
     ToastAndroid.show(
       'Password must be at least 8 characters long',
@@ -37,11 +35,8 @@ if(!password ){
     );
     return false;
   }
-  if(!phone ){
-    ToastAndroid.show(
-      'Enter Mobile Number',
-      ToastAndroid.SHORT,
-    );
+  if (!phone) {
+    ToastAndroid.show('Enter Mobile Number', ToastAndroid.SHORT);
     return false;
   }
   if (!/^\d{10,}$/.test(phone)) {
@@ -83,7 +78,7 @@ export const validateSignInForm = (email: string, password: string) => {
 };
 
 export const validateOtp = (email: string, otp: string) => {
-  if (!otp || otp.length!=6) {
+  if (!otp || otp.length != 6) {
     ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
     return false;
   }
@@ -96,7 +91,12 @@ export const validateOtp = (email: string, otp: string) => {
   return true;
 };
 
-export const validateForgetPasswordForm = (email: string, password: string,confirmPassword:string,otp:string) => {
+export const validateForgetPasswordForm = (
+  email: string,
+  password: string,
+  confirmPassword: string,
+  otp: string,
+) => {
   if (!email || !password || !confirmPassword || !otp) {
     ToastAndroid.show('All fields are required', ToastAndroid.LONG);
     return false;
@@ -106,7 +106,7 @@ export const validateForgetPasswordForm = (email: string, password: string,confi
     ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
     return false;
   }
-  if (otp.length!=6) {
+  if (otp.length != 6) {
     ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
     return false;
   }
@@ -118,10 +118,36 @@ export const validateForgetPasswordForm = (email: string, password: string,confi
     return false;
   }
   if (password !== confirmPassword) {
-    ToastAndroid.show(
-      'Password does not match',
-      ToastAndroid.SHORT,
-    );
+    ToastAndroid.show('Password does not match', ToastAndroid.SHORT);
+    return false;
+  }
+
+  return true;
+};
+
+export const validateProfile = (fields: {
+  'Full Name': string;
+  'Date of Birth': string;
+  Email: string;
+  'Phone Number': string;
+}) => {
+  if (!fields['Full Name']) {
+    Toast.show({type: 'error', text1: 'Full Name is required'});
+    return false;
+  }
+
+  if (!isValidEmail(fields['Email'])) {
+    Toast.show({type: 'error', text1: 'Invalid Email format'});
+    return false;
+  }
+
+  if (fields['Phone Number'].length<10) {
+    Toast.show({type: 'error', text1: 'Phone Number should be valid'});
+    return false;
+  }
+
+  if (!fields['Date of Birth']) {
+    Toast.show({type: 'error', text1: 'Date of Birth is required'});
     return false;
   }
 

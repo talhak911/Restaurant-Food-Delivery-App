@@ -13,16 +13,18 @@ import CameraIcon from '../../assets/icons/camera';
 import {CustomButton} from '../../components/customButton/CustomButtom';
 import DateInput from '../../components/dateInput/DateInput';
 import {BlinkingImage} from '../../components/loading/Loading';
+import {IMAGES} from '../../constants/constants';
 
 const Profile = () => {
   const {
     fields,
-    onChange,
     handleDateChange,
     handleUpdateProfile,
     loading,
     handleImagePicker,
     picture,
+    profilePic,
+    fieldConfig,
   } = useProfile();
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
@@ -41,10 +43,7 @@ const Profile = () => {
           <View style={{position: 'relative'}}>
             <BlinkingImage
               placeholder="profile"
-              uri={
-                picture ||
-                'https://th.bing.com/th/id/R.f06f596bb9331f6595e6715e37de02f1?rik=nIFBIWUurHvhVA&pid=ImgRaw&r=0'
-              }
+              uri={picture || profilePic}
               style={{height: 127, width: 127, borderRadius: 20}}
             />
 
@@ -55,19 +54,25 @@ const Profile = () => {
             </TouchableOpacity>
           </View>
           <View style={{gap: 32, marginTop: 38}}>
-            {Object.keys(fields).map((item, index) => (
-              <CustomInput
-                key={index}
-                label={item}
-                value={fields[item as keyof typeof fields]}
-                onChange={text => onChange(item as keyof typeof fields, text)}
-                placeHolder={item}
-              />
-            ))}
-            <DateInput
-              date={fields['Date of Birth']}
-              setDate={handleDateChange}
-            />
+            {fieldConfig.map((field, index) => {
+              return index === 1 ? (
+                <DateInput
+                  key={index}
+                  date={fields['Date of Birth']}
+                  setDate={handleDateChange}
+                />
+              ) : (
+                <CustomInput
+                  label={field.placeholder}
+                  key={index}
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeHolder={field.placeholder}
+                  secureInput={field.secureInput}
+                  editable={field.editable}
+                />
+              );
+            })}
           </View>
         </View>
       </ScrollView>
