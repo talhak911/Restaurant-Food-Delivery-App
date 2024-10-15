@@ -1,72 +1,39 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import Cart2Icon from '../../assets/icons/cart2';
-import {
-  LEAGUE_SPARTAN_BOLD,
-  LEAGUE_SPARTAN_MEDIUM,
-} from '../../constants/fonts';
 import {COLORS} from '../../constants/color';
 import CartCard from '../cartCard/CartCard';
 import {CustomButton} from '../customButton/CustomButtom';
 import Price from '../price/Price';
 import useCartComponent from './useCartComponent';
 import AddToCart from '../../assets/icons/addToCart';
-import {Height} from '../../utils/responsive';
 import Loader from '../loader/Loader';
+import {styles} from './CartComponentStyles';
 
 const CartComponent = ({action}: {action: () => void}) => {
-  const {cartItems, totalPrice, loading,navigateToFoods,navigateToConfirmOrder} = useCartComponent();
+  const {
+    cartItems,
+    totalPrice,
+    loading,
+    navigateToFoods,
+    navigateToConfirmOrder,
+  } = useCartComponent();
   if (loading) {
     return <Loader />;
   }
   return (
     <View style={{flex: 1}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: 10,
-          alignItems: 'center',
-          marginTop: 30,
-          justifyContent: 'center',
-        }}>
+      <View style={styles.topContainer}>
         <Cart2Icon />
-        <Text
-          style={{
-            fontFamily: LEAGUE_SPARTAN_BOLD,
-            fontSize: 24,
-            color: COLORS.almostWhite,
-          }}>
-          Cart
-        </Text>
+        <Text style={styles.cartText}>Cart</Text>
       </View>
-      <View
-        style={{
-          marginTop: 38,
-          borderBottomWidth: 1,
-          borderColor: COLORS.yellow,
-        }}
-      />
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <Text
-          style={{
-            textAlign: 'center',
-            fontFamily: LEAGUE_SPARTAN_MEDIUM,
-            fontSize: 20,
-            color: COLORS.almostWhite,
-            marginTop: 18,
-          }}>
+        <Text style={styles.cartStatus}>
           {cartItems?.length! > 0
             ? `you have ${cartItems?.length} items in the cart`
             : 'Your cart is empty'}
         </Text>
         {cartItems?.length! > 0 ? (
-          <View style={{marginTop: 26, marginBottom: 50}}>
+          <View style={styles.cartItemsContainer}>
             {cartItems?.map((item, index) => (
               <CartCard
                 key={index}
@@ -79,24 +46,11 @@ const CartComponent = ({action}: {action: () => void}) => {
             ))}
           </View>
         ) : (
-          <View
-            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
-            <TouchableOpacity
-            onPress={navigateToFoods}
-            >
+          <View style={styles.emptyCartContainer}>
+            <TouchableOpacity onPress={navigateToFoods}>
               <AddToCart />
             </TouchableOpacity>
-            <Text
-              style={{
-                fontFamily: LEAGUE_SPARTAN_BOLD,
-                lineHeight: 26,
-                color: COLORS.almostWhite,
-                fontSize: 24,
-                marginBottom: Height(11),
-                textAlign: 'center',
-              }}>
-              Want To Add Somethinng?
-            </Text>
+            <Text style={styles.emptyCartText}>Want To Add Somethinng?</Text>
           </View>
         )}
         {cartItems?.length! > 0 && (
@@ -104,7 +58,7 @@ const CartComponent = ({action}: {action: () => void}) => {
         )}
       </ScrollView>
       {cartItems?.length! > 0 && (
-        <View style={{alignItems: 'center', height: '15%'}}>
+        <View style={styles.buttonContainer}>
           <CustomButton
             onPress={action}
             title="Checkout"
@@ -120,17 +74,3 @@ const CartComponent = ({action}: {action: () => void}) => {
 };
 
 export default CartComponent;
-
-export const styles = StyleSheet.create({
-  priceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 22,
-  },
-  price: {
-    fontFamily: LEAGUE_SPARTAN_MEDIUM,
-    fontSize: 20,
-    color: COLORS.almostWhite,
-  },
-});
