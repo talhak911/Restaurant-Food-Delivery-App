@@ -9,7 +9,7 @@ import styles from './styles';
 import {useSignUp} from './useSignUp';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CustomInput} from '../../components/customInput/CustomInput';
-import {CustomButton} from '../../components/customButton/CustomButtom';
+import {CustomButton} from '../../components/customButton/CustomButton';
 import {COLORS} from '../../constants/color';
 import CustomDropdown from '../../components/customDropDown/CustomDropDown';
 import {Role} from '../../gql/graphql';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore"
 import { useNavigation } from "@react-navigation/native";
-import { TabNavigatorProps } from "../../types/types";
+import { StackNavigatorProps, TabNavigatorProps } from "../../types/types";
 import { fetchOrders, placeOrder } from "../../redux/slices/orderSlice";
 import Toast from "react-native-toast-message";
 
@@ -10,7 +10,7 @@ const useConfirmOrder = () => {
   const cartItems = useAppSelector(state=>state.cart.cartItems)
   const addresses = (useAppSelector(state=>state.auth.user?.customer?.address))?.map((item=>item.address))
   const dispatch = useAppDispatch()
-const navigation = useNavigation<TabNavigatorProps>()
+const navigation = useNavigation<StackNavigatorProps>()
 const totalPrice = cartItems
 ?.reduce((pre, item) => pre + item.totalPrice, 0)
 .toString();

@@ -6,7 +6,6 @@ import {
   PlaceOrderDocument,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
-import {ToastAndroid} from 'react-native';
 import Toast from 'react-native-toast-message';
 import { emptyCart } from './cartSlice';
 

@@ -1,16 +1,9 @@
 import {Animated, Modal, StatusBar, View} from 'react-native';
 import {useCustomModal} from './useCustomModal';
 import {styles} from './CustomModalStyles';
+import {CustomModalProps} from '../../types/types';
 
-export const CustomModal = ({
-  visible,
-  element,
-  onClose,
-}: {
-  visible: boolean;
-  element: React.JSX.Element;
-  onClose: () => void;
-}) => {
+export const CustomModal = ({visible, element, onClose}: CustomModalProps) => {
   const {panResponder, translateX} = useCustomModal({visible, onClose});
 
   return (

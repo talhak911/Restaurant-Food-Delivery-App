@@ -11,7 +11,7 @@ import {
 import {CATEGORIES} from '../../constants/constants';
 import BackIcon from '../../assets/icons/back';
 import Carousel from '../../components/carousel/Carousel';
-import FoodCard from '../../components/foodCard/FoodCard';
+import FoodItemPriceDisplay from '../../components/foodItemPriceDisplay/FoodItemPriceDisplay';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
 
 const Home = () => {
@@ -101,7 +101,7 @@ const Home = () => {
                       price: item.price.toString(),
                     });
                   }}>
-                  <FoodCard
+                  <FoodItemPriceDisplay
                     height={108}
                     width={72}
                     price={item.price.toString()}
@@ -146,7 +146,7 @@ const Home = () => {
                       price: item.price.toString(),
                     });
                   }}>
-                  <FoodCard
+                  <FoodItemPriceDisplay
                     uri={item.picture}
                     height={140}
                     width={159}

@@ -1,23 +1,14 @@
-import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { TabNavigatorProps } from '../../types/types'
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigatorProps} from '../../types/types';
 
 const useHomeHeader = () => {
-  const [cartVisible,setCartVisible]=useState(false)
-  const onClose =()=>{
-      setCartVisible(false)
-    }
-    const navigation = useNavigation<TabNavigatorProps>()
-  const navigateToConfirmOrder=()=>{
-    setCartVisible(false)
-    navigation.navigate("Confirm Order")
-  }
-    return {
-        cartVisible,
-        onClose,
-        setCartVisible,
-        navigateToConfirmOrder
-  }
-}
+  const navigation = useNavigation<StackNavigatorProps>();
+  const navigateToProfile = () => {
+    navigation.navigate('My Profile');
+  };
+  return {
+    navigateToProfile,
+  };
+};
 
-export default useHomeHeader
+export default useHomeHeader;

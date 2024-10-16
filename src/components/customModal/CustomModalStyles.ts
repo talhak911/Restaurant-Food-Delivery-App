@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     backgroundColor: 'rgba(0, 0, 0, 0.16)',
-    flexDirection: 'row',  // Align content horizontally
+    flexDirection: 'row',
   },
   modalContent: {
     backgroundColor: COLORS.orange,
@@ -16,8 +16,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 33,
     paddingVertical: 14,
     alignItems: 'center',
-    width: '80%',  // Set modal width to 80% of the screen
-    height: '100%',  // Take full screen height
+    width: '80%',
+    height: '100%',
   },
-
 });

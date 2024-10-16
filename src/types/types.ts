@@ -1,6 +1,4 @@
-import {
-  BottomTabNavigationProp,
-} from '@react-navigation/bottom-tabs';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
   NativeStackNavigationProp,
@@ -11,8 +9,18 @@ import {
   StackScreenProps,
 } from '@react-navigation/stack';
 
-import {KeyboardTypeOptions} from 'react-native';
-import {FetchFoodsQuery, GetCurrentUserQuery, OrderStatus, Role} from '../gql/graphql';
+import {
+  DimensionValue,
+  KeyboardTypeOptions,
+  TouchableOpacityProps,
+} from 'react-native';
+import {
+  FetchCartQuery,
+  FetchFoodsQuery,
+  GetCurrentUserQuery,
+  OrderStatus,
+  Role,
+} from '../gql/graphql';
 
 export type voidFunction = () => void;
 
@@ -39,17 +47,110 @@ export type ChangePasswordPayload = {
   newPassword: string;
 };
 
-
-export type CategoryColors = {
-  [key: string]: string;
-};
-
 //new
+
+
+export type ChangePasswordFieldsType= {
+  'Current Password': string;
+  'New Password': string;
+  'Confirm New Password': string;
+}
+export type AddressType ={
+  Name: string;
+  Address: string;
+}
+export type SliderItemProps = {
+  item: FetchFoodsQuery['fetchFoods'][number];
+  index: number;
+};
+export type OrderItemCardProps =  {
+  picture: string;
+  price: string;
+  items: string;
+  name: string;
+  totalPrice: string;
+}
+export type OrderCard2Props =  {
+  foods: FoodItem[];
+  dateTime: string;
+  orderStatus: OrderStatus;
+  totalPrice: string;
+}
+export type OrderCardProps = {
+  picUrl: string;
+  title: string;
+  dateTime: string;
+  price: string;
+  orderStatus: OrderStatus;
+  totalPrice: string;
+  items: string;
+}
+export type LoadingImageProps = {
+  uri?: string | null;
+  style: {};
+  placeholder: 'food' | 'profile';
+}
+export type FoodCardProps = {
+  data: FetchFoodsQuery['fetchFoods'][number];
+  navigation: StackNavigatorProps;
+}
+export type FoodItemPriceDisplayProps =  {
+  uri: string | undefined | null;
+  height: number;
+  width: number;
+  price: string;
+}
+export type DateInputProps ={
+  date: string;
+  setDate: (date: string) => void;
+}
+export type useCustomModalProps = {
+  visible: boolean;
+  onClose: () => void;
+};
+export type CustomModalProps = {
+  visible: boolean;
+  element: React.JSX.Element;
+  onClose: () => void;
+};
+export type CustomDropDownProps = {
+  label: string;
+  items: {value: Role}[];
+  onSelect: (e: Role) => void;
+  selectedValue: string | null;
+};
+export type CustomButtonProps = TouchableOpacityProps & {
+  loading?: boolean;
+  title: string;
+  bgColor?: string;
+  textColor?: string;
+  fontSize?: number;
+  pH?: number;
+  pV?: number;
+  icon?: React.JSX.Element;
+  width?: number | DimensionValue;
+};
+export type CartState = {
+  cartItems: FetchCartQuery['fetchCart'] | null;
+  loading: boolean;
+  loadingItem: boolean;
+};
+export type CartCardProps = {
+  picUrl?: string | null;
+  name: string;
+  price: string;
+  items: string;
+  foodId: string;
+};
+export type ConfirmOrderCardProps = {
+  picUrl?: string | null;
+  name: string;
+  foodId: string;
+  price: string;
+  items: string;
+};
 export type StackPaths = {
   Home: undefined;
-  // Help: undefined;
-  // Foods: undefined;
-  // Favoirite: undefined;
   'My Orders': undefined;
   'My Profile': undefined;
   'Delivery Address': undefined;
@@ -61,21 +162,13 @@ export type StackPaths = {
 };
 export type TabParamsList = {
   Stack: {
-    screen: keyof StackNavigatorParamList; // Allow specifying the screen in Stack
-    params?: StackNavigatorParamList[keyof StackNavigatorParamList]; // Optionally pass params to the target screen
+    screen: keyof StackNavigatorParamList;
+    params?: StackNavigatorParamList[keyof StackNavigatorParamList];
   };
   Help: undefined;
   Foods: undefined;
   Favoirite: undefined;
   'My Orders': undefined;
-  // 'My Profile': undefined;
-  // 'Delivery Address': undefined;
-  // 'Payment Method': undefined;
-  // 'Contact Us': undefined;
-  // 'Help & FAQs': undefined;
-  // Settings: undefined;
-  // 'Password Setting': undefined;
-  // 'Add New Address':undefined
 };
 
 export type StackNavigatorParamList = {
@@ -95,24 +188,19 @@ export type StackNavigatorParamList = {
   'Payment Method': undefined;
   'Contact Us': undefined;
   'Help & FAQs': undefined;
-   Settings: undefined;
+  Settings: undefined;
   'Password Setting': undefined;
   'Add New Address': undefined;
-  // Tab: undefined;
-  // 'Food Detail': {
-  //   id: string;
-  //   picUrl: string | null | undefined;
-  //   name:string;
-  //   description: string;
-  //   price : string
-
-  // };
+  'Forget Password': undefined;
 };
-
+export type ProfleFieldsType = {
+  'Full Name': string;
+  'Date of Birth': string;
+  Email: string;
+  'Phone Number': string;
+};
 export type RestaurntTabsParamsList = {
   Home: undefined;
-  // 'Add Food':undefined
-  // Profile:undefined
 };
 export type RestaurantTabNavigatorProps =
   BottomTabNavigationProp<RestaurntTabsParamsList>;
@@ -125,17 +213,6 @@ export type FoodDetailsProps = StackScreenProps<
 >;
 export type DrawerNavigatorParamList = {
   Tab: undefined;
-  // Home: undefined;
-  // Help: undefined;
-  // Stack: undefined;
-  // 'My Profile': undefined;
-  // 'Delivery Address': undefined;
-  // 'Payment Method': undefined;
-  // 'Contact Us': undefined;
-  // 'Help & FAQs': undefined;
-  // Settings: undefined;
-  // Favoirite: undefined;
-  // 'My Orders': undefined;
 };
 export type DrawerNavigationProps =
   DrawerNavigationProp<DrawerNavigatorParamList>;
@@ -159,13 +236,13 @@ export type AuthStackParamList = {
 export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
 
 export type FIELDS_TYPE = {
-  label?: string;
+  label: string;
   value: string;
   onChange: (text: string) => void;
   placeholder: string;
   secureInput?: boolean;
   keyboardType?: 'default' | 'numeric' | 'email-address';
- editable?:boolean
+  editable?: boolean;
 };
 
 export type CustomInputProps = {
@@ -191,7 +268,6 @@ export type CartContextProps = {
   closeCart: () => void;
 };
 
-//for apis
 export type UpdateCartParams = {quantity: number; foodId: string};
 
 export type Food = {
@@ -204,7 +280,6 @@ export type Food = {
   restaurantId: string;
 };
 
-// Type for each food item in the order
 export type FoodItem = {
   id: number;
   food: Food;
@@ -216,4 +291,4 @@ export type FoodItem = {
 export type FoodState = {
   foods: FetchFoodsQuery['fetchFoods'] | null;
   filteredFoods: FetchFoodsQuery['fetchFoods'] | null;
-}
+};

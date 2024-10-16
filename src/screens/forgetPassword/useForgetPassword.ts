@@ -5,9 +5,9 @@ import {RESET_PASSWORD_FIELDS} from '../../constants/inputFields';
 import {isValidEmail, validateForgetPasswordForm} from '../../utils/validation';
 import {useMutation} from '@apollo/client';
 import {RequestOtpDocument, ResetPasswordDocument} from '../../gql/graphql';
-import {ToastAndroid} from 'react-native';
-export const useForgetPassword = () => {
+import Toast from 'react-native-toast-message';
 
+export const useForgetPassword = () => {
   const navigation = useNavigation<AuthNavigationProp>();
 
   const [resetPassword, {loading, error}] = useMutation(ResetPasswordDocument);
@@ -24,7 +24,7 @@ export const useForgetPassword = () => {
 
     try {
       if (!isValidEmail(email)) {
-        ToastAndroid.show('Enter valid Email', ToastAndroid.LONG);
+        Toast.show({type: 'error', text1: 'Enter valid Email'});
         return;
       } else {
         await requestOtp({
@@ -33,10 +33,10 @@ export const useForgetPassword = () => {
             type: 'Reset',
           },
         });
-        ToastAndroid.show('Otp sent to your email ', ToastAndroid.LONG);
+        Toast.show({text1: 'Otp sent to your email '});
       }
     } catch (error: any) {
-      ToastAndroid.show(error.message, ToastAndroid.LONG);
+      Toast.show({type: 'error', text1: error.message});
     } finally {
       setLoadings(false);
     }
@@ -60,11 +60,10 @@ export const useForgetPassword = () => {
           otp,
         },
       });
-      ToastAndroid.show('Your password has been changed', ToastAndroid.LONG);
+      Toast.show({text1: 'Your password has been changed'});
       navigation.navigate('Log In');
     } catch (error: any) {
-      ToastAndroid.show(error.message, ToastAndroid.LONG);
-      console.log('error while sign in ', error);
+      Toast.show({type: 'error', text1: error.message});
     } finally {
       setLoadings(false);
     }
@@ -80,20 +79,6 @@ export const useForgetPassword = () => {
     setOtp,
   );
 
-  // const [signIn, {loadings, error}] = useQuery(SignInDocument);
-
-  //     const {data} = await signUp({
-  //       variables: {
-  //         data: {
-  //           email,
-  //           password,
-  //           phone: Number(phone),
-  //           name,
-  //           role,
-  //           dateOfBirth: dob,
-  //         },
-  //       },
-  //     });
   return {
     setEmail,
     setPassword,

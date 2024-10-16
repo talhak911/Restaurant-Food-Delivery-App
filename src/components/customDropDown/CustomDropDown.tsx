@@ -2,21 +2,16 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useCustomDropdown} from './useCustomDropDown';
 import {styles} from './CustomDropDownStyles';
-import {Role} from '../../gql/graphql';
 import {COLORS} from '../../constants/color';
 import BackIcon from '../../assets/icons/back';
+import {CustomDropDownProps} from '../../types/types';
 
 const CustomDropdown = ({
   label,
   items,
   onSelect,
   selectedValue,
-}: {
-  label: string;
-  items: {value: Role}[];
-  onSelect: (e: Role) => void;
-  selectedValue: string | null;
-}) => {
+}: CustomDropDownProps) => {
   const {handlePress, handleItemPress, isOpen} = useCustomDropdown({onSelect});
   return (
     <View>

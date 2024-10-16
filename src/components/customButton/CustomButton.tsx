@@ -7,20 +7,10 @@ import {
   TouchableOpacityProps,
   View,
 } from 'react-native';
-import {styles} from './styles';
+import {styles} from './CustomButtonStyles';
 import {COLORS} from '../../constants/color';
 import {responsiveWidth as rW} from 'react-native-responsive-dimensions';
-interface CustomButtonProps extends TouchableOpacityProps {
-  loading?: boolean;
-  title: string;
-  bgColor?: string;
-  textColor?: string;
-  fontSize?: number;
-  pH?: number;
-  pV?: number;
-  icon?: React.JSX.Element;
-  width?: number | DimensionValue;
-}
+import {CustomButtonProps} from '../../types/types';
 
 export const CustomButton: React.FC<CustomButtonProps> = ({
   loading = false,

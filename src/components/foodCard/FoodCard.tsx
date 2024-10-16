@@ -1,44 +1,41 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import {COLORS} from '../../constants/color';
-import {BlinkingImage} from '../loading/Loading';
+import {Text, TouchableOpacity, View} from 'react-native';
+import Ratings from '../ratings/Ratings';
+import {FoodCardProps} from '../../types/types';
+import {LoadingImage} from '../loadingImage/LoadingImage';
+import {styles} from './FoodCardStyles';
 
-const FoodCard = ({
-  uri,
-  height,
-  width,
-  price,
-}: {
-  uri: string | undefined | null;
-  height: number;
-  width: number;
-  price: string;
-}) => {
+const FoodCard = ({data, navigation}: FoodCardProps) => {
+  const {price, picture, name, description, id} = data;
   return (
-    <View style={{position: 'relative'}}>
-      <BlinkingImage
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('Food Detail', {
+          id,
+          name,
+          picUrl: picture,
+          description,
+          price: String(price),
+        });
+      }}>
+      <LoadingImage
         placeholder="food"
-        style={{borderRadius: 19, height, width}}
-        uri={uri}
+        style={{borderRadius: 36, width: '100%', height: 174}}
+        uri={picture}
       />
-
-      <View style={styles.priceContainer}>
-        <Text style={{color: COLORS.almostWhite}}>${price}</Text>
+      <View style={styles.belowImageContainer}>
+        <View style={styles.nameContainer}>
+          <Text style={styles.name}>{name}</Text>
+          <View style={styles.ratingsContainer} />
+          <Ratings ratings="5.0" />
+        </View>
+        <Text style={styles.price}>${price}</Text>
       </View>
-    </View>
+      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.description}>
+        {description}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
 export default FoodCard;
-
-const styles = StyleSheet.create({
-  priceContainer: {
-    position: 'absolute',
-    backgroundColor: COLORS.orange,
-    right: -2,
-    bottom: 12,
-    borderBottomLeftRadius: 10,
-    borderTopLeftRadius: 10,
-    paddingHorizontal: 4,
-  },
-});

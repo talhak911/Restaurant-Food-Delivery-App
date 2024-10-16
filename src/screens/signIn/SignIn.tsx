@@ -1,14 +1,14 @@
 import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
-import styles from './styles';
+import styles from './SignInstyles';
 import {useSignIn} from './useSignIn';
 import {CustomInput} from '../../components/customInput/CustomInput';
-import {CustomButton} from '../../components/customButton/CustomButtom';
 import {COLORS} from '../../constants/color';
 import GoogleIcon from '../../assets/icons/google';
 import FacebookIcon from '../../assets/icons/facebook';
 import {Height, Width} from '../../utils/responsive';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {CustomButton} from '../../components/customButton/CustomButton';
 
 export const SignIn = () => {
   const {
@@ -21,8 +21,8 @@ export const SignIn = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
       <KeyboardAwareScrollView
-       contentContainerStyle={{flexGrow:1}}
-       keyboardShouldPersistTaps="always"
+        contentContainerStyle={{flexGrow: 1}}
+        keyboardShouldPersistTaps="always"
         style={{flex: 1}}>
         <View style={styles.container}>
           <View style={styles.containerContent}>
@@ -50,33 +50,21 @@ export const SignIn = () => {
             </TouchableOpacity>
           </View>
 
-          <View style={{marginTop: Height(7), marginHorizontal: 16}}>
-            <View style={{alignItems: 'center'}}>
-              <CustomButton
-                loading={loading}
-                onPress={onSignInPress}
-                title="Login"
-                pH={Width(15)}
-              />
-            </View>
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              loading={loading}
+              onPress={onSignInPress}
+              title="Login"
+              pH={Width(15)}
+            />
 
-            {/* <View style={{alignItems: 'center'}}>
-            <SignUpGoogle loading={loading} setLoading={setLoading} />
-            </View> */}
             <View style={styles.footerView}>
-              <Text
-                style={{
-                  color: COLORS.almostBlack,
-                  marginTop: 29,
-                  marginBottom: 19,
-                }}>
-                or sign up with
-              </Text>
-              <View style={{flexDirection: 'row', gap: 9}}>
+              <Text style={styles.signUpOptionsText}>or sign up with</Text>
+              <View style={styles.signUpIcons}>
                 <GoogleIcon />
                 <FacebookIcon />
               </View>
-              <View style={{flexDirection: 'row', paddingVertical: 19}}>
+              <View style={styles.signUp}>
                 <Text style={styles.footerText}>Don’t have an account?</Text>
                 <TouchableOpacity onPress={navigateToSignUp}>
                   <Text style={styles.footerLink}>Sign Up</Text>

@@ -3,20 +3,15 @@ import React from 'react';
 import {CustomInput} from '../customInput/CustomInput';
 import useDateInput from './useDateInput';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-const DateInput = ({
-  date,
-  setDate,
-}: {
-  date: string;
-  setDate:(date: string) => void
-}) => {
+import {DateInputProps} from '../../types/types';
 
+const DateInput = ({date, setDate}: DateInputProps) => {
   const {handleConfirm, hideDatePicker, showDatePicker, isDatePickerVisible} =
     useDateInput({setDate});
   return (
     <View>
       <TouchableOpacity onPress={showDatePicker}>
-        <CustomInput 
+        <CustomInput
           value={date.split('T')[0]}
           onChange={() => {}}
           placeHolder="Date of Birth"

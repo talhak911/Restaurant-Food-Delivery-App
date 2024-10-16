@@ -2,7 +2,7 @@ import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import WelcomeIcon from '../../assets/icons/welcome';
-import {CustomButton} from '../../components/customButton/CustomButtom';
+import {CustomButton} from '../../components/customButton/CustomButton';
 import { Font, Height, Width } from '../../utils/responsive';
 import { useWelcome } from './useWelcome';
 const Welcome = () => {
@@ -14,9 +14,7 @@ const Welcome = () => {
         style={{
           alignItems: 'center',
           justifyContent: 'center',
-          // marginTop: rH(31),
           marginTop: Height(31),
-        //  marginTop: '50%',
         }}>
        <View style={{maxWidth:300,maxHeight:400}}>
        <WelcomeIcon />
@@ -24,7 +22,6 @@ const Welcome = () => {
         <Text
           style={{
             color: COLORS.almostWhite,
-            // fontSize: rT(1.7),
             fontSize: Font(14),
             marginTop: 30,
             marginHorizontal: Width(11),

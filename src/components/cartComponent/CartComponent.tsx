@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import Cart2Icon from '../../assets/icons/cart2';
 import {COLORS} from '../../constants/color';
 import CartCard from '../cartCard/CartCard';
-import {CustomButton} from '../customButton/CustomButtom';
+import {CustomButton} from '../customButton/CustomButton';
 import Price from '../price/Price';
 import useCartComponent from './useCartComponent';
 import AddToCart from '../../assets/icons/addToCart';
@@ -15,7 +15,6 @@ const CartComponent = ({action}: {action: () => void}) => {
     totalPrice,
     loading,
     navigateToFoods,
-    navigateToConfirmOrder,
   } = useCartComponent();
   if (loading) {
     return <Loader />;

@@ -2,16 +2,16 @@ import {useState} from 'react';
 import {useAppDispatch} from '../../hooks/useStore';
 import {addCustomerAddress} from '../../redux/slices/authSlice';
 import {useNavigation} from '@react-navigation/native';
-import {TabNavigatorProps} from '../../types/types';
 import Toast from 'react-native-toast-message';
+import {
+  AddressType,
+  StackNavigatorProps,
+} from '../../types/types';
 
 const useAddAddress = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation<TabNavigatorProps>();
-  const [fields, setFields] = useState<{
-    Name: string;
-    Address: string;
-  }>({
+  const navigation = useNavigation<StackNavigatorProps>();
+  const [fields, setFields] = useState<AddressType>({
     Name: '',
     Address: '',
   });
@@ -47,9 +47,9 @@ const useAddAddress = () => {
 
   return {
     fields,
+    loading,
     onChange,
     addAddress,
-    loading,
   };
 };
 

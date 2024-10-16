@@ -7,9 +7,9 @@ import {SIGN_IN_FIELDS} from '../../constants/inputFields';
 import {validateSignInForm} from '../../utils/validation';
 import {useMutation} from '@apollo/client';
 import {SignInDocument} from '../../gql/graphql';
-import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {client} from '../../providers/apolloProvider/apolloProvider';
+import Toast from 'react-native-toast-message';
 
 export const useSignIn = () => {
   const dispatch = useAppDispatch();
@@ -20,14 +20,13 @@ export const useSignIn = () => {
   const navigateToForgetPassword = () => {
     navigation.navigate('Forget Password');
   };
-  const [signIn, {loading, error}] = useMutation(SignInDocument);
+  const [signIn, {loading}] = useMutation(SignInDocument);
   const [email, setEmail] = useState('');
-  const [loadings, setLoadings] = useState(false);
+
   const [password, setPassword] = useState('');
 
   const onSignInPress = async () => {
     try {
-      setLoadings(true);
       const isValid = validateSignInForm(email, password);
       if (!isValid) {
         return;
@@ -44,14 +43,10 @@ export const useSignIn = () => {
         await AsyncStorage.setItem('authToken', token);
 
         await dispatch(fetchUserData());
-        ToastAndroid.show('Login successful', ToastAndroid.SHORT);
+        Toast.show({text1:"Login successful"});
       }
-      console.log('the token is ', response.data?.signIn);
     } catch (error: any) {
-      ToastAndroid.show(error.message, ToastAndroid.LONG);
-      console.log('error while sign in ', error);
-    } finally {
-      setLoadings(false);
+      Toast.show({text1:error.message,type:"error"});
     }
   };
   const fields = SIGN_IN_FIELDS(email, setEmail, password, setPassword);
@@ -61,7 +56,6 @@ export const useSignIn = () => {
     setPassword,
     onSignInPress,
     navigateToSignUp,
-    // setLoadings,
     navigateToForgetPassword,
     fields,
     loading,

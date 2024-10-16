@@ -1,9 +1,8 @@
-import {ActivityIndicator, Text, TouchableOpacity, View} from 'react-native';
-import styles from './styles';
-
+import {ActivityIndicator, View} from 'react-native';
+import styles from './ForgetPasswordStyles';
 import {CustomInput} from '../../components/customInput/CustomInput';
-import {CustomButton} from '../../components/customButton/CustomButtom';
-import {Font, Height, Width} from '../../utils/responsive';
+import {CustomButton} from '../../components/customButton/CustomButton';
+import {Height} from '../../utils/responsive';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useForgetPassword} from './useForgetPassword';
@@ -33,22 +32,18 @@ const ForgetPassword = () => {
               loading={loadings}
               onPress={handleRequestOtp}
               title="Get Otp"
-              //  pH={Width(6)}
-              // fontSize={Font(19)}
             />
           )}
         </View>
 
         {!loadings && (
-          <View style={{marginTop: Height(7), marginHorizontal: 16}}>
-            <View style={{alignItems: 'center', marginBottom: 12}}>
-              <CustomButton
-                loading={loadings}
-                onPress={handleResetPassword}
-                title="Reset"
-                pH={40}
-              />
-            </View>
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              loading={loadings}
+              onPress={handleResetPassword}
+              title="Reset"
+              pH={40}
+            />
           </View>
         )}
       </KeyboardAwareScrollView>

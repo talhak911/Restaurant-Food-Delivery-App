@@ -4,31 +4,28 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
-import React from 'react';
 import {COLORS} from '../../constants/color';
 import useChangePassword from './useChangePassword';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import {LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
-import {CustomButton} from '../../components/customButton/CustomButtom';
+import {CustomButton} from '../../components/customButton/CustomButton';
+import {styles} from './ChangePasswordStyles';
 
 const ChangePassword = () => {
-  const {fields, onChange,loading,handleChangePassword} = useChangePassword();
+  const {
+    fields,
+    onChange,
+    loading,
+    handleChangePassword,
+    navigateToForgetPassword,
+  } = useChangePassword();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-
-            flex: 1,
-            backgroundColor: 'white',
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            paddingHorizontal: 35,
-            paddingVertical: 19,
-            alignItems: 'center',
-          }}>
-          <View style={{gap: 26, marginTop: 38}}>
+        <View style={styles.contentContainer}>
+          <View style={styles.inputFieldsContainer}>
             {Object.keys(fields).map((item, index) => (
               <View key={index}>
                 <CustomInput
@@ -39,33 +36,26 @@ const ChangePassword = () => {
                   secureInput
                 />
                 {index === 0 && (
-                  <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-                    <Text
-                      style={{
-                        marginTop: 12,
-                        fontFamily: LEAGUE_SPARTAN_MEDIUM,
-                        fontSize: 15,
-                        color: COLORS.orange,
-                      }}>
-                      Forgot Password?
-                    </Text>
+                  <TouchableOpacity
+                    onPress={navigateToForgetPassword}
+                    style={{alignSelf: 'flex-end'}}>
+                    <Text style={styles.forgetPassword}>Forgot Password?</Text>
                   </TouchableOpacity>
                 )}
               </View>
             ))}
           </View>
-
         </View>
-          <View style={{alignItems:"center",backgroundColor:"white",paddingBottom:58}}>
-            <CustomButton title="Change Password" 
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            title="Change Password"
             fontSize={17}
             pH={36}
             onPress={handleChangePassword}
             loading={loading}
-            />
-          </View>
+          />
+        </View>
       </ScrollView>
-      
     </SafeAreaView>
   );
 };

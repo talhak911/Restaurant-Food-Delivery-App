@@ -1,4 +1,3 @@
-import {ToastAndroid} from 'react-native';
 import {Role} from '../gql/graphql';
 import Toast from 'react-native-toast-message';
 
@@ -16,61 +15,53 @@ export const validateSignUpForm = (
   role: Role | null,
 ) => {
   if (!name) {
-    ToastAndroid.show('Name is required', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Name is required'});
     return false;
   }
 
   if (!isValidEmail(email)) {
-    ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Invalid email format'});
     return false;
   }
   if (!password) {
-    ToastAndroid.show('Enter Password', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Enter Password'});
     return false;
   }
   if (password.length < 8) {
-    ToastAndroid.show(
-      'Password must be at least 8 characters long',
-      ToastAndroid.SHORT,
-    );
+    Toast.show({
+      type: 'error',
+      text1: 'Password must be at least 8 characters long',
+    });
     return false;
   }
   if (!phone) {
-    ToastAndroid.show('Enter Mobile Number', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Enter Mobile Number'});
     return false;
   }
   if (!/^\d{10,}$/.test(phone)) {
-    ToastAndroid.show('Invalid phone number', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Invalid phone number'});
     return false;
   }
 
   if (!dob) {
-    ToastAndroid.show('Date of Birth is required', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Date of Birth is required'});
     return false;
   }
 
   if (!role) {
-    ToastAndroid.show('Select Role', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Select Role'});
   }
   return true;
 };
 
 export const validateSignInForm = (email: string, password: string) => {
   if (!email || !password) {
-    ToastAndroid.show('Enter Email and Password', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Enter Email and Password'});
     return false;
   }
 
   if (!isValidEmail(email)) {
-    ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
-    return false;
-  }
-
-  if (password.length < 8) {
-    ToastAndroid.show(
-      'Password must be at least 8 characters long',
-      ToastAndroid.SHORT,
-    );
+    Toast.show({type: 'error', text1: 'Invalid email format'});
     return false;
   }
 
@@ -79,24 +70,27 @@ export const validateSignInForm = (email: string, password: string) => {
 
 export const validateOtp = (email: string, otp: string) => {
   if (!otp || otp.length != 6) {
-    ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Enter 6 digits otp'});
     return false;
   }
 
   if (!isValidEmail(email)) {
-    ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Invalid email format'});
     return false;
   }
 
   return true;
 };
-export const validateChangePasswordForm = (
-  fields: {
-    'Current Password':string,
-    'New Password':string,
-    'Confirm New Password':string
-  }) => {
-  if (!fields['Current Password'] || !fields['New Password'] || !fields['Confirm New Password']) {
+export const validateChangePasswordForm = (fields: {
+  'Current Password': string;
+  'New Password': string;
+  'Confirm New Password': string;
+}) => {
+  if (
+    !fields['Current Password'] ||
+    !fields['New Password'] ||
+    !fields['Confirm New Password']
+  ) {
     Toast.show({type: 'error', text1: 'All fields are required'});
     return false;
   }
@@ -123,27 +117,28 @@ export const validateForgetPasswordForm = (
   otp: string,
 ) => {
   if (!email || !password || !confirmPassword || !otp) {
-    ToastAndroid.show('All fields are required', ToastAndroid.LONG);
+    Toast.show({type: 'error', text1: 'All fields are required'});
     return false;
   }
 
   if (!isValidEmail(email)) {
-    ToastAndroid.show('Invalid email format', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Invalid email format'});
     return false;
   }
   if (otp.length != 6) {
-    ToastAndroid.show('Enter 6 digits otp', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Enter 6 digits otp'});
     return false;
   }
   if (password.length < 8) {
-    ToastAndroid.show(
-      'Password must be at least 8 characters long',
-      ToastAndroid.SHORT,
-    );
+    Toast.show({
+      type: 'error',
+      text1: 'Password must be at least 8 characters long',
+    });
+
     return false;
   }
   if (password !== confirmPassword) {
-    ToastAndroid.show('Password does not match', ToastAndroid.SHORT);
+    Toast.show({type: 'error', text1: 'Password does not match'});
     return false;
   }
 

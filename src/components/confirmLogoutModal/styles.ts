@@ -4,7 +4,7 @@ import {COLORS} from '../../constants/color';
 export const styles = StyleSheet.create({
   container: {marginTop: -10, alignItems: 'center', gap: 16},
   logoutText: {
-    color: COLORS.charcoal,
+    color: 'black',
     fontSize: 18,
     fontWeight: '600',
   },

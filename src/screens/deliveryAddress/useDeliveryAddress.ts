@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native"
-import { TabNavigatorProps } from "../../types/types"
+import { StackNavigatorProps } from "../../types/types"
 import { useAppSelector } from "../../hooks/useStore"
 
 const useDeliveryAddress = () => {
-  const naviagtion = useNavigation<TabNavigatorProps>()
+  const naviagtion = useNavigation<StackNavigatorProps>()
   const navigateToAddAddress = ()=>{
     naviagtion.navigate("Add New Address")
   }

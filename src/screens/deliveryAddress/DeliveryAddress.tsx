@@ -1,33 +1,18 @@
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
 import {COLORS} from '../../constants/color';
 import AddressCard from '../../components/addressCard/AddressCard';
-import {CustomButton} from '../../components/customButton/CustomButtom';
+import {CustomButton} from '../../components/customButton/CustomButton';
 import useDeliveryAddress from './useDeliveryAddress';
+import {styles} from './DeliveryAddressStyles';
 
 const DeliveryAddress = () => {
   const {navigateToAddAddress, addresses} = useDeliveryAddress();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'white',
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          overflow: 'hidden',
-        }}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.borderRadius}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View
-            style={{
-              flex: 1,
-              paddingTop: 35,
-              paddingBottom: 30,
-              paddingHorizontal: 35,
-            }}>
-            <View
-              style={{borderBottomWidth: 1, borderColor: COLORS.lightPink}}
-            />
+          <View style={styles.addressList}>
+            <View style={styles.border} />
             {addresses?.map((item, index) => (
               <AddressCard
                 key={index}
@@ -37,7 +22,7 @@ const DeliveryAddress = () => {
             ))}
           </View>
         </ScrollView>
-        <View style={{alignItems: 'center', marginTop: 120, paddingBottom: 30}}>
+        <View style={styles.buttonContainer}>
           <CustomButton
             title="Add new Address"
             bgColor={COLORS.orange2}
@@ -52,5 +37,3 @@ const DeliveryAddress = () => {
 };
 
 export default DeliveryAddress;
-
-const styles = StyleSheet.create({});

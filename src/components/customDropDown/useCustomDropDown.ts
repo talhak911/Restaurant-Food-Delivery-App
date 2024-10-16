@@ -1,6 +1,5 @@
 import {useState} from 'react';
-import { Role } from '../../gql/graphql';
-
+import {Role} from '../../gql/graphql';
 
 export const useCustomDropdown = ({
   onSelect,

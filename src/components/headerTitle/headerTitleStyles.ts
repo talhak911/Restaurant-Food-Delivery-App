@@ -1,10 +1,12 @@
-import { StyleSheet } from "react-native";
-import { LEAGUE_SPARTAN_BOLD } from "../../constants/fonts";
+import {StyleSheet} from 'react-native';
+import {LEAGUE_SPARTAN_BOLD} from '../../constants/fonts';
 
-export const styles = StyleSheet.create({title:{
+export const styles = StyleSheet.create({
+  title: {
     fontSize: 28,
     color: 'white',
-    paddingVertical:30,
+    paddingVertical: 30,
     fontFamily: LEAGUE_SPARTAN_BOLD,
   },
-container:{justifyContent: 'center', alignItems: 'center'}})
+  container: {justifyContent: 'center', alignItems: 'center'},
+});

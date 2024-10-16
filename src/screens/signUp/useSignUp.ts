@@ -1,12 +1,11 @@
 import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {useAppDispatch} from '../../hooks/useStore';
 import {AuthNavigationProp} from '../../types/types';
 import {SIGN_UP_FIELDS} from '../../constants/inputFields';
 import {useMutation} from '@apollo/client';
 import {Role, SignUpDocument} from '../../gql/graphql';
-import {ToastAndroid} from 'react-native';
 import {validateSignUpForm} from '../../utils/validation';
+import Toast from 'react-native-toast-message';
 
 export const useSignUp = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -14,7 +13,7 @@ export const useSignUp = () => {
   const navigateToSignIn = () => {
     navigation.navigate('Log In');
   };
-   const handleDateChange = (date: string) => {
+  const handleDateChange = (date: string) => {
     setDob(date);
   };
 
@@ -30,7 +29,7 @@ export const useSignUp = () => {
 
     try {
       const {data} = await signUp({
-        fetchPolicy:"no-cache",
+        fetchPolicy: 'no-cache',
         variables: {
           data: {
             email,
@@ -43,18 +42,16 @@ export const useSignUp = () => {
         },
       });
       if (data) {
-        ToastAndroid.show('Verify your account to login ', ToastAndroid.SHORT);
+        Toast.show({text1: 'Verify your account to login'});
         navigation.navigate('Verify Otp', {email});
       }
     } catch (error: any) {
-      console.log(error);
-      ToastAndroid.show(error.message, ToastAndroid.LONG);
+      Toast.show({type: 'error', text1: error.message});
     }
   };
 
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<Role | null>(null);
   const [dob, setDob] = useState('');
@@ -80,6 +77,5 @@ export const useSignUp = () => {
     role,
     dob,
     handleDateChange,
-
   };
 };

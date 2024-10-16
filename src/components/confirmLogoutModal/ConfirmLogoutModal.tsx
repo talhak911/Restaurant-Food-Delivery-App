@@ -16,12 +16,12 @@ export const ConfirmLogoutModal = ({
     <View style={styles.buttonsContainer}>
       <TouchableOpacity
         onPress={close}
-        style={[styles.button, {backgroundColor: COLORS.lightPurple}]}>
+        style={[styles.button, {backgroundColor: COLORS.orange2}]}>
         <Text style={styles.buttonTextNo}>No</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={action}
-        style={[styles.button, {backgroundColor: COLORS.purple}]}>
+        style={[styles.button, {backgroundColor: COLORS.orange}]}>
         <Text style={styles.buttonTextYes}>Yes</Text>
       </TouchableOpacity>
     </View>

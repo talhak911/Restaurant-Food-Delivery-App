@@ -1,8 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
-import {TabNavigatorProps} from '../../types/types';
+import {StackNavigatorProps} from '../../types/types';
 
 const useSliderItem = () => {
-  const navigation = useNavigation<TabNavigatorProps>();
+  const navigation = useNavigation<StackNavigatorProps>();
 
   const navigateToFoodDetail = ({
     id,

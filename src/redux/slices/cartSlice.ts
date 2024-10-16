@@ -1,19 +1,15 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {UpdateCartParams} from '../../types/types';
+import {CartState, UpdateCartParams} from '../../types/types';
 import {
   FetchCartDocument,
-  FetchCartQuery,
   RemoveFromCartDocument,
   UpdateCartDocument,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
+import Toast from 'react-native-toast-message';
 import {ToastAndroid} from 'react-native';
 
-const initialState: {
-  cartItems: FetchCartQuery['fetchCart'] | null;
-  loading: boolean;
-  loadingItem: boolean;
-} = {
+const initialState: CartState = {
   cartItems: null,
   loading: false,
   loadingItem: false,
@@ -86,6 +82,7 @@ export const cartSlice = createSlice({
       );
 
       if (item) {
+        item.quantity -= 1;
         item.totalPrice = parseFloat(
           (item.totalPrice - item.food.price).toFixed(2),
         );
@@ -97,9 +94,9 @@ export const cartSlice = createSlice({
         ? state.cartItems.filter(item => item.food.id !== action.payload)
         : null;
     },
-    emptyCart:(state)=>{
-      state.cartItems=null
-    }
+    emptyCart: state => {
+      state.cartItems = null;
+    },
   },
   extraReducers: builder => {
     builder.addCase(deleteItem.fulfilled, state => {
@@ -110,7 +107,7 @@ export const cartSlice = createSlice({
     });
     builder.addCase(deleteItem.rejected, (state, action) => {
       state.loadingItem = false;
-      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+      Toast.show({type: 'error', text1: action.payload as string});
     });
     builder.addCase(updateCart.fulfilled, state => {
       state.loadingItem = false;
@@ -120,7 +117,7 @@ export const cartSlice = createSlice({
     });
     builder.addCase(updateCart.rejected, (state, action) => {
       state.loadingItem = false;
-      ToastAndroid.show(action.payload as string, ToastAndroid.LONG);
+      ToastAndroid.show(action.payload as string, 3);
     });
     builder.addCase(fetchCart.fulfilled, (state, action) => {
       state.cartItems = action.payload;
@@ -131,6 +128,10 @@ export const cartSlice = createSlice({
     });
   },
 });
-export const {removeOneItemFromCart, addOneItemToCart, deleteItemFromCart,emptyCart} =
-  cartSlice.actions;
+export const {
+  removeOneItemFromCart,
+  addOneItemToCart,
+  deleteItemFromCart,
+  emptyCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

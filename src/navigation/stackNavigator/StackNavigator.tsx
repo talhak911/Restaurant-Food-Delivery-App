@@ -14,6 +14,7 @@ import BackIcon from '../../assets/icons/back';
 import HeaderTitle from '../../components/headerTitle/HeaderTitle';
 import Home from '../../screens/home/Home';
 import MyOrder from '../../screens/myOrder/MyOrder';
+import ForgetPassword from '../../screens/forgetPassword/ForgetPassword';
 
 export default function StackNavigator() {
   const Stack = createNativeStackNavigator<StackNavigatorParamList>();
@@ -96,6 +97,11 @@ export default function StackNavigator() {
         key={'Contact Us'}
         name={'Contact Us'}
         component={ComingSoon}
+      />
+      <Stack.Screen
+        key={'Forget Password'}
+        name={'Forget Password'}
+        component={ForgetPassword}
       />
       <Stack.Screen
         key={'Help & FAQs'}

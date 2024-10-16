@@ -1,17 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { styles } from './headerTitleStyles'
+import {Text, View} from 'react-native';
+import React from 'react';
+import {styles} from './headerTitleStyles';
 
-const HeaderTitle = ({title}:{title:string}) => {
+const HeaderTitle = ({title}: {title: string}) => {
   return (
     <View style={styles.container}>
-    <Text
-      style={styles.title}>
-      {title}
-    </Text>
-  </View>
-  )
-}
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+};
 
-export default HeaderTitle
-
+export default HeaderTitle;

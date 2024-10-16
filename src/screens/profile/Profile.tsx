@@ -1,19 +1,11 @@
-import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import React from 'react';
+import {View, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import useProfile from './useProfile';
 import CameraIcon from '../../assets/icons/camera';
-import {CustomButton} from '../../components/customButton/CustomButtom';
+import {CustomButton} from '../../components/customButton/CustomButton';
 import DateInput from '../../components/dateInput/DateInput';
-import {BlinkingImage} from '../../components/loading/Loading';
-import {IMAGES} from '../../constants/constants';
+import {LoadingImage} from '../../components/loadingImage/LoadingImage';
 
 const Profile = () => {
   const {
@@ -41,7 +33,7 @@ const Profile = () => {
             alignItems: 'center',
           }}>
           <View style={{position: 'relative'}}>
-            <BlinkingImage
+            <LoadingImage
               placeholder="profile"
               uri={picture || profilePic}
               style={{height: 127, width: 127, borderRadius: 20}}
@@ -63,7 +55,7 @@ const Profile = () => {
                 />
               ) : (
                 <CustomInput
-                  label={field.placeholder}
+                  label={field.label}
                   key={index}
                   value={field.value}
                   onChange={field.onChange}

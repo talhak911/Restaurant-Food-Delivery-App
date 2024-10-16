@@ -1,7 +1,7 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { COLORS } from '../../constants/color'
-import { CustomButton } from '../../components/customButton/CustomButtom'
+import { CustomButton } from '../../components/customButton/CustomButton'
 import useRestaurantHome from './useRestaurantHome'
 
 const RestaurantHome = () => {

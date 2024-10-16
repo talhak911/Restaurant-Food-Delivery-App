@@ -39,4 +39,13 @@ export const styles = StyleSheet.create({
     color: COLORS.almostBlack,
     fontSize: 20,
   },
+  date:{
+    fontFamily: LEAGUE_SPARTAN_LIGHT,
+    color: COLORS.almostBlack,
+  },
+  items:{
+    paddingBottom: 23,
+    color: COLORS.almostBlack,
+    fontFamily: LEAGUE_SPARTAN_LIGHT,
+  }
 });

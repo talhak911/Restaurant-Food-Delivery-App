@@ -1,7 +1,6 @@
 import {useState} from 'react';
 
-const useDateInput = ({setDate}:{setDate:(date: string) => void}) => {
-
+const useDateInput = ({setDate}: {setDate: (date: string) => void}) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {

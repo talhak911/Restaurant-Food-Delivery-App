@@ -3,13 +3,6 @@ import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {fetchOrders} from '../../redux/slices/orderSlice';
 import {OrderStatus} from '../../gql/graphql';
 
-// export type OrdersStatus = 'Active' | 'Completed' | 'Cancelled';
-export const ORDER_FILTERS: {status: OrderStatus}[] = [
-  {status: OrderStatus.Active},
-  {status: OrderStatus.Delivered},
-  {status: OrderStatus.Canceled},
-];
-
 export const useMyOrders = () => {
   const [isActive, setIsActive] = useState<OrderStatus>(OrderStatus.Active);
   const orders = useAppSelector(state => state.orders.orders);

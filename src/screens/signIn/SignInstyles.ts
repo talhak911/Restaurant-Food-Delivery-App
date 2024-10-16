@@ -33,6 +33,8 @@ export default StyleSheet.create({
   footerView: {
     alignItems: 'center',
   },
+  signUp:{flexDirection: 'row', paddingVertical: 19},
+  signUpIcons:{flexDirection: 'row', gap: 9},
   footerText: {
     fontSize: 14,
     color: 'black',
@@ -42,4 +44,10 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: COLORS.orange,
   },
+  signUpOptionsText:{
+    color: COLORS.almostBlack,
+    marginTop: 29,
+    marginBottom: 19,
+  },
+  buttonContainer:{alignItems: 'center',marginTop: Height(7), marginHorizontal: 16}
 });

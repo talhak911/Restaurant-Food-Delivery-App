@@ -8,7 +8,7 @@ import {
 import LogoutIcon from '../../assets/icons/logout';
 import {DrawerList} from '../../constants/constants';
 import useDrawerContent from './useDrawerContent';
-import {BlinkingImage} from '../loading/Loading';
+import {LoadingImage} from '../loadingImage/LoadingImage';
 import {styles} from './DrawerContentStyles';
 
 function DrawerContent(props: DrawerContentComponentProps) {
@@ -18,7 +18,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
     <View style={styles.container}>
       <DrawerContentScrollView {...props} style={{}}>
         <View style={styles.profileContainer}>
-          <BlinkingImage
+          <LoadingImage
             style={styles.profilePicture}
             uri={user?.customer?.picture}
             placeholder="profile"

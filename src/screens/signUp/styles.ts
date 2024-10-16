@@ -4,12 +4,9 @@ import { Height, Width } from '../../utils/responsive';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
     backgroundColor: 'white',
     paddingTop: 30,
-    // borderTopWidth:30,
     borderTopRightRadius:30,
-    // paddingHorizontal:35,
     borderTopLeftRadius:30,
 
   },

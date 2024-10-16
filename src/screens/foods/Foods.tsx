@@ -10,90 +10,51 @@ import {
 import React from 'react';
 import {COLORS} from '../../constants/color';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
-import {CATEGORIES} from '../../constants/constants';
-import {LEAGUE_SPARTAN_LIGHT} from '../../constants/fonts';
+import {CATEGORIES, IMAGES} from '../../constants/constants';
+import {
+  LEAGUE_SPARTAN_LIGHT,
+  LEAGUE_SPARTAN_REGULAR,
+} from '../../constants/fonts';
 import SearchFilterIcon from '../../assets/icons/searchFilter';
-import FoodCard2 from '../../components/foodCard2/FoodCard2';
+import FoodCard from '../../components/foodCard/FoodCard';
 import useFoods from './useFoods';
+import {styles} from './FoodsStyles';
 
 const Foods = () => {
-  const {activeButton,foods, handlePressFoodCategory,navigation} = useFoods();
+  const {activeButton, foods, handlePressFoodCategory, navigation} = useFoods();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+    <SafeAreaView style={styles.container}>
       <HomeHeader />
-      <View
-        style={{
-          borderTopStartRadius: 30,
-          borderTopEndRadius: 30,
-          backgroundColor: 'white',
-          flex: 1,
-          marginTop: 12,
-        }}>
-        <View
-          style={{
-            paddingHorizontal: 35,
-            paddingTop: 15,
-            borderTopStartRadius: 30,
-            borderTopEndRadius: 30,
-            flexDirection: 'row',
-            backgroundColor: COLORS.orange,
-            justifyContent: 'space-between',
-          }}>
+      <View style={styles.topContainer}>
+        <View style={styles.categoriesContainer}>
           {CATEGORIES.map((item, index) => (
             <TouchableOpacity
               onPress={() => {
                 handlePressFoodCategory(item.label);
               }}
-              style={[
-                {
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 4,
-                  height: 93,
-                  width: '20%',
-                },
-              ]}
+              style={styles.category}
               key={index}>
               {activeButton === item.label ? (
                 <ImageBackground
-                  style={{
-                    width: 123,
-                    height: 94,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
+                  style={styles.activeCategoryBackground}
                   tintColor="white"
-                  source={require('../../assets/images/Union.png')} // Use your image here
+                  source={IMAGES.selectedCategoryBg}
                   resizeMode="cover">
                   {item.icon}
-                  <Text style={{fontSize: 12, color: COLORS.almostBlack}}>
-                    {item.label}
-                  </Text>
+                  <Text style={styles.categoryText}>{item.label}</Text>
                 </ImageBackground>
               ) : (
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <View style={styles.button}>
                   {item.icon}
-                  <Text style={{fontSize: 12, color: COLORS.almostBlack}}>
-                    {item.label}
-                  </Text>
+                  <Text style={styles.categoryText}>{item.label}</Text>
                 </View>
               )}
             </TouchableOpacity>
           ))}
         </View>
-        <View
-          style={{
-            flexGrow: 1,
-            paddingTop: 22,
-            paddingHorizontal: 35,
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <View style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
+        <View style={styles.foodsContainer}>
+          <View style={styles.filterContainer}>
+            <View style={styles.filterContainerLeftContent}>
               <Text style={[styles.lightFont, {color: COLORS.almostBlack}]}>
                 Sort by
               </Text>
@@ -105,14 +66,16 @@ const Foods = () => {
           </View>
 
           <FlatList
-            style={{marginTop: 16,}}
+            style={{marginTop: 16}}
             data={foods}
             showsVerticalScrollIndicator={false}
-            renderItem={({item}) => <FoodCard2 data={item} navigation={navigation}/>}
+            renderItem={({item}) => (
+              <FoodCard data={item} navigation={navigation} />
+            )}
             contentContainerStyle={{
               paddingBottom: 110,
             }}
-   />
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -120,7 +83,3 @@ const Foods = () => {
 };
 
 export default Foods;
-
-const styles = StyleSheet.create({
-  lightFont: {fontSize: 12, fontFamily: LEAGUE_SPARTAN_LIGHT},
-});

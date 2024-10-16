@@ -8,7 +8,6 @@ import {
   UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/apolloProvider';
-import {ToastAndroid} from 'react-native';
 import Toast from 'react-native-toast-message';
 
 const initialState: {user: reduxUser} = {
@@ -138,13 +137,9 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // builder.addCase(signIn.fulfilled, (state, action) => {
-    //   state.user = action.payload;
-    // });
-
     builder.addCase(addCustomerAddress.fulfilled, (state, action) => {
       if (state.user?.customer && action.payload) {
-        state.user.customer.address = action.payload; // Update the addresses in the state
+        state.user.customer.address = action.payload;
       }
     });
     builder.addCase(signOut.fulfilled, state => {
