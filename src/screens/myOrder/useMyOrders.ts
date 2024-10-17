@@ -8,10 +8,18 @@ export const useMyOrders = () => {
   const orders = useAppSelector(state => state.orders.orders);
   const [filteredOrders, setFilteredOrders] = useState(orders);
 
-  const dipatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    dipatch(fetchOrders({}));
-  }, []);
+    dispatch(fetchOrders({}));
+
+    const intervalId = setInterval(() => {
+      dispatch(fetchOrders({}));
+    }, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     if (orders) {
@@ -39,7 +47,6 @@ export const useMyOrders = () => {
   };
   return {
     isActive,
-    orders,
     filteredOrders,
     handleIsActive,
   };
