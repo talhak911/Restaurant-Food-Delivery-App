@@ -4,12 +4,9 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
-import {COLORS} from '../../constants/color';
 import useChangePassword from './useChangePassword';
 import {CustomInput} from '../../components/customInput/CustomInput';
-import {LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
 import {CustomButton} from '../../components/customButton/CustomButton';
 import {styles} from './ChangePasswordStyles';
 

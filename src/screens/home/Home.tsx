@@ -13,13 +13,14 @@ import BackIcon from '../../assets/icons/back';
 import Carousel from '../../components/carousel/Carousel';
 import FoodItemPriceDisplay from '../../components/foodItemPriceDisplay/FoodItemPriceDisplay';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
+import { styles } from './HomeStyles';
 
 const Home = () => {
   const {navigateToFoodDetail, navigateToFoods, bestSeller, recommended} =
     useHome();
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+    <SafeAreaView style={styles.container}>
       <HomeHeader />
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View

@@ -3,53 +3,42 @@ import React from 'react';
 import {COLORS} from '../../constants/color';
 import WelcomeIcon from '../../assets/icons/welcome';
 import {CustomButton} from '../../components/customButton/CustomButton';
-import { Font, Height, Width } from '../../utils/responsive';
-import { useWelcome } from './useWelcome';
+import {Width} from '../../utils/responsive';
+import {useWelcome} from './useWelcome';
+import {styles} from './WelcomeStyles';
 const Welcome = () => {
-  const {navigateToSignUp,navigateToSignIn}= useWelcome()
+  const {navigateToSignUp, navigateToSignIn} = useWelcome();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.orange}}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: Height(31),
-        }}>
-       <View style={{maxWidth:300,maxHeight:400}}>
-       <WelcomeIcon />
-       </View>
-        <Text
-          style={{
-            color: COLORS.almostWhite,
-            fontSize: Font(14),
-            marginTop: 30,
-            marginHorizontal: Width(11),
-            textAlign: 'center',
-          }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod.
-        </Text>
-        <View style={{marginTop: Height(5), gap: 4,marginBottom:12}}>
-          <CustomButton
-            pH={Width(17)}
-            bgColor={COLORS.yellow}
-            textColor={COLORS.orange}
-            loading={false}
-            title="Log In"
-            onPress={navigateToSignIn}
+        <View style={styles.contentContainer}>
+          <View style={styles.logo}>
+            <WelcomeIcon />
+          </View>
+          <Text style={styles.description}>
+            Enjoy the convenience of food delivery without compromising on
+            taste.
+          </Text>
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              pH={Width(17)}
+              bgColor={COLORS.yellow}
+              textColor={COLORS.orange}
+              loading={false}
+              title="Log In"
+              onPress={navigateToSignIn}
             />
-          <CustomButton
-            pH={Width(17)}
-            bgColor={COLORS.yellow2}
-            textColor={COLORS.orange}
-            loading={false}
-            title="Sign Up"
-            onPress={navigateToSignUp}
+            <CustomButton
+              pH={Width(17)}
+              bgColor={COLORS.yellow2}
+              textColor={COLORS.orange}
+              loading={false}
+              title="Sign Up"
+              onPress={navigateToSignUp}
             />
+          </View>
         </View>
-      </View>
-            </ScrollView>
+      </ScrollView>
     </SafeAreaView>
   );
 };

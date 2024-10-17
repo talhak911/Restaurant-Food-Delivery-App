@@ -6,11 +6,19 @@ import {FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.yellow,
+  },
+  borderRadius: {
+    flex: 1,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    overflow: 'hidden',
+  },
+  containerContent: {
+    gap: Height(2.5),
     paddingTop: Height(4),
     paddingHorizontal: Width(8),
   },
-  containerContent: {gap: Height(2.5)},
   forgetPasswordContainer: {
     alignSelf: 'flex-end',
   },

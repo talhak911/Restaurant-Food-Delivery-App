@@ -2,12 +2,17 @@ import {StyleSheet} from 'react-native';
 import { COLORS } from '../../constants/color';
 import { Height, Width } from '../../utils/responsive';
 export default StyleSheet.create({
-  container: {
+  container:{flex: 1, backgroundColor: COLORS.yellow},
+  borderRadius:{
+    flex:1,
+    borderTopRightRadius:30,
+    borderTopLeftRadius:30,
+    overflow:"hidden"
+  },
+  contentContainer: {
     flex: 1,
     backgroundColor: 'white',
     paddingTop: 30,
-    borderTopRightRadius:30,
-    borderTopLeftRadius:30,
 
   },
   terms: {
@@ -29,15 +34,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  footerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  footerContainer:{flexDirection: 'row', paddingVertical: Height(1),alignItems:"center"},
   footerText: {
     marginRight: 2,
     color: 'black',
   },
+  signUpOptionsText:{color: COLORS.almostBlack, marginVertical: 9},
   footerLink: {
     fontWeight:'500',
     color: COLORS.orange,

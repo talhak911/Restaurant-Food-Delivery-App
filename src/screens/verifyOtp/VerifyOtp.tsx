@@ -4,42 +4,38 @@ import {useVerifyOtp} from './useVerifyOtp';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {VerifyOtpProps} from '../../types/types';
 import {CustomButton} from '../../components/customButton/CustomButton';
-import {Height} from '../../utils/responsive';
+import {styles} from './VerifyOtpStyles';
 
 const VerifyOtp = ({route}: VerifyOtpProps) => {
   const {otp, loading, setOtp, handleVerifyOtp} = useVerifyOtp(
     route.params.email,
   );
   return (
-    <SafeAreaView>
-      <KeyboardAwareScrollView>
-        <OtpTextInput
-          otp={otp}
-          setOtp={setOtp}
-          digits={6}
-          style={{
-            borderRadius: 0,
-            borderTopWidth: 0,
-            borderRightWidth: 0,
-            borderLeftWidth: 0,
-            height: 45,
-          }}
-          fontStyle={{fontSize: 20, fontWeight: 'bold'}}
-          focusedStyle={{borderColor: 'black', borderBottomWidth: 2}}
-        />
-      </KeyboardAwareScrollView>
-
-      <View style={{alignItems: 'center', marginTop: Height(9)}}>
-        <CustomButton
-          loading={loading}
-          title="Verify Account"
-          onPress={handleVerifyOtp}
-        />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.borderRadius}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{flexGrow: 1, backgroundColor: 'white'}}>
+          <View style={styles.contentContainer}>
+            <OtpTextInput
+              otp={otp}
+              setOtp={setOtp}
+              digits={6}
+              style={styles.otpStyle}
+              fontStyle={styles.fontStyle}
+              focusedStyle={styles.focusedStyle}
+            />
+            <View style={styles.buttonContainer}>
+              <CustomButton
+                loading={loading}
+                title="Verify Account"
+                onPress={handleVerifyOtp}
+              />
+            </View>
+          </View>
+        </KeyboardAwareScrollView>
       </View>
     </SafeAreaView>
   );
 };
 
 export default VerifyOtp;
-
-const styles = StyleSheet.create({});

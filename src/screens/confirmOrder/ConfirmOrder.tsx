@@ -1,16 +1,11 @@
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {COLORS} from '../../constants/color';
-import {
-  LEAGUE_SPARTAN_BOLD,
-  LEAGUE_SPARTAN_MEDIUM,
-} from '../../constants/fonts';
 import PencilIcon from '../../assets/icons/pencil';
 import {CustomButton} from '../../components/customButton/CustomButton';
 import ConfirmOrderCard from '../../components/confirmOrderCard/ConfirmOrderCard';

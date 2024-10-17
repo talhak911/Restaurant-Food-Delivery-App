@@ -1,11 +1,11 @@
 import {View, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native';
-import {COLORS} from '../../constants/color';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import useProfile from './useProfile';
 import CameraIcon from '../../assets/icons/camera';
 import {CustomButton} from '../../components/customButton/CustomButton';
 import DateInput from '../../components/dateInput/DateInput';
 import {LoadingImage} from '../../components/loadingImage/LoadingImage';
+import {styles} from './ProfileStyles';
 
 const Profile = () => {
   const {
@@ -19,33 +19,22 @@ const Profile = () => {
     fieldConfig,
   } = useProfile();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            width: '100%',
-            flex: 1,
-            backgroundColor: 'white',
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            paddingHorizontal: 35,
-            paddingVertical: 19,
-            alignItems: 'center',
-          }}>
+        <View style={styles.contentContainer}>
           <View style={{position: 'relative'}}>
             <LoadingImage
               placeholder="profile"
               uri={picture || profilePic}
-              style={{height: 127, width: 127, borderRadius: 20}}
+              style={styles.profilePicture}
             />
-
             <TouchableOpacity
               onPress={handleImagePicker}
-              style={{position: 'absolute', bottom: -5, right: -5}}>
+              style={styles.cameraIcon}>
               <CameraIcon />
             </TouchableOpacity>
           </View>
-          <View style={{gap: 32, marginTop: 38}}>
+          <View style={styles.inputFieldsContainer}>
             {fieldConfig.map((field, index) => {
               return index === 1 ? (
                 <DateInput
@@ -68,12 +57,7 @@ const Profile = () => {
           </View>
         </View>
       </ScrollView>
-      <View
-        style={{
-          backgroundColor: 'white',
-          alignItems: 'center',
-          paddingBottom: 25,
-        }}>
+      <View style={styles.buttonContainer}>
         <CustomButton
           loading={loading}
           onPress={handleUpdateProfile}

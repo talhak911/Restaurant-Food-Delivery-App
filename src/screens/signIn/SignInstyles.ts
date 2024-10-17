@@ -1,18 +1,23 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {Font, Height, Width} from '../../utils/responsive';
-import {FONT_INTER, FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
+import {FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
 
 export default StyleSheet.create({
-  container: {
+  container: {flex: 1, backgroundColor: COLORS.yellow},
+  borderRadius:{
+    flex:1,
+    borderTopRightRadius:30,
+    borderTopLeftRadius:30,
+    overflow:"hidden"
+  },
+  contentContainer: {
     flex: 1,
     backgroundColor: 'white',
     paddingTop: Height(4),
     paddingHorizontal: Width(8),
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
   },
-  containerContent: {gap: Height(2.5)},
+  topContainer: {gap: Height(2.5)},
   forgetPasswordContainer: {
     alignSelf: 'flex-end',
   },
@@ -33,8 +38,8 @@ export default StyleSheet.create({
   footerView: {
     alignItems: 'center',
   },
-  signUp:{flexDirection: 'row', paddingVertical: 19},
-  signUpIcons:{flexDirection: 'row', gap: 9},
+  signUp: {flexDirection: 'row', paddingVertical: 19},
+  signUpIcons: {flexDirection: 'row', gap: 9},
   footerText: {
     fontSize: 14,
     color: 'black',
@@ -44,10 +49,14 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: COLORS.orange,
   },
-  signUpOptionsText:{
+  signUpOptionsText: {
     color: COLORS.almostBlack,
     marginTop: 29,
     marginBottom: 19,
   },
-  buttonContainer:{alignItems: 'center',marginTop: Height(7), marginHorizontal: 16}
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: Height(7),
+    marginHorizontal: 16,
+  },
 });

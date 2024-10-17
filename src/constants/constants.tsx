@@ -26,44 +26,6 @@ export const IMAGES = {
   selectedCategoryBg:require('../assets/images/Union.png')
 };
 
-export const AUTH_SCREENS: AuthScreenOptions = [
-  {
-    name: 'OnBoarding',
-    component: Welcome,
-    options: {
-      title: 'Sign Up',
-      headerTitleAlign: 'center',
-      headerTitleStyle: {fontSize: 18},
-    },
-  },
-  {
-    name: 'Welcome',
-    component: Welcome,
-    options: {
-      title: 'Sign Up',
-      headerTitleAlign: 'center',
-      headerTitleStyle: {fontSize: 18},
-    },
-  },
-  {
-    name: 'SignUp',
-    component: SignUp,
-    options: {
-      title: 'Sign Up',
-      headerTitleAlign: 'center',
-      headerTitleStyle: {fontSize: 18},
-    },
-  },
-  {
-    name: 'SignIn',
-    component: SignIn,
-    options: {
-      title: 'Login',
-      headerTitleAlign: 'center',
-      headerTitleStyle: {fontSize: 18},
-    },
-  },
-];
 export const TAB_SCREEN_OPTIONS = {
   tabBarLabelStyle: {
     marginBottom: 12,

@@ -2,7 +2,6 @@ import {
   FlatList,
   ImageBackground,
   SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -11,10 +10,6 @@ import React from 'react';
 import {COLORS} from '../../constants/color';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
 import {CATEGORIES, IMAGES} from '../../constants/constants';
-import {
-  LEAGUE_SPARTAN_LIGHT,
-  LEAGUE_SPARTAN_REGULAR,
-} from '../../constants/fonts';
 import SearchFilterIcon from '../../assets/icons/searchFilter';
 import FoodCard from '../../components/foodCard/FoodCard';
 import useFoods from './useFoods';

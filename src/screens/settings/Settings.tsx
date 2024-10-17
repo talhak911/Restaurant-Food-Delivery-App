@@ -1,51 +1,33 @@
-import {View, Text, ScrollView, SafeAreaView, TouchableOpacity} from 'react-native';
-import React from 'react';
-import {COLORS} from '../../constants/color';
-import NotificationIcon from '../../assets/icons/notification';
-import NotificationsIcon from '../../assets/icons/notifications';
+import {
+  View,
+  Text,
+  ScrollView,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import DownArrowIcon from '../../assets/icons/downArrow';
-import {LEAGUE_SPARTAN_MEDIUM} from '../../constants/fonts';
 import {SETTINGS} from '../../constants/constants';
 import useSettings from './useSettings';
-import { StackPaths } from '../../types/types';
+import {StackPaths} from '../../types/types';
+import {styles} from './SettingsStyles';
 
 const Settings = () => {
-    const {navigateTo}=useSettings()
+  const {navigateTo} = useSettings();
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.yellow}}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'white',
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            paddingLeft: 39,
-            paddingRight: 46,
-            paddingVertical: 56,
-          }}>
+        <View style={styles.contentContainer}>
           <View style={{gap: 22}}>
             {SETTINGS.map((item, index) => (
               <TouchableOpacity
-              onPress={()=>{navigateTo(item.screen as keyof StackPaths)}}
+                onPress={() => {
+                  navigateTo(item.screen as keyof StackPaths);
+                }}
                 key={index}
-                style={{flexDirection: 'row', gap: 18, alignItems: 'center'}}>
-                <View>{item.icon}</View>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: LEAGUE_SPARTAN_MEDIUM,
-                      fontSize: 20,
-                      color: COLORS.almostBlack,
-                    }}>
-                    {item.title}
-                  </Text>
+                style={styles.buttonContainer}>
+                {item.icon}
+                <View style={styles.buttonContent}>
+                  <Text style={styles.buttonTitle}>{item.title}</Text>
                   <DownArrowIcon />
                 </View>
               </TouchableOpacity>

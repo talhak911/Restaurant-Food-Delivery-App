@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 import {COLORS} from '../../constants/color';
 import AddressCard from '../../components/addressCard/AddressCard';
 import {CustomButton} from '../../components/customButton/CustomButton';

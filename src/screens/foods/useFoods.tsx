@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import {  FilterBy } from '../../constants/constants'
 import {  FoodCategory } from '../../gql/graphql';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigatorProps, TabNavigatorProps } from '../../types/types';
+import { StackNavigatorProps } from '../../types/types';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { fetchFoods } from '../../redux/slices/foodSlice';
 

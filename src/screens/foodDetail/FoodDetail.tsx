@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
 import HeartIcon from '../../assets/icons/heart';
 import GoBack from '../../components/goBack/GoBack';
 import {FoodDetailsProps} from '../../types/types';
