@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingHorizontal: 35,
+    paddingHorizontal: '6%',
     paddingVertical: 39,
   },
   filterButtonsContainer: {
