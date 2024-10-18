@@ -7,6 +7,7 @@ import {OrderStatus} from '../../gql/graphql';
 import {styles} from './OrderCardStyles';
 import FoodItemPriceDisplay from '../foodItemPriceDisplay/FoodItemPriceDisplay';
 import {OrderCardProps} from '../../types/types';
+import {Font} from '../../utils/responsive';
 
 const OrderCard = ({
   picUrl,
@@ -36,12 +37,9 @@ const OrderCard = ({
               <Text style={styles.orderStatus}>Order {orderStatus}</Text>
             </View>
           )}
-          <CustomButton
-            title="Leave a review"
-            fontSize={15}
-            width={121}
-            pV={5}
-          />
+          <View style={styles.reviewButton}>
+            <CustomButton title="Leave a review" fontSize={Font(15)} pV={5} />
+          </View>
         </View>
         <View style={styles.rightContentContainer}>
           <Text style={styles.price}>${totalPrice}</Text>
@@ -50,8 +48,7 @@ const OrderCard = ({
           <View style={styles.orderAgainButton}>
             <CustomButton
               title="Order Again"
-              fontSize={15}
-              width={104}
+              fontSize={Font(15)}
               bgColor={COLORS.orange2}
               textColor={COLORS.orange}
               pV={5}
