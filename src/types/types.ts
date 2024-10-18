@@ -1,13 +1,14 @@
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationOptions,
+  BottomTabNavigationProp,
+} from '@react-navigation/bottom-tabs';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {
+  NativeStackNavigationOptions,
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
-import {
-  StackNavigationOptions,
-  StackScreenProps,
-} from '@react-navigation/stack';
+import {StackScreenProps} from '@react-navigation/stack';
 
 import {
   DimensionValue,
@@ -24,58 +25,37 @@ import {
 
 export type voidFunction = () => void;
 
-export type AuthScreenOptions = {
-  name: string;
-  component: () => React.JSX.Element;
-  options: {
-    title: string;
-    headerTitleAlign: 'center' | 'left' | undefined;
-    headerTitleStyle: {
-      fontSize: number;
-    };
-  };
-}[];
-
-// export type ScreenConfig = {
-//   name: keyof StackNavigatorParamList;
-//   component: React.ComponentType<any>;
-//   options?: StackNavigationOptions;
-// };
-
 export type ChangePasswordPayload = {
   currentPassword: string;
   newPassword: string;
 };
 
-//new
-
-
-export type ChangePasswordFieldsType= {
+export type ChangePasswordFieldsType = {
   'Current Password': string;
   'New Password': string;
   'Confirm New Password': string;
-}
-export type AddressType ={
+};
+export type AddressType = {
   Name: string;
   Address: string;
-}
+};
 export type SliderItemProps = {
   item: FetchFoodsQuery['fetchFoods'][number];
   index: number;
 };
-export type OrderItemCardProps =  {
+export type OrderItemCardProps = {
   picture: string;
   price: string;
   items: string;
   name: string;
   totalPrice: string;
-}
-export type OrderCard2Props =  {
+};
+export type OrderCard2Props = {
   foods: FoodItem[];
   dateTime: string;
   orderStatus: OrderStatus;
   totalPrice: string;
-}
+};
 export type OrderCardProps = {
   picUrl: string;
   title: string;
@@ -84,26 +64,26 @@ export type OrderCardProps = {
   orderStatus: OrderStatus;
   totalPrice: string;
   items: string;
-}
+};
 export type LoadingImageProps = {
   uri?: string | null;
   style: {};
   placeholder: 'food' | 'profile';
-}
+};
 export type FoodCardProps = {
   data: FetchFoodsQuery['fetchFoods'][number];
   navigation: StackNavigatorProps;
-}
-export type FoodItemPriceDisplayProps =  {
+};
+export type FoodItemPriceDisplayProps = {
   uri: string | undefined | null;
   height: number;
   width: number;
   price: string;
-}
-export type DateInputProps ={
+};
+export type DateInputProps = {
   date: string;
   setDate: (date: string) => void;
-}
+};
 export type useCustomModalProps = {
   visible: boolean;
   onClose: () => void;
@@ -290,4 +270,20 @@ export type FoodItem = {
 export type FoodState = {
   foods: FetchFoodsQuery['fetchFoods'] | null;
   filteredFoods: FetchFoodsQuery['fetchFoods'] | null;
+};
+export type StackScreenConfig = {
+  name: keyof StackNavigatorParamList;
+  component: React.ComponentType<any>;
+  options?: NativeStackNavigationOptions;
+};
+export type TabScreen = {
+  name: keyof TabParamsList;
+  component: React.ComponentType<any>;
+  icon: React.ReactNode;
+  options?: BottomTabNavigationOptions;
+};
+export type AuthScreen = {
+  name: keyof AuthStackParamList;
+  component: React.ComponentType<any>;
+  options?: NativeStackNavigationOptions;
 };

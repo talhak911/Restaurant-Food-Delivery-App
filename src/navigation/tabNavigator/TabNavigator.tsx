@@ -1,25 +1,17 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabParamsList} from '../../types/types';
 import {COLORS} from '../../constants/color';
-import HomeIcon from '../../assets/icons/home';
-import FoodIcon from '../../assets/icons/food';
-import FavouriteIcon from '../../assets/icons/favourite';
-import TabOrderIcon from '../../assets/icons/tabOrder';
-import HelpIcon from '../../assets/icons/help';
-import {Text, TouchableOpacity, View} from 'react-native';
-import BackIcon from '../../assets/icons/back';
-import MyOrder from '../../screens/myOrder/MyOrder';
+import {Text, View} from 'react-native';
 import {LEAGUE_SPARTAN_BOLD} from '../../constants/fonts';
-import ComingSoon from '../../screens/comingSoon/ComingSoon';
-import Foods from '../../screens/foods/Foods';
-import StackNavigator from '../stackNavigator/StackNavigator';
+import GoBack from '../../components/goBack/GoBack';
+import {TAB_SCREENS} from '../../constants/constants';
 
 export const TabNavigator = () => {
   const Tab = createBottomTabNavigator<TabParamsList>();
 
   return (
     <Tab.Navigator
-      screenOptions={({navigation}) => ({
+      screenOptions={() => ({
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: COLORS.orange,
@@ -47,45 +39,19 @@ export const TabNavigator = () => {
           </View>
         ),
         headerBackVisible: false,
-        headerLeft: () => (
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={{paddingLeft: 35}}>
-            <BackIcon />
-          </TouchableOpacity>
-        ),
+        headerLeft: () => <GoBack />,
       })}>
-      <Tab.Screen
-        key={'Stack'}
-        name={'Stack'}
-        options={{tabBarIcon: () => <HomeIcon />, headerShown: false}}
-        component={StackNavigator}
-      />
-      <Tab.Screen
-        key={'Foods'}
-        name={'Foods'}
-        options={{tabBarIcon: () => <FoodIcon />, headerShown: false}}
-        component={Foods}
-      />
-      <Tab.Screen
-        key={'Favoirite'}
-        name={'Favoirite'}
-        options={{tabBarIcon: () => <FavouriteIcon />}}
-        component={ComingSoon}
-      />
-
-      <Tab.Screen
-        key={'My Orders'}
-        name={'My Orders'}
-        options={{tabBarIcon: () => <TabOrderIcon />}}
-        component={MyOrder}
-      />
-      <Tab.Screen
-        key={'Help'}
-        name={'Help'}
-        options={{tabBarIcon: () => <HelpIcon />}}
-        component={ComingSoon}
-      />
+      {TAB_SCREENS.map(({name, component, icon, options}) => (
+        <Tab.Screen
+          key={name}
+          name={name}
+          component={component}
+          options={{
+            ...options,
+            tabBarIcon: () => icon,
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 };
