@@ -64,7 +64,6 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addOneItemToCart: (state, action) => {
-      console.log('the action is ', action);
       const item = state.cartItems?.find(
         item => item.food.id === action.payload,
       );
@@ -89,7 +88,6 @@ export const cartSlice = createSlice({
       }
     },
     deleteItemFromCart: (state, action) => {
-      console.log(action.payload);
       state.cartItems = state.cartItems
         ? state.cartItems.filter(item => item.food.id !== action.payload)
         : null;

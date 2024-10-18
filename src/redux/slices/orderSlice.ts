@@ -74,7 +74,6 @@ export const orderSlice = createSlice({
         state.loading = false
     });
     builder.addCase(placeOrder.rejected, (state, action) => {
-        console.log(false)
       Toast.show({type:"error",text1:action.payload as string});
       state.loading = false
     });
