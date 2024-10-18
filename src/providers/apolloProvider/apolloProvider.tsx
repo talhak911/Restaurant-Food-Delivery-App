@@ -6,6 +6,7 @@ import {
 import {setContext} from '@apollo/client/link/context';
 import {createHttpLink} from '@apollo/client/link/http';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ReactNode} from 'react';
 
 const httpLink = createHttpLink({
   uri: 'https://restaurant-backend-app-server-production.up.railway.app/graphql',
@@ -26,6 +27,6 @@ export const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export const ApolloProvider = ({children}: any) => {
+export const ApolloProvider = ({children}: {children: ReactNode}) => {
   return <Provider client={client}>{children}</Provider>;
 };

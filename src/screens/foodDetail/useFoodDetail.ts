@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {updateCart} from '../../redux/slices/cartSlice';
 import {UpdateCartParams} from '../../types/types';
 import useCart from '../../hooks/useCart';
-import Toast from 'react-native-toast-message';
+import {ToastAndroid} from 'react-native';
 
 const useFoodDetail = (foodId: string) => {
   const loading = useAppSelector(state => state.cart.loadingItem);
@@ -24,7 +24,7 @@ const useFoodDetail = (foodId: string) => {
   const addToCart = async ({quantity, foodId}: UpdateCartParams) => {
     const res = await dispatch(updateCart({quantity, foodId}));
     if (res.meta.requestStatus === 'fulfilled') {
-      Toast.show({text1:"Added to cart"})
+      ToastAndroid.show('Added to cart', 3);
       openCart();
     }
   };

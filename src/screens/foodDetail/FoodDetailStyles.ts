@@ -12,10 +12,10 @@ export const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginTop: 47,
     marginBottom: 12,
-    paddingHorizontal: 35,
+    paddingRight: 35,
   },
   contentContainer: {
     flex: 1,

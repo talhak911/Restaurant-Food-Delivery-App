@@ -1,14 +1,10 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../types/types';
-import {SignUp} from '../../screens/signUp/SignUp';
 import {COLORS} from '../../constants/color';
-import Welcome from '../../screens/welcome/Welcome';
 import BackIcon from '../../assets/icons/back';
 import {Text, TouchableOpacity, View} from 'react-native';
-import { SignIn } from '../../screens/signIn/SignIn';
-import VerifyOtp from '../../screens/verifyOtp/VerifyOtp';
-import ForgetPassword from '../../screens/forgetPassword/ForgetPassword';
+import {AUTH_SCREENS} from '../../constants/constants';
 
 export default function AuthNavigator() {
   const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -25,11 +21,18 @@ export default function AuthNavigator() {
             backgroundColor: COLORS.yellow,
           },
           headerTitle: ({children}) => (
-            <View style={{ height: 130, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ fontSize: 28,color:"white",fontWeight:"700" }}>{children}</Text>
+            <View
+              style={{
+                height: 130,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontSize: 28, color: 'white', fontWeight: '700'}}>
+                {children}
+              </Text>
             </View>
           ),
-          headerBackVisible:false,
+          headerBackVisible: false,
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.goBack()}
@@ -38,16 +41,14 @@ export default function AuthNavigator() {
             </TouchableOpacity>
           ),
         })}>
-        <Stack.Screen
-          key="Welcome"
-          name="Welcome"
-          component={Welcome}
-          options={{statusBarColor: COLORS.orange, headerShown: false}}
-        />
-        <Stack.Screen key="New Account" name="New Account" component={SignUp}/>
-        <Stack.Screen key="Log In" name="Log In" component={SignIn}/>
-        <Stack.Screen key="Verify Otp" name="Verify Otp" component={VerifyOtp}/>
-        <Stack.Screen key="Forget Password" name="Forget Password" component={ForgetPassword}/>
+        {AUTH_SCREENS.map(({name, component, options}) => (
+          <Stack.Screen
+            key={name}
+            name={name}
+            component={component}
+            options={options}
+          />
+        ))}
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,17 +1,19 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
-import { Path, Svg } from 'react-native-svg';
+import {useWindowDimensions} from 'react-native';
+import {Path, Svg} from 'react-native-svg';
 
 const WelcomeIcon = () => {
-  // Get the screen width and height
-  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-
-  // Set a dynamic width and height based on the screen dimensions
-  const svgWidth = screenWidth * 0.8; // 80% of screen width
-  const svgHeight = screenHeight * 0.4; // 40% of screen height
+  const {width: screenWidth, height: screenHeight} = useWindowDimensions();
+  const svgWidth = screenWidth * 0.7;
+  const svgHeight = screenHeight * 0.3;
 
   return (
-    <Svg width={svgWidth} height={svgHeight} viewBox="0 0 210 262" fill="none">
+    <Svg
+      style={{marginTop: screenHeight > 800 ? 120 : 0}}
+      width={svgWidth}
+      height={svgHeight}
+      viewBox="0 0 210 262"
+      fill="none">
       <Path
         d="M35.596 223.035l-8.642 16.762v7.806h-6.866v-7.806l-8.642-16.762h7.806l4.321 9.478 4.322-9.478h7.7zm8.788 0v14.253c0 1.324.301 2.346.905 3.066.628.72 1.569 1.08 2.823 1.08 1.255 0 2.196-.36 2.823-1.08.65-.743.976-1.765.976-3.066v-14.253h6.83v14.253c0 2.253-.476 4.181-1.429 5.784a9.24 9.24 0 01-3.903 3.59c-1.626.79-3.438 1.184-5.436 1.184-1.998 0-3.787-.394-5.367-1.184-1.556-.813-2.788-2.01-3.694-3.59-.882-1.579-1.324-3.508-1.324-5.784v-14.253h6.795zm46.797 0v24.568h-6.83v-13.556l-4.635 13.556h-5.715l-4.67-13.661v13.661h-6.83v-24.568h8.26l6.167 15.96 6.03-15.96h8.223z"
         fill="#F5CB58"

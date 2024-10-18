@@ -1,12 +1,11 @@
 import {TouchableOpacity} from 'react-native';
-import React from 'react';
 import BackIcon from '../../assets/icons/back';
 import useGoBack from './useGoBack';
 
 const GoBack = () => {
   const {navigateToBack} = useGoBack();
   return (
-    <TouchableOpacity onPress={navigateToBack}>
+    <TouchableOpacity style={{paddingLeft: 33}} onPress={navigateToBack}>
       <BackIcon />
     </TouchableOpacity>
   );

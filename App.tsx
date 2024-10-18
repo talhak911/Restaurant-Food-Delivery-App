@@ -4,7 +4,7 @@ import Toast from 'react-native-toast-message';
 import {Provider} from 'react-redux';
 import AppNavigator from './src/navigation/appNavigator/AppNavigator';
 import {store} from './src/redux/store';
-import {ApolloProvider} from './src/providers/apolloProvider/apolloProvider';
+import {ApolloProvider} from './src/providers/apolloProvider/ApolloProvider';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export default function App(): React.JSX.Element {

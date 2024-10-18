@@ -1,28 +1,27 @@
 import {StyleSheet} from 'react-native';
-import { COLORS } from '../../constants/color';
-import { Height, Width } from '../../utils/responsive';
+import {COLORS} from '../../constants/color';
+import {Height, Width} from '../../utils/responsive';
 export default StyleSheet.create({
-  container:{flex: 1, backgroundColor: COLORS.yellow},
-  borderRadius:{
-    flex:1,
-    borderTopRightRadius:30,
-    borderTopLeftRadius:30,
-    overflow:"hidden"
+  container: {flex: 1, backgroundColor: COLORS.yellow},
+  borderRadius: {
+    flex: 1,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    overflow: 'hidden',
   },
   contentContainer: {
     flex: 1,
     backgroundColor: 'white',
     paddingTop: 30,
-
   },
   terms: {
     color: COLORS.almostBlack,
-    textAlign:"center"
+    textAlign: 'center',
   },
-  termsContainer:{
-    paddingTop:20,
-    paddingBottom:5,
-    paddingHorizontal:Width(25)
+  termsContainer: {
+    paddingTop: 20,
+    paddingBottom: 5,
+    paddingHorizontal: '25%',
   },
   gap: {
     gap: Height(1.3),
@@ -34,14 +33,18 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  footerContainer:{flexDirection: 'row', paddingVertical: Height(1),alignItems:"center"},
+  footerContainer: {
+    flexDirection: 'row',
+    paddingVertical: Height(1),
+    alignItems: 'center',
+  },
   footerText: {
     marginRight: 2,
     color: 'black',
   },
-  signUpOptionsText:{color: COLORS.almostBlack, marginVertical: 9},
+  signUpOptionsText: {color: COLORS.almostBlack, marginVertical: 9},
   footerLink: {
-    fontWeight:'500',
+    fontWeight: '500',
     color: COLORS.orange,
   },
 });

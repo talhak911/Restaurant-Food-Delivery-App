@@ -7,23 +7,13 @@ import {
   UpdateCustomerDocument,
   UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
-import {client} from '../../providers/apolloProvider/apolloProvider';
+import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
 
 const initialState: {user: reduxUser} = {
   user: null,
 };
 
-export const signIn = createAsyncThunk(
-  'auth/signIn',
-  async (
-    {email, password}: {email: string; password: string},
-    {rejectWithValue},
-  ) => {
-    try {
-    } catch (error: any) {}
-  },
-);
 export const fetchUserData = createAsyncThunk(
   'auth/fetchUserData',
   async (_, {rejectWithValue}) => {
@@ -96,17 +86,6 @@ export const updateCustomer = createAsyncThunk(
   },
 );
 
-export const signUp = createAsyncThunk(
-  'auth/signUp',
-  async (
-    {name, email, password}: {name: string; email: string; password: string},
-    {rejectWithValue},
-  ) => {
-    try {
-    } catch (error: any) {}
-  },
-);
-
 export const changePassword = createAsyncThunk(
   'auth/changePassword',
   async (
@@ -126,8 +105,6 @@ export const changePassword = createAsyncThunk(
   },
 );
 
-export const signOut = createAsyncThunk('auth/signOut', async () => {});
-
 export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
@@ -141,9 +118,6 @@ export const authSlice = createSlice({
       if (state.user?.customer && action.payload) {
         state.user.customer.address = action.payload;
       }
-    });
-    builder.addCase(signOut.fulfilled, state => {
-      state.user = null;
     });
     builder.addCase(fetchUserData.fulfilled, (state, action) => {
       state.user = action.payload;

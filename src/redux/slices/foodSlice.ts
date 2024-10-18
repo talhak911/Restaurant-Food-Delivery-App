@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {FetchFoodsDocument, FoodCategory} from '../../gql/graphql';
-import {client} from '../../providers/apolloProvider/apolloProvider';
+import {client} from '../../providers/apolloProvider/ApolloProvider';
 import {FoodState} from '../../types/types';
 import Toast from 'react-native-toast-message';
 

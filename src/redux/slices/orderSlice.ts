@@ -5,7 +5,7 @@ import {
   OrderStatus,
   PlaceOrderDocument,
 } from '../../gql/graphql';
-import {client} from '../../providers/apolloProvider/apolloProvider';
+import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
 import { emptyCart } from './cartSlice';
 

@@ -39,8 +39,7 @@ const OrderCard = ({
           <CustomButton
             title="Leave a review"
             fontSize={15}
-            width={120}
-            pH={12}
+            width={121}
             pV={5}
           />
         </View>
@@ -52,9 +51,9 @@ const OrderCard = ({
             <CustomButton
               title="Order Again"
               fontSize={15}
+              width={104}
               bgColor={COLORS.orange2}
               textColor={COLORS.orange}
-              pH={12}
               pV={5}
             />
           </View>

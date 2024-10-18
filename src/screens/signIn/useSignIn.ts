@@ -8,7 +8,7 @@ import {validateSignInForm} from '../../utils/validation';
 import {useMutation} from '@apollo/client';
 import {SignInDocument} from '../../gql/graphql';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {client} from '../../providers/apolloProvider/apolloProvider';
+import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
 
 export const useSignIn = () => {

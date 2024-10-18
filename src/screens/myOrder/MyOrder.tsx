@@ -8,12 +8,12 @@ import {FoodItem} from '../../types/types';
 import {formatDate, toPascalCase} from '../../utils/utils';
 import {ORDER_FILTERS} from '../../constants/constants';
 import {styles} from './MyOrderStyles';
+import {Font} from '../../utils/responsive';
 
 const MyOrder = () => {
   const {handleIsActive, isActive, filteredOrders} = useMyOrders();
   return (
-    <SafeAreaView
-    style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.borderRadius}>
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.contentContainer}>
@@ -34,8 +34,8 @@ const MyOrder = () => {
                       ? COLORS.almostWhite
                       : COLORS.orange
                   }
-                  fontSize={17}
-                  width="33%"
+                  fontSize={Font(17)}
+                  width="32%"
                 />
               ))}
             </View>

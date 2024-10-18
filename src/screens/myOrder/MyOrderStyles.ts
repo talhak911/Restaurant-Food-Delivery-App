@@ -18,7 +18,11 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 35,
     paddingVertical: 39,
   },
-  filterButtonsContainer: {flexDirection: 'row', gap: 10, marginBottom: 19},
+  filterButtonsContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginBottom: 19,
+  },
   orderContainer: {
     paddingVertical: 19,
     borderBottomWidth: 1,
