@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/color';
 import {FONT_LEAGUE_SPARTAN} from '../../constants/fonts';
-import {Width} from '../../utils/responsive';
+import {Height, Width} from '../../utils/responsive';
 
 export const styles = StyleSheet.create({
   bottomDrawerSection: {
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     borderBottomLeftRadius: 60,
     paddingLeft: 20,
     paddingRight: 41,
-    paddingBottom: 91,
+    paddingBottom: Height(8),
     paddingTop: 65,
   },
   profileContainer: {

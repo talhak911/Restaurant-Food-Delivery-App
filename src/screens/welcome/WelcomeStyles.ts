@@ -5,11 +5,12 @@ import {Font, Height, Width} from '../../utils/responsive';
 export const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: COLORS.orange},
   contentContainer: {
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Height(31),
+
   },
-  logo: {maxWidth: 300, maxHeight: 400},
+  logo: {maxWidth: 300, maxHeight: 400,alignItems:"center"},
   description: {
     color: COLORS.almostWhite,
     fontSize: Font(14),

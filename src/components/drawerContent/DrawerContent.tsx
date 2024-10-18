@@ -16,7 +16,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
 
   return (
     <View style={styles.container}>
-      <DrawerContentScrollView {...props} style={{}}>
+      <DrawerContentScrollView {...props} >
         <View style={styles.profileContainer}>
           <LoadingImage
             style={styles.profilePicture}

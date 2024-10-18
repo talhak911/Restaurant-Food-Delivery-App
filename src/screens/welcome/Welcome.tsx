@@ -10,7 +10,7 @@ const Welcome = () => {
   const {navigateToSignUp, navigateToSignIn} = useWelcome();
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{flexGrow:1}}>
         <View style={styles.contentContainer}>
           <View style={styles.logo}>
             <WelcomeIcon />
