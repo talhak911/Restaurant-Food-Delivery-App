@@ -103,7 +103,7 @@ export const PROFILE_FIELDS = (
   onChange: (key: keyof typeof fields, value: string) => void,
 ): FIELDS_TYPE[] => [
   {
-    label:"Full Name",
+    label: 'Full Name',
     value: fields['Full Name'],
     onChange: (text: string) => onChange('Full Name', text),
     placeholder: 'Full Name',
@@ -111,7 +111,7 @@ export const PROFILE_FIELDS = (
     editable: true,
   },
   {
-    label:"Date of Birth",
+    label: 'Date of Birth',
     value: fields['Date of Birth'],
     onChange: () => {},
     placeholder: 'Date of Birth',
@@ -119,7 +119,7 @@ export const PROFILE_FIELDS = (
     editable: false,
   },
   {
-    label:"Email",
+    label: 'Email',
     value: fields.Email,
     onChange: () => {},
     placeholder: 'Email',
@@ -127,7 +127,7 @@ export const PROFILE_FIELDS = (
     editable: false,
   },
   {
-    label:"Phone Number",
+    label: 'Phone Number',
     value: fields['Phone Number'],
     onChange: (text: string) => onChange('Phone Number', text),
     placeholder: 'Phone Number',

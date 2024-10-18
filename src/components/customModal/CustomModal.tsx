@@ -15,7 +15,7 @@ export const CustomModal = ({visible, element, onClose}: CustomModalProps) => {
       <View style={styles.modalOverlay}>
         <Animated.View
           style={[styles.modalContent, {transform: [{translateX}]}]}
-          {...panResponder.panHandlers}>
+          {...panResponder.panHandlers.onResponderReject}>
           <View style={{flex: 1, width: '100%'}}>{element}</View>
         </Animated.View>
       </View>

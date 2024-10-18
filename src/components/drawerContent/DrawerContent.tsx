@@ -6,7 +6,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import LogoutIcon from '../../assets/icons/logout';
-import {DrawerList} from '../../constants/constants';
+import {DRAWER_LIST} from '../../constants/constants';
 import useDrawerContent from './useDrawerContent';
 import {LoadingImage} from '../loadingImage/LoadingImage';
 import {styles} from './DrawerContentStyles';
@@ -29,7 +29,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           </View>
         </View>
         <View style={{marginTop: 35}}>
-          {DrawerList.map((item, index) => (
+          {DRAWER_LIST.map((item, index) => (
             <DrawerItem
               key={index}
               style={styles.drawerItem}

@@ -36,11 +36,11 @@ export type AuthScreenOptions = {
   };
 }[];
 
-export type ScreenConfig = {
-  name: keyof StackNavigatorParamList;
-  component: React.ComponentType<any>;
-  options?: StackNavigationOptions;
-};
+// export type ScreenConfig = {
+//   name: keyof StackNavigatorParamList;
+//   component: React.ComponentType<any>;
+//   options?: StackNavigationOptions;
+// };
 
 export type ChangePasswordPayload = {
   currentPassword: string;
