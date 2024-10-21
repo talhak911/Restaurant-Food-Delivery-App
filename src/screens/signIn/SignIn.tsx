@@ -1,5 +1,5 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import styles from './SignInstyles';
+import styles from './SignInStyles';
 import {useSignIn} from './useSignIn';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import GoogleIcon from '../../assets/icons/google';
