@@ -5,6 +5,10 @@ export const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+const isValidPassword = (password: string): boolean => {
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return passwordRegex.test(password);
+};
 
 export const validateSignUpForm = (
   name: string,
@@ -30,7 +34,17 @@ export const validateSignUpForm = (
   if (password.length < 8) {
     Toast.show({
       type: 'error',
-      text1: 'Password must be at least 8 characters long',
+      text1: 'New password must be at least 8 digits',
+    });
+    return false;
+  }
+  if (!isValidPassword(password)) {
+    Toast.show({
+      type: 'error',
+      text1: 'Password must contain',
+      text2Style:{color:"black"},
+      text2:"uppercase, lowercase, number, and special character",
+      visibilityTime:6000
     });
     return false;
   }
@@ -99,6 +113,16 @@ export const validateChangePasswordForm = (fields: {
     Toast.show({
       type: 'error',
       text1: 'New password must be at least 8 digits',
+    });
+    return false;
+  }
+  if (!isValidPassword(fields['New Password'])) {
+    Toast.show({
+      type: 'error',
+      text1: 'Password must contain',
+      text2Style:{color:"black"},
+      text2:"uppercase, lowercase, number, and special character",
+      visibilityTime:6000
     });
     return false;
   }
