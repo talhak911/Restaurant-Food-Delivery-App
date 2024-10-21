@@ -77,9 +77,7 @@ export const updateCustomer = createAsyncThunk(
         variables: data,
       });
 
-      if (response?.data?.updateCustomer) {
-        return data;
-      }
+      return response?.data?.updateCustomer;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -128,25 +126,15 @@ export const authSlice = createSlice({
     });
     builder.addCase(updateCustomer.fulfilled, (state, action) => {
       if (state.user) {
-        if (action.payload?.name) {
-          state.user.name = action.payload?.name;
-        }
-        if (action.payload?.dateOfBirth) {
-          state.user.dateOfBirth = action.payload?.dateOfBirth;
-        }
-        if (action.payload?.picture && state.user.customer) {
-          state.user.customer.picture = action.payload?.picture;
-        }
-        if (action.payload?.phone) {
-          state.user.phone = action.payload?.phone;
-        }
+        state.user = action.payload;
+        Toast.show({text1: 'Profile Updated'});
       }
     });
     builder.addCase(updateCustomer.rejected, (state, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
     });
     builder.addCase(changePassword.fulfilled, () => {
-      Toast.show({type: 'success', text1: 'Password changed successfully'});
+      Toast.show({text1: 'Password changed successfully'});
     });
     builder.addCase(changePassword.rejected, (state, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
