@@ -33,7 +33,7 @@ export const refreshTokenAction = async (refreshToken: string) => {
 export const isAccessTokenExpired = (accessToken: string) => {
   const {exp} = jwtDecode(accessToken);
   if (exp) {
-    const bufferTime = 60 * 1000;
+    const bufferTime = 30 * 1000;
     const expirationTime = exp * 1000;
     return Date.now() > expirationTime - bufferTime;
   }
