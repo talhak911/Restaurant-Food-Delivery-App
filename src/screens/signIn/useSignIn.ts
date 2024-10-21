@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {useAppDispatch} from '../../hooks/useStore';
-import {fetchUserData} from '../../redux/slices/authSlice';
+import {setUser} from '../../redux/slices/authSlice';
 import {AuthNavigationProp} from '../../types/types';
 import {SIGN_IN_FIELDS} from '../../constants/inputFields';
 import {validateSignInForm} from '../../utils/validation';
@@ -37,16 +37,16 @@ export const useSignIn = () => {
           password,
         },
       });
-      const token = response.data?.signIn;
-      if (token) {
+      const data = response.data?.signIn;
+      if (data) {
         await client.clearStore();
-        await AsyncStorage.setItem('authToken', token);
-
-        await dispatch(fetchUserData());
-        Toast.show({text1:"Login successful"});
+        await AsyncStorage.setItem('authToken', data.accessToken);
+        await AsyncStorage.setItem('refreshToken', data.refreshToken);
+        dispatch(setUser(data.user));
+        Toast.show({text1: 'Login successful'});
       }
     } catch (error: any) {
-      Toast.show({text1:error.message,type:"error"});
+      Toast.show({text1: error.message, type: 'error'});
     }
   };
   const fields = SIGN_IN_FIELDS(email, setEmail, password, setPassword);

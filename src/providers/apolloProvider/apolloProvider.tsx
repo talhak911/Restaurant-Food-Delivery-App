@@ -7,23 +7,40 @@ import {setContext} from '@apollo/client/link/context';
 import {createHttpLink} from '@apollo/client/link/http';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ReactNode} from 'react';
+import {
+  isAccessTokenExpired,
+  refreshTokenAction,
+} from '../../utils/refreshToken';
+import {BASE_URL} from '@env';
 
 const httpLink = createHttpLink({
-  uri: 'https://restaurant-backend-app-server-production.up.railway.app/graphql',
+  uri: `${BASE_URL}/graphql`,
 });
 
-const authLink = setContext(async (_, {headers}) => {
-  const token = await AsyncStorage.getItem('authToken');
+const refreshTokenLink = setContext(async (_, {headers}) => {
+  const accessToken = await AsyncStorage.getItem('authToken');
+  const refreshToken = await AsyncStorage.getItem('refreshToken');
+  if (accessToken && refreshToken && isAccessTokenExpired(accessToken)) {
+    const newAccessToken = await refreshTokenAction(refreshToken);
+    if (newAccessToken) {
+      return {
+        headers: {
+          ...headers,
+          auth: `${newAccessToken}`,
+        },
+      };
+    }
+  }
   return {
     headers: {
       ...headers,
-      auth: token ? `${token}` : '',
+      auth: accessToken ? `${accessToken}` : '',
     },
   };
 });
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: refreshTokenLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

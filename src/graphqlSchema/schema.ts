@@ -8,9 +8,42 @@ export const SIGN_UP = gql`
   }
 `;
 
+export const REFRESH_TOKEN = gql`
+  mutation refreshToken($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken)
+  }
+`;
+
 export const SIGN_IN = gql`
   mutation signIn($email: String!, $password: String!) {
-    signIn(email: $email, password: $password)
+    signIn(email: $email, password: $password) {
+      user {
+        id
+        email
+        phone
+        dateOfBirth
+        name
+        role
+        verification
+        customer {
+          address
+          picture
+          id
+          cart {
+            id
+            foodId
+            totalPrice
+            food {
+              name
+              price
+              id
+            }
+          }
+        }
+      }
+      accessToken
+      refreshToken
+    }
   }
 `;
 
@@ -58,87 +91,119 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
- 
-export const FETCH_FOODS =gql`
-query fetchFoods($category: String){
-fetchFoods(category:$category){
-  id
-  name
-  description
-  category
-  price
-  picture
-  restaurantId
-}
-}
-`
-export const UPDATE_CART =gql`
-mutation updateCart($quantity: Float!, $foodId: String!) {
-  updateCart(quantity:$quantity,foodId:$foodId)
-}
-`
 
-export const FETCH_CART=gql`
-query fetchCart{
-  fetchCart{
-    food{
+export const FETCH_FOODS = gql`
+  query fetchFoods($category: String) {
+    fetchFoods(category: $category) {
       id
       name
-      picture
+      description
+      category
       price
+      picture
+      restaurantId
     }
-    quantity
-    totalPrice
   }
-}
-`
-export const REMOVE_ITEM_FROM_CART=gql`
-mutation removeFromCart($foodId:String!){
-removeFromCart(foodId:$foodId)
-}
-`
+`;
+export const UPDATE_CART = gql`
+  mutation updateCart($quantity: Float!, $foodId: String!) {
+    updateCart(quantity: $quantity, foodId: $foodId)
+  }
+`;
 
-export const ADD_CUSTOMER_ADDRESS=gql`
-mutation addCustomerAddress($name:String!,$address:String!){
-  addCustomerAddress(name:$name,address:$address){
-    id
-    name
-    address
+export const FETCH_CART = gql`
+  query fetchCart {
+    fetchCart {
+      food {
+        id
+        name
+        picture
+        price
+      }
+      quantity
+      totalPrice
+    }
   }
-}
-`
+`;
+export const REMOVE_ITEM_FROM_CART = gql`
+  mutation removeFromCart($foodId: String!) {
+    removeFromCart(foodId: $foodId)
+  }
+`;
+
+export const ADD_CUSTOMER_ADDRESS = gql`
+  mutation addCustomerAddress($name: String!, $address: String!) {
+    addCustomerAddress(name: $name, address: $address) {
+      id
+      name
+      address
+    }
+  }
+`;
 export const PLACE_ORDER = gql`
-mutation placeOrder($deliveryAddress: String!) {
-  placeOrder(deliveryAddress:$deliveryAddress) {
-    totalPrice
-    foods
+  mutation placeOrder($deliveryAddress: String!) {
+    placeOrder(deliveryAddress: $deliveryAddress) {
+      totalPrice
+      foods
+    }
   }
-}
-`
+`;
 
 export const FETCH_ORDERS = gql`
-query fetchOrders($status: String) {
+  query fetchOrders($status: String) {
     fetchOrders(status: $status) {
-        id
-        totalPrice
-        foods
-        status
-        deliveryPerson
-        deliveryTime
-        customerId
-        restaurantId
-        deliveryAddress
-        createdAt
+      id
+      totalPrice
+      foods
+      status
+      deliveryPerson
+      deliveryTime
+      customerId
+      restaurantId
+      deliveryAddress
+      createdAt
     }
-}
-`
-export const UPDATE_CUSTOMER=gql`
-mutation updateCustomer($dateOfBirth:DateTimeISO,$phone:String,$name:String,$picture:String){
-  updateCustomer(dateOfBirth:$dateOfBirth,phone:$phone,name:$name,picture:$picture)
-}
-`
-export const CHANGE_PASSWORD=gql`
-mutation changePassword($password:String!,$newPassword:String!){
-  changePassword(password:$password,newPassword:$newPassword)
-}
-`
+  }
+`;
+export const UPDATE_CUSTOMER = gql`
+  mutation updateCustomer(
+    $dateOfBirth: DateTimeISO
+    $phone: String
+    $name: String
+    $picture: String
+  ) {
+    updateCustomer(
+      dateOfBirth: $dateOfBirth
+      phone: $phone
+      name: $name
+      picture: $picture
+    ) {
+      dateOfBirth
+      name
+      id
+      email
+      phone
+      role
+      verification
+      customer {
+        address
+        picture
+        cart {
+          id
+          foodId
+          totalPrice
+          food {
+            name
+            price
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+export const CHANGE_PASSWORD = gql`
+  mutation changePassword($password: String!, $newPassword: String!) {
+    changePassword(password: $password, newPassword: $newPassword)
+  }
+`;
