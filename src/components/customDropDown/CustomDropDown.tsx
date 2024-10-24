@@ -11,18 +11,19 @@ const CustomDropdown = ({
   items,
   onSelect,
   selectedValue,
+  placeHolder,
 }: CustomDropDownProps) => {
   const {handlePress, handleItemPress, isOpen} = useCustomDropdown({onSelect});
   return (
     <View>
-      <Text style={styles.label}>{label}</Text>
+      {label && <Text style={styles.label}>{label}</Text>}
       <TouchableOpacity style={styles.container} onPress={handlePress}>
         <Text
           style={[
             styles.dropdownText,
             selectedValue ? {color: 'black'} : {color: COLORS.grey},
           ]}>
-          {selectedValue || 'Select User Role'}
+          {selectedValue || placeHolder}
         </Text>
         <View
           style={
@@ -39,8 +40,8 @@ const CustomDropdown = ({
             <TouchableOpacity
               style={{paddingVertical: 10}}
               key={index}
-              onPress={() => handleItemPress(item.value)}>
-              <Text style={styles.categoriesText}>{item.value}</Text>
+              onPress={() => handleItemPress(item)}>
+              <Text style={styles.categoriesText}>{item}</Text>
             </TouchableOpacity>
           ))}
         </View>

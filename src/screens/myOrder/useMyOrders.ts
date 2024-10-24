@@ -47,12 +47,9 @@ export const useMyOrders = () => {
       }
     }, [orders, isActive]),
   );
-  const handleIsActive = (button: OrderStatus) => {
-    setIsActive(button);
-  };
   return {
     isActive,
     filteredOrders,
-    handleIsActive,
+    setIsActive,
   };
 };

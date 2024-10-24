@@ -11,7 +11,7 @@ import {styles} from './MyOrderStyles';
 import {Font} from '../../utils/responsive';
 
 const MyOrder = () => {
-  const {handleIsActive, isActive, filteredOrders} = useMyOrders();
+  const {setIsActive, isActive, filteredOrders} = useMyOrders();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.borderRadius}>
@@ -22,7 +22,7 @@ const MyOrder = () => {
                 <CustomButton
                   key={index}
                   onPress={() => {
-                    handleIsActive(item.status);
+                    setIsActive(item.status);
                   }}
                   title={toPascalCase(item.status)}
                   pV={3}
