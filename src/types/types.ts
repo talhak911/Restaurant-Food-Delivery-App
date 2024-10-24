@@ -64,7 +64,7 @@ export type OrderCardProps = {
   orderStatus: OrderStatus;
   totalPrice: string;
   items: string;
-  foodId:string
+  foodId: string;
 };
 export type LoadingImageProps = {
   uri?: string | null;
@@ -80,6 +80,7 @@ export type FoodItemPriceDisplayProps = {
   height: number;
   width: number;
   price: string;
+  priceTagBottom?:number
 };
 export type DateInputProps = {
   date: string;
@@ -97,7 +98,7 @@ export type CustomModalProps = {
 export type CustomDropDownProps = {
   label?: string;
   items: string[];
-  placeHolder:string
+  placeHolder: string;
   onSelect: (e: string) => void;
   selectedValue: string | null;
 };
@@ -168,6 +169,7 @@ export type StackNavigatorParamList = {
     picUrl: string | null | undefined;
     name: string;
   };
+  'Best Seller': undefined;
   'My Orders': undefined;
   'Coming Soon': undefined;
   'My Profile': undefined;
@@ -240,7 +242,7 @@ export type CustomInputProps = {
   secureInput?: boolean;
   editable?: boolean;
   label?: string;
-  height?:number,
+  height?: number;
   value: string;
   keyboardType?: KeyboardTypeOptions;
   placeHolder: string;

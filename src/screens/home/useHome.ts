@@ -15,7 +15,7 @@ const useHome = () => {
   const recommended = foods?.slice(4, 6);
 
   const navigation = useNavigation<StackNavigatorProps>();
-  const tabNavigation = useNavigation<TabNavigatorProps>()
+  const tabNavigation = useNavigation<TabNavigatorProps>();
   const navigateToFoodDetail = ({
     id,
     description,
@@ -37,15 +37,19 @@ const useHome = () => {
       price,
     });
   };
-  const navigateToFoods=()=>{
-    tabNavigation.navigate('Foods')
-  }
+  const navigateToFoods = () => {
+    tabNavigation.navigate('Foods');
+  };
+  const navigateToBestSeller = () => {
+    navigation.navigate('Best Seller');
+  };
   return {
     foods,
     bestSeller,
     recommended,
     navigateToFoods,
     navigateToFoodDetail,
+    navigateToBestSeller,
   };
 };
 

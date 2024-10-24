@@ -16,7 +16,7 @@ import HomeHeader from '../../components/homeHeader/HomeHeader';
 import { styles } from './HomeStyles';
 
 const Home = () => {
-  const {navigateToFoodDetail, navigateToFoods, bestSeller, recommended} =
+  const {navigateToFoodDetail,navigateToBestSeller, navigateToFoods, bestSeller, recommended} =
     useHome();
 
   return (
@@ -67,7 +67,7 @@ const Home = () => {
               Best Seller
             </Text>
             <TouchableOpacity
-              onPress={navigateToFoods}
+              onPress={navigateToBestSeller}
               style={{flexDirection: 'row', alignItems: 'center', gap: 11}}>
               <Text
                 style={{

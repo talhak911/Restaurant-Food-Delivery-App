@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: COLORS.orange,
     right: -2,
-    bottom: 12,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 4,

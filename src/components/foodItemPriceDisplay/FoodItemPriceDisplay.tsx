@@ -10,6 +10,7 @@ const FoodItemPriceDisplay = ({
   height,
   width,
   price,
+  priceTagBottom
 }: FoodItemPriceDisplayProps) => {
   return (
     <View style={{position: 'relative'}}>
@@ -19,7 +20,7 @@ const FoodItemPriceDisplay = ({
         uri={uri}
       />
 
-      <View style={styles.priceContainer}>
+      <View style={[styles.priceContainer,{bottom: priceTagBottom||12}]}>
         <Text style={{color: COLORS.almostWhite}}>${price}</Text>
       </View>
     </View>
