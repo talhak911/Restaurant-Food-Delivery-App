@@ -1,10 +1,6 @@
 import {useState} from 'react';
 
-export const useCustomDropdown = ({
-  onSelect,
-}: {
-  onSelect: (v: string) => void;
-}) => {
+export const useFaqs = () => {
   const [isOpen, setIsOpen] = useState(false);
   const handlePress = () => {
     setIsOpen(!isOpen);
@@ -12,7 +8,6 @@ export const useCustomDropdown = ({
 
   const handleItemPress = (value: string) => {
     setIsOpen(false);
-    onSelect(value);
   };
   return {
     isOpen,

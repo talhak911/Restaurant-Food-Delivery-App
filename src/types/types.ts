@@ -94,9 +94,10 @@ export type CustomModalProps = {
   onClose: () => void;
 };
 export type CustomDropDownProps = {
-  label: string;
-  items: {value: Role}[];
-  onSelect: (e: Role) => void;
+  label?: string;
+  items: string[];
+  placeHolder:string
+  onSelect: (e: string) => void;
   selectedValue: string | null;
 };
 export type CustomButtonProps = TouchableOpacityProps & {
