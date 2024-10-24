@@ -59,7 +59,8 @@ const MyOrder = () => {
                       orderStatus={order.status}
                       totalPrice={foodItem.totalPrice.toFixed(2)}
                       price={`${foodItem.food.price}`}
-                      title={foodItem.food.name}
+                      name={foodItem.food.name}
+                      foodId={foodItem.foodId}
                     />
                   ))
                 ) : (

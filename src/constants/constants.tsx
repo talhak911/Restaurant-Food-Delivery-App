@@ -48,6 +48,7 @@ import OnBoardingOrderIcon from '../assets/icons/onBoardingOrder';
 import OnBoardingPaymentIcon from '../assets/icons/onBoardingPayment';
 import OnBoardingDeliveryIcon from '../assets/icons/onBoardingDelivery';
 import Help from '../screens/help/Help';
+import LeaveReview from '../screens/leaveReview/LeaveReview';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -119,6 +120,7 @@ export const STACK_SCREENS: StackScreenConfig[] = [
   {name: 'Contact Us', component: ComingSoon},
   {name: 'Forget Password', component: ForgetPassword},
   {name: 'Help & FAQs', component: Help},
+  {name: 'Leave a Review', component: LeaveReview},
 ];
 
 export const TAB_SCREENS: TabScreen[] = [

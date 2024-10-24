@@ -8,16 +8,20 @@ import {styles} from './OrderCardStyles';
 import FoodItemPriceDisplay from '../foodItemPriceDisplay/FoodItemPriceDisplay';
 import {OrderCardProps} from '../../types/types';
 import {Font} from '../../utils/responsive';
+import useOrderCard from './useOrderCard';
 
 const OrderCard = ({
   picUrl,
-  title,
+  name,
   dateTime,
   orderStatus,
   totalPrice,
   price,
   items,
+  foodId
 }: OrderCardProps) => {
+
+  const {naviateToReview}=useOrderCard()
   return (
     <View style={styles.cardContainer}>
       <FoodItemPriceDisplay
@@ -28,7 +32,7 @@ const OrderCard = ({
       />
       <View style={styles.containerContent}>
         <View style={styles.leftContentContainer}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{name}</Text>
           <Text style={styles.date}>{dateTime}</Text>
           {orderStatus !== OrderStatus.Active && (
             <View style={styles.orderStatusContainer}>
@@ -38,7 +42,11 @@ const OrderCard = ({
             </View>
           )}
           <View style={styles.reviewButton}>
-            <CustomButton title="Leave a review" fontSize={Font(15)} pV={5} />
+            <CustomButton 
+            onPress={()=>{
+              naviateToReview({foodId,name,picUrl})
+            }}
+            title="Leave a review" fontSize={Font(15)} pV={5} />
           </View>
         </View>
         <View style={styles.rightContentContainer}>

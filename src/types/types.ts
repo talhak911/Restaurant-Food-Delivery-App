@@ -58,12 +58,13 @@ export type OrderCard2Props = {
 };
 export type OrderCardProps = {
   picUrl: string;
-  title: string;
+  name: string;
   dateTime: string;
   price: string;
   orderStatus: OrderStatus;
   totalPrice: string;
   items: string;
+  foodId:string
 };
 export type LoadingImageProps = {
   uri?: string | null;
@@ -162,6 +163,11 @@ export type StackNavigatorParamList = {
     description: string;
     price: string;
   };
+  'Leave a Review': {
+    foodId: string;
+    picUrl: string | null | undefined;
+    name: string;
+  };
   'My Orders': undefined;
   'Coming Soon': undefined;
   'My Profile': undefined;
@@ -191,6 +197,10 @@ export type StackNavigatorProps =
 export type FoodDetailsProps = StackScreenProps<
   StackNavigatorParamList,
   'Food Detail'
+>;
+export type LeaveReviewProps = StackScreenProps<
+  StackNavigatorParamList,
+  'Leave a Review'
 >;
 export type DrawerNavigatorParamList = {
   Tab: undefined;
@@ -229,7 +239,8 @@ export type FIELDS_TYPE = {
 export type CustomInputProps = {
   secureInput?: boolean;
   editable?: boolean;
-  label: string;
+  label?: string;
+  height?:number,
   value: string;
   keyboardType?: KeyboardTypeOptions;
   placeHolder: string;

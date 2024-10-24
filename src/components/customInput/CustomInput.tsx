@@ -12,14 +12,15 @@ export const CustomInput = ({
   keyboardType,
   editable = true,
   onChange,
+  height,
   secureInput = false,
 }: CustomInputProps) => {
   const {passwordVisibility, handlePasswordVisibility} = useCustomInput();
 
   return (
-    <View>
-      <Text style={styles.label}>{label}</Text>
-      <View style={styles.inputContainer}>
+    <View >
+      {label && <Text style={styles.label}>{label}</Text>}
+      <View style={[styles.inputContainer, {height: height ? height : 45}]}>
         <TextInput
           style={styles.inputField}
           placeholder={placeHolder}
@@ -28,6 +29,7 @@ export const CustomInput = ({
           onChangeText={onChange}
           value={value}
           editable={editable}
+          multiline={!!height}
           keyboardType={keyboardType}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
