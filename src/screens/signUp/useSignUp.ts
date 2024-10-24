@@ -9,17 +9,12 @@ import Toast from 'react-native-toast-message';
 
 export const useSignUp = () => {
   const navigation = useNavigation<AuthNavigationProp>();
-
-  const navigateToSignIn = () => {
-    navigation.navigate('Log In');
-  };
-  const handleDateChange = (date: string) => {
-    setDob(date);
-  };
-
-  const selectRole = (e: Role) => {
-    setRole(e);
-  };
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState<Role | null>(null);
+  const [dob, setDob] = useState('');
+  const [phone, setPhone] = useState('');
   const [signUp, {loading}] = useMutation(SignUpDocument);
   const handleSignUp = async () => {
     const isValid = validateSignUpForm(name, email, password, phone, dob, role);
@@ -50,13 +45,16 @@ export const useSignUp = () => {
     }
   };
 
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState<Role | null>(null);
-  const [dob, setDob] = useState('');
-  const [phone, setPhone] = useState('');
+  const navigateToSignIn = () => {
+    navigation.navigate('Log In');
+  };
+  const handleDateChange = (date: string) => {
+    setDob(date);
+  };
 
+  const selectRole = (e: string) => {
+    setRole(e as Role);
+  };
   const fields = SIGN_UP_FIELDS(
     name,
     setName,

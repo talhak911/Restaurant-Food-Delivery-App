@@ -53,8 +53,9 @@ export const SignUp = () => {
 
               <DateInput date={dob} setDate={handleDateChange} />
               <CustomDropdown
+                placeHolder="Select User Role"
                 label="Role"
-                items={[{value: Role.Customer}, {value: Role.Restaurant}]}
+                items={[Role.Customer, Role.Restaurant]}
                 onSelect={selectRole}
                 selectedValue={role}
               />

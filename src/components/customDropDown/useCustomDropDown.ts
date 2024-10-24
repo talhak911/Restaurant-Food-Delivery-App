@@ -4,14 +4,14 @@ import {Role} from '../../gql/graphql';
 export const useCustomDropdown = ({
   onSelect,
 }: {
-  onSelect: (v: Role) => void;
+  onSelect: (v: string) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const handlePress = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleItemPress = (value: Role) => {
+  const handleItemPress = (value: string) => {
     setIsOpen(false);
     onSelect(value);
   };

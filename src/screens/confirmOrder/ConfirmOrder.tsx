@@ -10,9 +10,8 @@ import PencilIcon from '../../assets/icons/pencil';
 import {CustomButton} from '../../components/customButton/CustomButton';
 import ConfirmOrderCard from '../../components/confirmOrderCard/ConfirmOrderCard';
 import Price from '../../components/price/Price';
-import useConfirmOrder from './useConfirmOrder';
-import CustomDropdown from '../../components/customDropDown2/CustomDropDown';
-import {styles} from './ConfirmOrderStyles';
+import useConfirmOrder from './useConfirmOrder';import {styles} from './ConfirmOrderStyles';
+import CustomDropdown from '../../components/customDropDown/CustomDropDown';
 
 const ConfirmOrder = () => {
   const {
@@ -37,6 +36,7 @@ const ConfirmOrder = () => {
               </TouchableOpacity>
             </View>
             <CustomDropdown
+              placeHolder='Select Delivery Addres'
               items={addresses!}
               onSelect={onChangeAddress}
               selectedValue={address!}
