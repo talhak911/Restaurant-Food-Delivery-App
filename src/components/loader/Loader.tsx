@@ -1,10 +1,8 @@
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import React from 'react';
-
-const Loader = () => {
+const Loader = ({color}: {color?: string}) => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <ActivityIndicator size="large" color="white" />
+      <ActivityIndicator size="large" color={color || 'white'} />
     </View>
   );
 };
