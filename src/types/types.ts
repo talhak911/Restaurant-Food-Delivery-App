@@ -204,6 +204,7 @@ export type DrawerListType = {
 };
 
 export type AuthStackParamList = {
+  OnBoarding: undefined;
   Welcome: undefined;
   'New Account': undefined;
   'Log In': undefined;

@@ -5,13 +5,21 @@ import {COLORS} from '../../constants/color';
 import BackIcon from '../../assets/icons/back';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {AUTH_SCREENS} from '../../constants/constants';
+import useAuthNavigator from './useAuthNavigator';
+import Loader from '../../components/loader/Loader';
 
 export default function AuthNavigator() {
   const Stack = createNativeStackNavigator<AuthStackParamList>();
-
+  const {initialRoute}=useAuthNavigator()
+  if (initialRoute === null) {
+    return (
+<Loader color='black' />
+    );
+  }
   return (
     <NavigationContainer>
       <Stack.Navigator
+      initialRouteName={initialRoute}
         screenOptions={({navigation}) => ({
           headerShadowVisible: false,
           statusBarColor: COLORS.yellow,

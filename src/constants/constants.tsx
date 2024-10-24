@@ -42,7 +42,11 @@ import Welcome from '../screens/welcome/Welcome';
 import {SignUp} from '../screens/signUp/SignUp';
 import {SignIn} from '../screens/signIn/SignIn';
 import VerifyOtp from '../screens/verifyOtp/VerifyOtp';
-import { COLORS } from './color';
+import {COLORS} from './color';
+import OnBoarding from '../screens/onBoarding/OnBoarding';
+import OnBoardingOrderIcon from '../assets/icons/onBoardingOrder';
+import OnBoardingPaymentIcon from '../assets/icons/onBoardingPayment';
+import OnBoardingDeliveryIcon from '../assets/icons/onBoardingDelivery';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -129,12 +133,22 @@ export const TAB_SCREENS: TabScreen[] = [
     icon: <FoodIcon />,
     options: {headerShown: false},
   },
-  {name: 'Favoirite', component: ComingSoon, icon: <FavouriteIcon />},
+  {
+    name: 'Favoirite',
+    options: {headerShown: false},
+    component: OnBoarding,
+    icon: <FavouriteIcon />,
+  },
   {name: 'My Orders', component: MyOrder, icon: <TabOrderIcon />},
   {name: 'Help', component: ComingSoon, icon: <HelpIcon />},
 ];
 
 export const AUTH_SCREENS: AuthScreen[] = [
+  {
+    name: 'OnBoarding',
+    component: OnBoarding,
+    options: {statusBarColor: COLORS.orange, headerShown: false},
+  },
   {
     name: 'Welcome',
     component: Welcome,
@@ -144,4 +158,28 @@ export const AUTH_SCREENS: AuthScreen[] = [
   {name: 'Log In', component: SignIn},
   {name: 'Verify Otp', component: VerifyOtp},
   {name: 'Forget Password', component: ForgetPassword},
+];
+
+export const ON_BOARDING_ITEMS = [
+  {
+    icon: <OnBoardingOrderIcon />,
+    image: require('../assets/images/pizza.png'),
+    title: 'Order For Food',
+    description:
+      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+  },
+  {
+    icon: <OnBoardingPaymentIcon />,
+    image: require('../assets/images/brownie.png'),
+    title: 'Easy Payment',
+    description:
+      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+  },
+  {
+    icon: <OnBoardingDeliveryIcon />,
+    image: require('../assets/images/coffee.png'),
+    title: 'Fast Delivery',
+    description:
+      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+  },
 ];
