@@ -1,13 +1,13 @@
-import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
+import {FlatList, NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import {useRef, useState} from 'react';
-import { ON_BOARDING_ITEMS } from '../../constants/constants';
-import { useNavigation } from '@react-navigation/native';
-import { AuthNavigationProp } from '../../types/types';
+import {ON_BOARDING_ITEMS} from '../../constants/constants';
+import {useNavigation} from '@react-navigation/native';
+import {AuthNavigationProp} from '../../types/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useOnBoarding = () => {
-  const navigation = useNavigation<AuthNavigationProp>()
-  const flatListRef = useRef(null);
+  const navigation = useNavigation<AuthNavigationProp>();
+  const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -27,10 +27,10 @@ const useOnBoarding = () => {
       flatListRef.current?.scrollToIndex({index: nextIndex, animated: true});
     }
   };
-  const getStarted=async()=>{
-   await AsyncStorage.setItem("onBoardingShown","true")
-    navigation.navigate("Welcome")
-  }
+  const getStarted = async () => {
+    await AsyncStorage.setItem('onBoardingShown', 'true');
+    navigation.navigate('Welcome');
+  };
   return {
     currentIndex,
     getStarted,

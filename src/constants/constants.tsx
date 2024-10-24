@@ -47,6 +47,7 @@ import OnBoarding from '../screens/onBoarding/OnBoarding';
 import OnBoardingOrderIcon from '../assets/icons/onBoardingOrder';
 import OnBoardingPaymentIcon from '../assets/icons/onBoardingPayment';
 import OnBoardingDeliveryIcon from '../assets/icons/onBoardingDelivery';
+import Help from '../screens/help/Help';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -117,7 +118,7 @@ export const STACK_SCREENS: StackScreenConfig[] = [
   {name: 'Payment Method', component: ComingSoon},
   {name: 'Contact Us', component: ComingSoon},
   {name: 'Forget Password', component: ForgetPassword},
-  {name: 'Help & FAQs', component: ComingSoon},
+  {name: 'Help & FAQs', component: Help},
 ];
 
 export const TAB_SCREENS: TabScreen[] = [
@@ -166,20 +167,76 @@ export const ON_BOARDING_ITEMS = [
     image: require('../assets/images/pizza.png'),
     title: 'Order For Food',
     description:
-      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+      'Browse through a wide range of cuisines and restaurants, from pizza to sushi, burgers to biryani. Find your cravings and order with just a few taps.',
   },
   {
     icon: <OnBoardingPaymentIcon />,
     image: require('../assets/images/brownie.png'),
     title: 'Easy Payment',
     description:
-      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+      'Pay conveniently with our secure payment options, including cash on delivery, credit/debit cards, and mobile wallets. Your financial information is always protected.',
   },
   {
     icon: <OnBoardingDeliveryIcon />,
     image: require('../assets/images/coffee.png'),
     title: 'Fast Delivery',
     description:
-      'Lorem Ipsum sdfsf jdkshfj jsdh dsfsdfad dsfds ds sdjkf dkjshf jksdh dsfds sd sd ssdfsdv  sdvsd dsfds sdfsd',
+      'Get your food delivered quickly and efficiently. Our delivery partners work hard to ensure your order arrives hot, fresh, and on time.',
   },
 ];
+
+export const HELP_BUTTONS = ['FAQ', 'Contact Us'];
+export const FAQS_CATEGORY = ['General', 'Account', 'Services'];
+export const FAQS = {
+  general: [
+    {
+      question: 'How does the food delivery service work?',
+      answer:
+        "Simply download our app, browse our wide range of restaurants, select your desired dishes, and place your order. We'll handle the rest, delivering your food right to your doorstep.",
+    },
+    {
+      question: 'What are your operating hours?',
+      answer:
+        'We operate 24/7, so you can satisfy your cravings anytime, day or night.',
+    },
+    {
+      question: 'Which areas do you deliver to?',
+      answer:
+        'We currently deliver to Lahore, Karachi, Islamabad, and Faisalabad.',
+    },
+  ],
+  account: [
+    {
+      question: 'How do I create an account?',
+      answer:
+        'You can easily create an account by signing up with your email address or phone number.',
+    },
+    {
+      question: 'How do I change my password?',
+      answer:
+        'Go to your account settings and follow the instructions to change your password.',
+    },
+    {
+      question: 'I forgot my password. How can I recover it?',
+      answer:
+        'Use the "Forgot Password" option on the login or password settings screen to reset your password.',
+    },
+  ],
+  services: [
+    {
+      question: 'How much is the delivery fee?',
+      answer:
+        'Delivery fees vary depending on the restaurant and your location. You can see the exact fee during checkout.',
+    },
+    {
+      question: 'Can I cancel my order?',
+      answer:
+        "Yes, you can cancel your order as long as it hasn't been prepared or dispatched. To cancel, please contact our customer support.",
+    },
+    {
+      question: 'How can I track my order?',
+      answer:
+        "You can track your order's progress through the app. You'll receive real-time updates on its status.",
+    },
+  ],
+};

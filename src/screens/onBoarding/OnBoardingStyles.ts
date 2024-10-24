@@ -1,16 +1,29 @@
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/color";
+import { LEAGUE_SPARTAN_SEMI_BOLD } from "../../constants/fonts";
 
 export const styles = StyleSheet.create({
+  container:{position: 'relative', flex: 1, backgroundColor: 'white'},
     paginationContainer: {
-      // position: 'absolute',
-      // bottom: -8,
-      // left: 0,
-      // right: 0
       marginTop:-20,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    skipButtonContainer:{
+      zIndex: 20,
+      position: 'absolute',
+      top: 23,
+      right: 35,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 7,
+    },
+    skipButtonText:{
+      fontFamily: LEAGUE_SPARTAN_SEMI_BOLD,
+      fontSize: 15,
+      color: COLORS.orange,
+      lineHeight:18
     },
     dot: {
       width: 20,
@@ -24,5 +37,6 @@ export const styles = StyleSheet.create({
     inActiveDot: {
       backgroundColor: COLORS.yellow2,
     },
+    actionButtonContainer:{alignItems: 'center', paddingVertical: 30},
   });
   
