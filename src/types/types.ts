@@ -285,6 +285,7 @@ export type FoodItem = {
 export type FoodState = {
   foods: FetchFoodsQuery['fetchFoods'] | null;
   filteredFoods: FetchFoodsQuery['fetchFoods'] | null;
+  bestSeller: FetchFoodsQuery['fetchFoods'] | null;
 };
 export type StackScreenConfig = {
   name: keyof StackNavigatorParamList;

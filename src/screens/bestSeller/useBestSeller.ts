@@ -1,12 +1,18 @@
-import { useAppSelector } from "../../hooks/useStore"
+import {useEffect} from 'react';
+import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
+import {getBestSeller} from '../../redux/slices/foodSlice';
 
 const useBestSeller = () => {
+  const dispatch = useAppDispatch();
   
-  const foods = useAppSelector(state=>state.foods.foods)
+  useEffect(() => {
+    dispatch(getBestSeller({}));
+  }, []);
+  const foods = useAppSelector(state => state.foods.bestSeller);
 
   return {
-    foods
-  }
-}
+    foods,
+  };
+};
 
-export default useBestSeller
+export default useBestSeller;
