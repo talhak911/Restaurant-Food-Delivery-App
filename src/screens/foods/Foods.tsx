@@ -16,7 +16,7 @@ import useFoods from './useFoods';
 import {styles} from './FoodsStyles';
 
 const Foods = () => {
-  const {activeButton, foods, handlePressFoodCategory, navigation} = useFoods();
+  const {activeButton, foods, handlePressFoodCategory, navigation,loadMoreFoods} = useFoods();
   return (
     <SafeAreaView style={styles.container}>
       <HomeHeader />
@@ -64,12 +64,15 @@ const Foods = () => {
             style={{marginTop: 16}}
             data={foods}
             showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item.id.toString()}
             renderItem={({item}) => (
               <FoodCard data={item} navigation={navigation} />
             )}
             contentContainerStyle={{
               paddingBottom: 110,
             }}
+            onEndReached={loadMoreFoods}
+            onEndReachedThreshold={0.5} 
           />
         </View>
       </View>
