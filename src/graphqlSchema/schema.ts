@@ -93,8 +93,8 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const FETCH_FOODS = gql`
-  query fetchFoods($category: String) {
-    fetchFoods(category: $category) {
+  query fetchFoods($category: String, $limit: Int, $offset: Int) {
+    fetchFoods(category: $category, limit: $limit, offset: $offset) {
       id
       name
       description
@@ -102,7 +102,45 @@ export const FETCH_FOODS = gql`
       price
       picture
       restaurantId
+      averageRating
+      totalRatingsCount
     }
+  }
+`;
+export const GET_BEST_SELLER = gql`
+  query getBestSeller ($limit:Int){
+    getBestSellers (limit:$limit){
+      id
+      name
+      description
+      category
+      price
+      picture
+      restaurantId
+      averageRating
+      totalRatingsCount
+    }
+  }
+`;
+export const SEARCH_FOODS = gql`
+  query searchFoods ($name: String!){
+    searchFoods(name: $name) {
+      name
+      id
+      description
+      category
+      price
+      picture
+      restaurantId
+      averageRating
+      totalRatingsCount
+    }
+  }
+`;
+
+export const GIVE_REVIEW = gql`
+  mutation addReview($reviews: [ReviewsParam!]!, $orderId: Float!) {
+    addReview(reviews: $reviews, orderId: $orderId)
   }
 `;
 export const UPDATE_CART = gql`

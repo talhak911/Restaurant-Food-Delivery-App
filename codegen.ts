@@ -1,8 +1,7 @@
-import {BASE_URL} from '@env';
 import type {CodegenConfig} from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
-  schema: `${BASE_URL}/graphql`,
+  schema: `https://restaurant-backend-app-server-production.up.railway.app/graphql`,
   documents: 'src/graphqlSchema/*.{ts,tsx}',
   generates: {
     'src/gql/': {

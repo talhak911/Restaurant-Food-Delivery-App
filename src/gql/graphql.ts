@@ -66,11 +66,37 @@ export type AggregateRestaurant = {
   _min?: Maybe<RestaurantMinAggregate>;
 };
 
+export type AggregateReview = {
+  __typename?: 'AggregateReview';
+  _avg?: Maybe<ReviewAvgAggregate>;
+  _count?: Maybe<ReviewCountAggregate>;
+  _max?: Maybe<ReviewMaxAggregate>;
+  _min?: Maybe<ReviewMinAggregate>;
+  _sum?: Maybe<ReviewSumAggregate>;
+};
+
 export type AggregateUser = {
   __typename?: 'AggregateUser';
   _count?: Maybe<UserCountAggregate>;
   _max?: Maybe<UserMaxAggregate>;
   _min?: Maybe<UserMinAggregate>;
+};
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type BoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
+export type BoolWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedBoolFilter>;
+  _min?: InputMaybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
 export type CreateManyAndReturnCustomer = {
@@ -83,14 +109,17 @@ export type CreateManyAndReturnCustomer = {
 
 export type CreateManyAndReturnFood = {
   __typename?: 'CreateManyAndReturnFood';
+  averageRating: Scalars['Float']['output'];
   category: FoodCategory;
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  orderCount: Scalars['Int']['output'];
   picture?: Maybe<Scalars['String']['output']>;
   price: Scalars['Float']['output'];
   restaurant: Restaurant;
   restaurantId: Scalars['String']['output'];
+  totalRatingsCount: Scalars['Int']['output'];
 };
 
 export type CreateManyAndReturnOrder = {
@@ -103,6 +132,7 @@ export type CreateManyAndReturnOrder = {
   deliveryTime?: Maybe<Scalars['DateTimeISO']['output']>;
   foods: Scalars['JSON']['output'];
   id: Scalars['Int']['output'];
+  isReviewed: Scalars['Boolean']['output'];
   restaurant: Restaurant;
   restaurantId: Scalars['String']['output'];
   status: OrderStatus;
@@ -129,6 +159,18 @@ export type CreateManyAndReturnRestaurant = {
   user: User;
 };
 
+export type CreateManyAndReturnReview = {
+  __typename?: 'CreateManyAndReturnReview';
+  comment?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTimeISO']['output'];
+  customer: Customer;
+  customerId: Scalars['String']['output'];
+  food: Food;
+  foodId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rating: Scalars['Int']['output'];
+};
+
 export type CreateManyAndReturnUser = {
   __typename?: 'CreateManyAndReturnUser';
   dateOfBirth: Scalars['DateTimeISO']['output'];
@@ -147,6 +189,7 @@ export type CreateManyAndReturnUser = {
 
 export type Customer = {
   __typename?: 'Customer';
+  Review: Array<Review>;
   _count?: Maybe<CustomerCount>;
   address: Array<Scalars['JSON']['output']>;
   cart: Array<OrderItemCart>;
@@ -154,6 +197,16 @@ export type Customer = {
   orders: Array<Order>;
   picture?: Maybe<Scalars['String']['output']>;
   user: User;
+};
+
+
+export type CustomerReviewArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ReviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
 };
 
 
@@ -185,8 +238,14 @@ export type CustomerAddress = {
 
 export type CustomerCount = {
   __typename?: 'CustomerCount';
+  Review: Scalars['Int']['output'];
   cart: Scalars['Int']['output'];
   orders: Scalars['Int']['output'];
+};
+
+
+export type CustomerCountReviewArgs = {
+  where?: InputMaybe<ReviewWhereInput>;
 };
 
 
@@ -215,8 +274,6 @@ export type CustomerCountOrderByAggregateInput = {
 
 export type CustomerCreateInput = {
   address?: InputMaybe<CustomerCreateaddressInput>;
-  cart?: InputMaybe<OrderItemCartCreateNestedManyWithoutCustomerInput>;
-  orders?: InputMaybe<OrderCreateNestedManyWithoutCustomerInput>;
   picture?: InputMaybe<Scalars['String']['input']>;
   user: UserCreateNestedOneWithoutCustomerInput;
 };
@@ -239,6 +296,12 @@ export type CustomerCreateNestedOneWithoutOrdersInput = {
   create?: InputMaybe<CustomerCreateWithoutOrdersInput>;
 };
 
+export type CustomerCreateNestedOneWithoutReviewInput = {
+  connect?: InputMaybe<CustomerWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CustomerCreateOrConnectWithoutReviewInput>;
+  create?: InputMaybe<CustomerCreateWithoutReviewInput>;
+};
+
 export type CustomerCreateNestedOneWithoutUserInput = {
   connect?: InputMaybe<CustomerWhereUniqueInput>;
   connectOrCreate?: InputMaybe<CustomerCreateOrConnectWithoutUserInput>;
@@ -255,6 +318,11 @@ export type CustomerCreateOrConnectWithoutOrdersInput = {
   where: CustomerWhereUniqueInput;
 };
 
+export type CustomerCreateOrConnectWithoutReviewInput = {
+  create: CustomerCreateWithoutReviewInput;
+  where: CustomerWhereUniqueInput;
+};
+
 export type CustomerCreateOrConnectWithoutUserInput = {
   create: CustomerCreateWithoutUserInput;
   where: CustomerWhereUniqueInput;
@@ -262,22 +330,24 @@ export type CustomerCreateOrConnectWithoutUserInput = {
 
 export type CustomerCreateWithoutCartInput = {
   address?: InputMaybe<CustomerCreateaddressInput>;
-  orders?: InputMaybe<OrderCreateNestedManyWithoutCustomerInput>;
   picture?: InputMaybe<Scalars['String']['input']>;
   user: UserCreateNestedOneWithoutCustomerInput;
 };
 
 export type CustomerCreateWithoutOrdersInput = {
   address?: InputMaybe<CustomerCreateaddressInput>;
-  cart?: InputMaybe<OrderItemCartCreateNestedManyWithoutCustomerInput>;
+  picture?: InputMaybe<Scalars['String']['input']>;
+  user: UserCreateNestedOneWithoutCustomerInput;
+};
+
+export type CustomerCreateWithoutReviewInput = {
+  address?: InputMaybe<CustomerCreateaddressInput>;
   picture?: InputMaybe<Scalars['String']['input']>;
   user: UserCreateNestedOneWithoutCustomerInput;
 };
 
 export type CustomerCreateWithoutUserInput = {
   address?: InputMaybe<CustomerCreateaddressInput>;
-  cart?: InputMaybe<OrderItemCartCreateNestedManyWithoutCustomerInput>;
-  orders?: InputMaybe<OrderCreateNestedManyWithoutCustomerInput>;
   picture?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -333,9 +403,7 @@ export type CustomerOrderByWithAggregationInput = {
 
 export type CustomerOrderByWithRelationInput = {
   address?: InputMaybe<SortOrder>;
-  cart?: InputMaybe<OrderItemCartOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
-  orders?: InputMaybe<OrderOrderByRelationAggregateInput>;
   picture?: InputMaybe<SortOrderInput>;
   user?: InputMaybe<UserOrderByWithRelationInput>;
 };
@@ -362,8 +430,6 @@ export type CustomerScalarWhereWithAggregatesInput = {
 
 export type CustomerUpdateInput = {
   address?: InputMaybe<CustomerUpdateaddressInput>;
-  cart?: InputMaybe<OrderItemCartUpdateManyWithoutCustomerNestedInput>;
-  orders?: InputMaybe<OrderUpdateManyWithoutCustomerNestedInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutCustomerNestedInput>;
 };
@@ -389,6 +455,14 @@ export type CustomerUpdateOneRequiredWithoutOrdersNestedInput = {
   upsert?: InputMaybe<CustomerUpsertWithoutOrdersInput>;
 };
 
+export type CustomerUpdateOneRequiredWithoutReviewNestedInput = {
+  connect?: InputMaybe<CustomerWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<CustomerCreateOrConnectWithoutReviewInput>;
+  create?: InputMaybe<CustomerCreateWithoutReviewInput>;
+  update?: InputMaybe<CustomerUpdateToOneWithWhereWithoutReviewInput>;
+  upsert?: InputMaybe<CustomerUpsertWithoutReviewInput>;
+};
+
 export type CustomerUpdateOneWithoutUserNestedInput = {
   connect?: InputMaybe<CustomerWhereUniqueInput>;
   connectOrCreate?: InputMaybe<CustomerCreateOrConnectWithoutUserInput>;
@@ -409,6 +483,11 @@ export type CustomerUpdateToOneWithWhereWithoutOrdersInput = {
   where?: InputMaybe<CustomerWhereInput>;
 };
 
+export type CustomerUpdateToOneWithWhereWithoutReviewInput = {
+  data: CustomerUpdateWithoutReviewInput;
+  where?: InputMaybe<CustomerWhereInput>;
+};
+
 export type CustomerUpdateToOneWithWhereWithoutUserInput = {
   data: CustomerUpdateWithoutUserInput;
   where?: InputMaybe<CustomerWhereInput>;
@@ -416,22 +495,24 @@ export type CustomerUpdateToOneWithWhereWithoutUserInput = {
 
 export type CustomerUpdateWithoutCartInput = {
   address?: InputMaybe<CustomerUpdateaddressInput>;
-  orders?: InputMaybe<OrderUpdateManyWithoutCustomerNestedInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutCustomerNestedInput>;
 };
 
 export type CustomerUpdateWithoutOrdersInput = {
   address?: InputMaybe<CustomerUpdateaddressInput>;
-  cart?: InputMaybe<OrderItemCartUpdateManyWithoutCustomerNestedInput>;
+  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutCustomerNestedInput>;
+};
+
+export type CustomerUpdateWithoutReviewInput = {
+  address?: InputMaybe<CustomerUpdateaddressInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneRequiredWithoutCustomerNestedInput>;
 };
 
 export type CustomerUpdateWithoutUserInput = {
   address?: InputMaybe<CustomerUpdateaddressInput>;
-  cart?: InputMaybe<OrderItemCartUpdateManyWithoutCustomerNestedInput>;
-  orders?: InputMaybe<OrderUpdateManyWithoutCustomerNestedInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
 };
 
@@ -452,6 +533,12 @@ export type CustomerUpsertWithoutOrdersInput = {
   where?: InputMaybe<CustomerWhereInput>;
 };
 
+export type CustomerUpsertWithoutReviewInput = {
+  create: CustomerCreateWithoutReviewInput;
+  update: CustomerUpdateWithoutReviewInput;
+  where?: InputMaybe<CustomerWhereInput>;
+};
+
 export type CustomerUpsertWithoutUserInput = {
   create: CustomerCreateWithoutUserInput;
   update: CustomerUpdateWithoutUserInput;
@@ -463,9 +550,7 @@ export type CustomerWhereInput = {
   NOT?: InputMaybe<Array<CustomerWhereInput>>;
   OR?: InputMaybe<Array<CustomerWhereInput>>;
   address?: InputMaybe<JsonNullableListFilter>;
-  cart?: InputMaybe<OrderItemCartListRelationFilter>;
   id?: InputMaybe<StringFilter>;
-  orders?: InputMaybe<OrderListRelationFilter>;
   picture?: InputMaybe<StringNullableFilter>;
   user?: InputMaybe<UserRelationFilter>;
 };
@@ -475,9 +560,7 @@ export type CustomerWhereUniqueInput = {
   NOT?: InputMaybe<Array<CustomerWhereInput>>;
   OR?: InputMaybe<Array<CustomerWhereInput>>;
   address?: InputMaybe<JsonNullableListFilter>;
-  cart?: InputMaybe<OrderItemCartListRelationFilter>;
   id?: InputMaybe<Scalars['String']['input']>;
-  orders?: InputMaybe<OrderListRelationFilter>;
   picture?: InputMaybe<StringNullableFilter>;
   user?: InputMaybe<UserRelationFilter>;
 };
@@ -636,16 +719,30 @@ export type FloatWithAggregatesFilter = {
 
 export type Food = {
   __typename?: 'Food';
+  Review: Array<Review>;
   _count?: Maybe<FoodCount>;
+  averageRating: Scalars['Float']['output'];
   carts: Array<OrderItemCart>;
   category: FoodCategory;
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  orderCount: Scalars['Int']['output'];
   picture?: Maybe<Scalars['String']['output']>;
   price: Scalars['Float']['output'];
   restaurant: Restaurant;
   restaurantId: Scalars['String']['output'];
+  totalRatingsCount: Scalars['Int']['output'];
+};
+
+
+export type FoodReviewArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ReviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
 };
 
 
@@ -660,7 +757,10 @@ export type FoodCartsArgs = {
 
 export type FoodAvgAggregate = {
   __typename?: 'FoodAvgAggregate';
+  averageRating?: Maybe<Scalars['Float']['output']>;
+  orderCount?: Maybe<Scalars['Float']['output']>;
   price?: Maybe<Scalars['Float']['output']>;
+  totalRatingsCount?: Maybe<Scalars['Float']['output']>;
 };
 
 export type FoodAvgOrderByAggregateInput = {
@@ -677,7 +777,13 @@ export enum FoodCategory {
 
 export type FoodCount = {
   __typename?: 'FoodCount';
+  Review: Scalars['Int']['output'];
   carts: Scalars['Int']['output'];
+};
+
+
+export type FoodCountReviewArgs = {
+  where?: InputMaybe<ReviewWhereInput>;
 };
 
 
@@ -688,13 +794,16 @@ export type FoodCountCartsArgs = {
 export type FoodCountAggregate = {
   __typename?: 'FoodCountAggregate';
   _all: Scalars['Int']['output'];
+  averageRating: Scalars['Int']['output'];
   category: Scalars['Int']['output'];
   description: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   name: Scalars['Int']['output'];
+  orderCount: Scalars['Int']['output'];
   picture: Scalars['Int']['output'];
   price: Scalars['Int']['output'];
   restaurantId: Scalars['Int']['output'];
+  totalRatingsCount: Scalars['Int']['output'];
 };
 
 export type FoodCountOrderByAggregateInput = {
@@ -755,6 +864,12 @@ export type FoodCreateNestedOneWithoutCartsInput = {
   create?: InputMaybe<FoodCreateWithoutCartsInput>;
 };
 
+export type FoodCreateNestedOneWithoutReviewInput = {
+  connect?: InputMaybe<FoodWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FoodCreateOrConnectWithoutReviewInput>;
+  create?: InputMaybe<FoodCreateWithoutReviewInput>;
+};
+
 export type FoodCreateOrConnectWithoutCartsInput = {
   create: FoodCreateWithoutCartsInput;
   where: FoodWhereUniqueInput;
@@ -762,6 +877,11 @@ export type FoodCreateOrConnectWithoutCartsInput = {
 
 export type FoodCreateOrConnectWithoutRestaurantInput = {
   create: FoodCreateWithoutRestaurantInput;
+  where: FoodWhereUniqueInput;
+};
+
+export type FoodCreateOrConnectWithoutReviewInput = {
+  create: FoodCreateWithoutReviewInput;
   where: FoodWhereUniqueInput;
 };
 
@@ -785,6 +905,17 @@ export type FoodCreateWithoutRestaurantInput = {
   price: Scalars['Float']['input'];
 };
 
+export type FoodCreateWithoutReviewInput = {
+  carts?: InputMaybe<OrderItemCartCreateNestedManyWithoutFoodInput>;
+  category: FoodCategory;
+  description: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  price: Scalars['Float']['input'];
+  restaurant: RestaurantCreateNestedOneWithoutMenuInput;
+};
+
 export type FoodGroupBy = {
   __typename?: 'FoodGroupBy';
   _avg?: Maybe<FoodAvgAggregate>;
@@ -792,13 +923,16 @@ export type FoodGroupBy = {
   _max?: Maybe<FoodMaxAggregate>;
   _min?: Maybe<FoodMinAggregate>;
   _sum?: Maybe<FoodSumAggregate>;
+  averageRating: Scalars['Float']['output'];
   category: FoodCategory;
   description: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  orderCount: Scalars['Int']['output'];
   picture?: Maybe<Scalars['String']['output']>;
   price: Scalars['Float']['output'];
   restaurantId: Scalars['String']['output'];
+  totalRatingsCount: Scalars['Int']['output'];
 };
 
 export type FoodListRelationFilter = {
@@ -809,13 +943,16 @@ export type FoodListRelationFilter = {
 
 export type FoodMaxAggregate = {
   __typename?: 'FoodMaxAggregate';
+  averageRating?: Maybe<Scalars['Float']['output']>;
   category?: Maybe<FoodCategory>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  orderCount?: Maybe<Scalars['Int']['output']>;
   picture?: Maybe<Scalars['String']['output']>;
   price?: Maybe<Scalars['Float']['output']>;
   restaurantId?: Maybe<Scalars['String']['output']>;
+  totalRatingsCount?: Maybe<Scalars['Int']['output']>;
 };
 
 export type FoodMaxOrderByAggregateInput = {
@@ -830,13 +967,16 @@ export type FoodMaxOrderByAggregateInput = {
 
 export type FoodMinAggregate = {
   __typename?: 'FoodMinAggregate';
+  averageRating?: Maybe<Scalars['Float']['output']>;
   category?: Maybe<FoodCategory>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  orderCount?: Maybe<Scalars['Int']['output']>;
   picture?: Maybe<Scalars['String']['output']>;
   price?: Maybe<Scalars['Float']['output']>;
   restaurantId?: Maybe<Scalars['String']['output']>;
+  totalRatingsCount?: Maybe<Scalars['Int']['output']>;
 };
 
 export type FoodMinOrderByAggregateInput = {
@@ -886,13 +1026,16 @@ export type FoodRelationFilter = {
 };
 
 export enum FoodScalarFieldEnum {
+  AverageRating = 'averageRating',
   Category = 'category',
   Description = 'description',
   Id = 'id',
   Name = 'name',
+  OrderCount = 'orderCount',
   Picture = 'picture',
   Price = 'price',
-  RestaurantId = 'restaurantId'
+  RestaurantId = 'restaurantId',
+  TotalRatingsCount = 'totalRatingsCount'
 }
 
 export type FoodScalarWhereInput = {
@@ -923,7 +1066,10 @@ export type FoodScalarWhereWithAggregatesInput = {
 
 export type FoodSumAggregate = {
   __typename?: 'FoodSumAggregate';
+  averageRating?: Maybe<Scalars['Float']['output']>;
+  orderCount?: Maybe<Scalars['Int']['output']>;
   price?: Maybe<Scalars['Float']['output']>;
+  totalRatingsCount?: Maybe<Scalars['Int']['output']>;
 };
 
 export type FoodSumOrderByAggregateInput = {
@@ -977,8 +1123,21 @@ export type FoodUpdateOneRequiredWithoutCartsNestedInput = {
   upsert?: InputMaybe<FoodUpsertWithoutCartsInput>;
 };
 
+export type FoodUpdateOneRequiredWithoutReviewNestedInput = {
+  connect?: InputMaybe<FoodWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<FoodCreateOrConnectWithoutReviewInput>;
+  create?: InputMaybe<FoodCreateWithoutReviewInput>;
+  update?: InputMaybe<FoodUpdateToOneWithWhereWithoutReviewInput>;
+  upsert?: InputMaybe<FoodUpsertWithoutReviewInput>;
+};
+
 export type FoodUpdateToOneWithWhereWithoutCartsInput = {
   data: FoodUpdateWithoutCartsInput;
+  where?: InputMaybe<FoodWhereInput>;
+};
+
+export type FoodUpdateToOneWithWhereWithoutReviewInput = {
+  data: FoodUpdateWithoutReviewInput;
   where?: InputMaybe<FoodWhereInput>;
 };
 
@@ -1007,6 +1166,17 @@ export type FoodUpdateWithoutRestaurantInput = {
   price?: InputMaybe<FloatFieldUpdateOperationsInput>;
 };
 
+export type FoodUpdateWithoutReviewInput = {
+  carts?: InputMaybe<OrderItemCartUpdateManyWithoutFoodNestedInput>;
+  category?: InputMaybe<EnumFoodCategoryFieldUpdateOperationsInput>;
+  description?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  price?: InputMaybe<FloatFieldUpdateOperationsInput>;
+  restaurant?: InputMaybe<RestaurantUpdateOneRequiredWithoutMenuNestedInput>;
+};
+
 export type FoodUpsertWithWhereUniqueWithoutRestaurantInput = {
   create: FoodCreateWithoutRestaurantInput;
   update: FoodUpdateWithoutRestaurantInput;
@@ -1016,6 +1186,12 @@ export type FoodUpsertWithWhereUniqueWithoutRestaurantInput = {
 export type FoodUpsertWithoutCartsInput = {
   create: FoodCreateWithoutCartsInput;
   update: FoodUpdateWithoutCartsInput;
+  where?: InputMaybe<FoodWhereInput>;
+};
+
+export type FoodUpsertWithoutReviewInput = {
+  create: FoodCreateWithoutReviewInput;
+  update: FoodUpdateWithoutReviewInput;
   where?: InputMaybe<FoodWhereInput>;
 };
 
@@ -1131,6 +1307,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCustomerAddress: Array<CustomerAddress>;
   addFoodItem: Scalars['Boolean']['output'];
+  addReview: Scalars['Boolean']['output'];
   assignDeliveryPerson: Order;
   cancelOrder: Scalars['String']['output'];
   changePassword: Scalars['Boolean']['output'];
@@ -1139,18 +1316,21 @@ export type Mutation = {
   createManyAndReturnOrder: Array<CreateManyAndReturnOrder>;
   createManyAndReturnOrderItemCart: Array<CreateManyAndReturnOrderItemCart>;
   createManyAndReturnRestaurant: Array<CreateManyAndReturnRestaurant>;
+  createManyAndReturnReview: Array<CreateManyAndReturnReview>;
   createManyAndReturnUser: Array<CreateManyAndReturnUser>;
   createManyCustomer: AffectedRowsOutput;
   createManyFood: AffectedRowsOutput;
   createManyOrder: AffectedRowsOutput;
   createManyOrderItemCart: AffectedRowsOutput;
   createManyRestaurant: AffectedRowsOutput;
+  createManyReview: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createOneCustomer: Customer;
   createOneFood: Food;
   createOneOrder: Order;
   createOneOrderItemCart: OrderItemCart;
   createOneRestaurant: Restaurant;
+  createOneReview: Review;
   createOneUser: User;
   deleteCustomerAddress: Scalars['Boolean']['output'];
   deleteManyCustomer: AffectedRowsOutput;
@@ -1158,12 +1338,14 @@ export type Mutation = {
   deleteManyOrder: AffectedRowsOutput;
   deleteManyOrderItemCart: AffectedRowsOutput;
   deleteManyRestaurant: AffectedRowsOutput;
+  deleteManyReview: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteOneCustomer?: Maybe<Customer>;
   deleteOneFood?: Maybe<Food>;
   deleteOneOrder?: Maybe<Order>;
   deleteOneOrderItemCart?: Maybe<OrderItemCart>;
   deleteOneRestaurant?: Maybe<Restaurant>;
+  deleteOneReview?: Maybe<Review>;
   deleteOneUser?: Maybe<User>;
   placeOrder: Order;
   refreshToken: Scalars['String']['output'];
@@ -1182,12 +1364,14 @@ export type Mutation = {
   updateManyOrder: AffectedRowsOutput;
   updateManyOrderItemCart: AffectedRowsOutput;
   updateManyRestaurant: AffectedRowsOutput;
+  updateManyReview: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateOneCustomer?: Maybe<Customer>;
   updateOneFood?: Maybe<Food>;
   updateOneOrder?: Maybe<Order>;
   updateOneOrderItemCart?: Maybe<OrderItemCart>;
   updateOneRestaurant?: Maybe<Restaurant>;
+  updateOneReview?: Maybe<Review>;
   updateOneUser?: Maybe<User>;
   updateRestaurant: Scalars['String']['output'];
   upsertOneCustomer: Customer;
@@ -1195,6 +1379,7 @@ export type Mutation = {
   upsertOneOrder: Order;
   upsertOneOrderItemCart: OrderItemCart;
   upsertOneRestaurant: Restaurant;
+  upsertOneReview: Review;
   upsertOneUser: User;
   verifyAccount: Scalars['Boolean']['output'];
 };
@@ -1208,6 +1393,12 @@ export type MutationAddCustomerAddressArgs = {
 
 export type MutationAddFoodItemArgs = {
   data: FoodCreateWithoutRestaurantInput;
+};
+
+
+export type MutationAddReviewArgs = {
+  orderId: Scalars['Float']['input'];
+  reviews: Array<ReviewsParam>;
 };
 
 
@@ -1258,6 +1449,12 @@ export type MutationCreateManyAndReturnRestaurantArgs = {
 };
 
 
+export type MutationCreateManyAndReturnReviewArgs = {
+  data: Array<ReviewCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationCreateManyAndReturnUserArgs = {
   data: Array<UserCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1294,6 +1491,12 @@ export type MutationCreateManyRestaurantArgs = {
 };
 
 
+export type MutationCreateManyReviewArgs = {
+  data: Array<ReviewCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type MutationCreateManyUserArgs = {
   data: Array<UserCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1322,6 +1525,11 @@ export type MutationCreateOneOrderItemCartArgs = {
 
 export type MutationCreateOneRestaurantArgs = {
   data: RestaurantCreateInput;
+};
+
+
+export type MutationCreateOneReviewArgs = {
+  data: ReviewCreateInput;
 };
 
 
@@ -1360,6 +1568,11 @@ export type MutationDeleteManyRestaurantArgs = {
 };
 
 
+export type MutationDeleteManyReviewArgs = {
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
 export type MutationDeleteManyUserArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
@@ -1387,6 +1600,11 @@ export type MutationDeleteOneOrderItemCartArgs = {
 
 export type MutationDeleteOneRestaurantArgs = {
   where: RestaurantWhereUniqueInput;
+};
+
+
+export type MutationDeleteOneReviewArgs = {
+  where: ReviewWhereUniqueInput;
 };
 
 
@@ -1496,6 +1714,12 @@ export type MutationUpdateManyRestaurantArgs = {
 };
 
 
+export type MutationUpdateManyReviewArgs = {
+  data: ReviewUpdateManyMutationInput;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
 export type MutationUpdateManyUserArgs = {
   data: UserUpdateManyMutationInput;
   where?: InputMaybe<UserWhereInput>;
@@ -1529,6 +1753,12 @@ export type MutationUpdateOneOrderItemCartArgs = {
 export type MutationUpdateOneRestaurantArgs = {
   data: RestaurantUpdateInput;
   where: RestaurantWhereUniqueInput;
+};
+
+
+export type MutationUpdateOneReviewArgs = {
+  data: ReviewUpdateInput;
+  where: ReviewWhereUniqueInput;
 };
 
 
@@ -1578,6 +1808,13 @@ export type MutationUpsertOneRestaurantArgs = {
 };
 
 
+export type MutationUpsertOneReviewArgs = {
+  create: ReviewCreateInput;
+  update: ReviewUpdateInput;
+  where: ReviewWhereUniqueInput;
+};
+
+
 export type MutationUpsertOneUserArgs = {
   create: UserCreateInput;
   update: UserUpdateInput;
@@ -1588,6 +1825,19 @@ export type MutationUpsertOneUserArgs = {
 export type MutationVerifyAccountArgs = {
   email: Scalars['String']['input'];
   otp: Scalars['String']['input'];
+};
+
+export type NestedBoolFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<NestedBoolFilter>;
+};
+
+export type NestedBoolWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedBoolFilter>;
+  _min?: InputMaybe<NestedBoolFilter>;
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<NestedBoolWithAggregatesFilter>;
 };
 
 export type NestedDateTimeFilter = {
@@ -1857,6 +2107,7 @@ export type Order = {
   deliveryTime?: Maybe<Scalars['DateTimeISO']['output']>;
   foods: Scalars['JSON']['output'];
   id: Scalars['Int']['output'];
+  isReviewed: Scalars['Boolean']['output'];
   restaurant: Restaurant;
   restaurantId: Scalars['String']['output'];
   status: OrderStatus;
@@ -1884,6 +2135,7 @@ export type OrderCountAggregate = {
   deliveryTime: Scalars['Int']['output'];
   foods: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
+  isReviewed: Scalars['Int']['output'];
   restaurantId: Scalars['Int']['output'];
   status: Scalars['Int']['output'];
   totalPrice: Scalars['Int']['output'];
@@ -1897,6 +2149,7 @@ export type OrderCountOrderByAggregateInput = {
   deliveryTime?: InputMaybe<SortOrder>;
   foods?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  isReviewed?: InputMaybe<SortOrder>;
   restaurantId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   totalPrice?: InputMaybe<SortOrder>;
@@ -1909,26 +2162,10 @@ export type OrderCreateInput = {
   deliveryPerson?: InputMaybe<Scalars['String']['input']>;
   deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
   foods: Scalars['JSON']['input'];
+  isReviewed?: InputMaybe<Scalars['Boolean']['input']>;
   restaurant: RestaurantCreateNestedOneWithoutOrdersInput;
   status?: InputMaybe<OrderStatus>;
   totalPrice: Scalars['Float']['input'];
-};
-
-export type OrderCreateManyCustomerInput = {
-  createdAt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  deliveryAddress: Scalars['String']['input'];
-  deliveryPerson?: InputMaybe<Scalars['String']['input']>;
-  deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  foods: Scalars['JSON']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  restaurantId: Scalars['String']['input'];
-  status?: InputMaybe<OrderStatus>;
-  totalPrice: Scalars['Float']['input'];
-};
-
-export type OrderCreateManyCustomerInputEnvelope = {
-  data: Array<OrderCreateManyCustomerInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type OrderCreateManyInput = {
@@ -1939,6 +2176,7 @@ export type OrderCreateManyInput = {
   deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
   foods: Scalars['JSON']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  isReviewed?: InputMaybe<Scalars['Boolean']['input']>;
   restaurantId: Scalars['String']['input'];
   status?: InputMaybe<OrderStatus>;
   totalPrice: Scalars['Float']['input'];
@@ -1952,6 +2190,7 @@ export type OrderCreateManyRestaurantInput = {
   deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
   foods: Scalars['JSON']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
+  isReviewed?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<OrderStatus>;
   totalPrice: Scalars['Float']['input'];
 };
@@ -1961,13 +2200,6 @@ export type OrderCreateManyRestaurantInputEnvelope = {
   skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type OrderCreateNestedManyWithoutCustomerInput = {
-  connect?: InputMaybe<Array<OrderWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderCreateOrConnectWithoutCustomerInput>>;
-  create?: InputMaybe<Array<OrderCreateWithoutCustomerInput>>;
-  createMany?: InputMaybe<OrderCreateManyCustomerInputEnvelope>;
-};
-
 export type OrderCreateNestedManyWithoutRestaurantInput = {
   connect?: InputMaybe<Array<OrderWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<OrderCreateOrConnectWithoutRestaurantInput>>;
@@ -1975,25 +2207,9 @@ export type OrderCreateNestedManyWithoutRestaurantInput = {
   createMany?: InputMaybe<OrderCreateManyRestaurantInputEnvelope>;
 };
 
-export type OrderCreateOrConnectWithoutCustomerInput = {
-  create: OrderCreateWithoutCustomerInput;
-  where: OrderWhereUniqueInput;
-};
-
 export type OrderCreateOrConnectWithoutRestaurantInput = {
   create: OrderCreateWithoutRestaurantInput;
   where: OrderWhereUniqueInput;
-};
-
-export type OrderCreateWithoutCustomerInput = {
-  createdAt?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  deliveryAddress: Scalars['String']['input'];
-  deliveryPerson?: InputMaybe<Scalars['String']['input']>;
-  deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
-  foods: Scalars['JSON']['input'];
-  restaurant: RestaurantCreateNestedOneWithoutOrdersInput;
-  status?: InputMaybe<OrderStatus>;
-  totalPrice: Scalars['Float']['input'];
 };
 
 export type OrderCreateWithoutRestaurantInput = {
@@ -2003,6 +2219,7 @@ export type OrderCreateWithoutRestaurantInput = {
   deliveryPerson?: InputMaybe<Scalars['String']['input']>;
   deliveryTime?: InputMaybe<Scalars['DateTimeISO']['input']>;
   foods: Scalars['JSON']['input'];
+  isReviewed?: InputMaybe<Scalars['Boolean']['input']>;
   status?: InputMaybe<OrderStatus>;
   totalPrice: Scalars['Float']['input'];
 };
@@ -2021,6 +2238,7 @@ export type OrderGroupBy = {
   deliveryTime?: Maybe<Scalars['DateTimeISO']['output']>;
   foods: Scalars['JSON']['output'];
   id: Scalars['Int']['output'];
+  isReviewed: Scalars['Boolean']['output'];
   restaurantId: Scalars['String']['output'];
   status: OrderStatus;
   totalPrice: Scalars['Float']['output'];
@@ -2075,18 +2293,6 @@ export type OrderItemCartCreateInput = {
   totalPrice: Scalars['Float']['input'];
 };
 
-export type OrderItemCartCreateManyCustomerInput = {
-  foodId: Scalars['String']['input'];
-  id?: InputMaybe<Scalars['Int']['input']>;
-  quantity: Scalars['Int']['input'];
-  totalPrice: Scalars['Float']['input'];
-};
-
-export type OrderItemCartCreateManyCustomerInputEnvelope = {
-  data: Array<OrderItemCartCreateManyCustomerInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type OrderItemCartCreateManyFoodInput = {
   customerId: Scalars['String']['input'];
   id?: InputMaybe<Scalars['Int']['input']>;
@@ -2107,13 +2313,6 @@ export type OrderItemCartCreateManyInput = {
   totalPrice: Scalars['Float']['input'];
 };
 
-export type OrderItemCartCreateNestedManyWithoutCustomerInput = {
-  connect?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderItemCartCreateOrConnectWithoutCustomerInput>>;
-  create?: InputMaybe<Array<OrderItemCartCreateWithoutCustomerInput>>;
-  createMany?: InputMaybe<OrderItemCartCreateManyCustomerInputEnvelope>;
-};
-
 export type OrderItemCartCreateNestedManyWithoutFoodInput = {
   connect?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<OrderItemCartCreateOrConnectWithoutFoodInput>>;
@@ -2121,20 +2320,9 @@ export type OrderItemCartCreateNestedManyWithoutFoodInput = {
   createMany?: InputMaybe<OrderItemCartCreateManyFoodInputEnvelope>;
 };
 
-export type OrderItemCartCreateOrConnectWithoutCustomerInput = {
-  create: OrderItemCartCreateWithoutCustomerInput;
-  where: OrderItemCartWhereUniqueInput;
-};
-
 export type OrderItemCartCreateOrConnectWithoutFoodInput = {
   create: OrderItemCartCreateWithoutFoodInput;
   where: OrderItemCartWhereUniqueInput;
-};
-
-export type OrderItemCartCreateWithoutCustomerInput = {
-  food: FoodCreateNestedOneWithoutCartsInput;
-  quantity: Scalars['Int']['input'];
-  totalPrice: Scalars['Float']['input'];
 };
 
 export type OrderItemCartCreateWithoutFoodInput = {
@@ -2279,28 +2467,9 @@ export type OrderItemCartUpdateManyMutationInput = {
   totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
 };
 
-export type OrderItemCartUpdateManyWithWhereWithoutCustomerInput = {
-  data: OrderItemCartUpdateManyMutationInput;
-  where: OrderItemCartScalarWhereInput;
-};
-
 export type OrderItemCartUpdateManyWithWhereWithoutFoodInput = {
   data: OrderItemCartUpdateManyMutationInput;
   where: OrderItemCartScalarWhereInput;
-};
-
-export type OrderItemCartUpdateManyWithoutCustomerNestedInput = {
-  connect?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderItemCartCreateOrConnectWithoutCustomerInput>>;
-  create?: InputMaybe<Array<OrderItemCartCreateWithoutCustomerInput>>;
-  createMany?: InputMaybe<OrderItemCartCreateManyCustomerInputEnvelope>;
-  delete?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<OrderItemCartScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
-  set?: InputMaybe<Array<OrderItemCartWhereUniqueInput>>;
-  update?: InputMaybe<Array<OrderItemCartUpdateWithWhereUniqueWithoutCustomerInput>>;
-  updateMany?: InputMaybe<Array<OrderItemCartUpdateManyWithWhereWithoutCustomerInput>>;
-  upsert?: InputMaybe<Array<OrderItemCartUpsertWithWhereUniqueWithoutCustomerInput>>;
 };
 
 export type OrderItemCartUpdateManyWithoutFoodNestedInput = {
@@ -2317,32 +2486,15 @@ export type OrderItemCartUpdateManyWithoutFoodNestedInput = {
   upsert?: InputMaybe<Array<OrderItemCartUpsertWithWhereUniqueWithoutFoodInput>>;
 };
 
-export type OrderItemCartUpdateWithWhereUniqueWithoutCustomerInput = {
-  data: OrderItemCartUpdateWithoutCustomerInput;
-  where: OrderItemCartWhereUniqueInput;
-};
-
 export type OrderItemCartUpdateWithWhereUniqueWithoutFoodInput = {
   data: OrderItemCartUpdateWithoutFoodInput;
   where: OrderItemCartWhereUniqueInput;
-};
-
-export type OrderItemCartUpdateWithoutCustomerInput = {
-  food?: InputMaybe<FoodUpdateOneRequiredWithoutCartsNestedInput>;
-  quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
-  totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
 };
 
 export type OrderItemCartUpdateWithoutFoodInput = {
   customer?: InputMaybe<CustomerUpdateOneRequiredWithoutCartNestedInput>;
   quantity?: InputMaybe<IntFieldUpdateOperationsInput>;
   totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
-};
-
-export type OrderItemCartUpsertWithWhereUniqueWithoutCustomerInput = {
-  create: OrderItemCartCreateWithoutCustomerInput;
-  update: OrderItemCartUpdateWithoutCustomerInput;
-  where: OrderItemCartWhereUniqueInput;
 };
 
 export type OrderItemCartUpsertWithWhereUniqueWithoutFoodInput = {
@@ -2391,6 +2543,7 @@ export type OrderMaxAggregate = {
   deliveryPerson?: Maybe<Scalars['String']['output']>;
   deliveryTime?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  isReviewed?: Maybe<Scalars['Boolean']['output']>;
   restaurantId?: Maybe<Scalars['String']['output']>;
   status?: Maybe<OrderStatus>;
   totalPrice?: Maybe<Scalars['Float']['output']>;
@@ -2403,6 +2556,7 @@ export type OrderMaxOrderByAggregateInput = {
   deliveryPerson?: InputMaybe<SortOrder>;
   deliveryTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  isReviewed?: InputMaybe<SortOrder>;
   restaurantId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   totalPrice?: InputMaybe<SortOrder>;
@@ -2416,6 +2570,7 @@ export type OrderMinAggregate = {
   deliveryPerson?: Maybe<Scalars['String']['output']>;
   deliveryTime?: Maybe<Scalars['DateTimeISO']['output']>;
   id?: Maybe<Scalars['Int']['output']>;
+  isReviewed?: Maybe<Scalars['Boolean']['output']>;
   restaurantId?: Maybe<Scalars['String']['output']>;
   status?: Maybe<OrderStatus>;
   totalPrice?: Maybe<Scalars['Float']['output']>;
@@ -2428,6 +2583,7 @@ export type OrderMinOrderByAggregateInput = {
   deliveryPerson?: InputMaybe<SortOrder>;
   deliveryTime?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  isReviewed?: InputMaybe<SortOrder>;
   restaurantId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   totalPrice?: InputMaybe<SortOrder>;
@@ -2450,6 +2606,7 @@ export type OrderOrderByWithAggregationInput = {
   deliveryTime?: InputMaybe<SortOrderInput>;
   foods?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  isReviewed?: InputMaybe<SortOrder>;
   restaurantId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
   totalPrice?: InputMaybe<SortOrder>;
@@ -2464,6 +2621,7 @@ export type OrderOrderByWithRelationInput = {
   deliveryTime?: InputMaybe<SortOrderInput>;
   foods?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  isReviewed?: InputMaybe<SortOrder>;
   restaurant?: InputMaybe<RestaurantOrderByWithRelationInput>;
   restaurantId?: InputMaybe<SortOrder>;
   status?: InputMaybe<SortOrder>;
@@ -2478,6 +2636,7 @@ export enum OrderScalarFieldEnum {
   DeliveryTime = 'deliveryTime',
   Foods = 'foods',
   Id = 'id',
+  IsReviewed = 'isReviewed',
   RestaurantId = 'restaurantId',
   Status = 'status',
   TotalPrice = 'totalPrice'
@@ -2494,6 +2653,7 @@ export type OrderScalarWhereInput = {
   deliveryTime?: InputMaybe<DateTimeNullableFilter>;
   foods?: InputMaybe<JsonFilter>;
   id?: InputMaybe<IntFilter>;
+  isReviewed?: InputMaybe<BoolFilter>;
   restaurantId?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumOrderStatusFilter>;
   totalPrice?: InputMaybe<FloatFilter>;
@@ -2510,6 +2670,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   deliveryTime?: InputMaybe<DateTimeNullableWithAggregatesFilter>;
   foods?: InputMaybe<JsonWithAggregatesFilter>;
   id?: InputMaybe<IntWithAggregatesFilter>;
+  isReviewed?: InputMaybe<BoolWithAggregatesFilter>;
   restaurantId?: InputMaybe<StringWithAggregatesFilter>;
   status?: InputMaybe<EnumOrderStatusWithAggregatesFilter>;
   totalPrice?: InputMaybe<FloatWithAggregatesFilter>;
@@ -2542,6 +2703,7 @@ export type OrderUpdateInput = {
   deliveryPerson?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   deliveryTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   foods?: InputMaybe<Scalars['JSON']['input']>;
+  isReviewed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   restaurant?: InputMaybe<RestaurantUpdateOneRequiredWithoutOrdersNestedInput>;
   status?: InputMaybe<EnumOrderStatusFieldUpdateOperationsInput>;
   totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
@@ -2553,32 +2715,14 @@ export type OrderUpdateManyMutationInput = {
   deliveryPerson?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   deliveryTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   foods?: InputMaybe<Scalars['JSON']['input']>;
+  isReviewed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumOrderStatusFieldUpdateOperationsInput>;
   totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
-};
-
-export type OrderUpdateManyWithWhereWithoutCustomerInput = {
-  data: OrderUpdateManyMutationInput;
-  where: OrderScalarWhereInput;
 };
 
 export type OrderUpdateManyWithWhereWithoutRestaurantInput = {
   data: OrderUpdateManyMutationInput;
   where: OrderScalarWhereInput;
-};
-
-export type OrderUpdateManyWithoutCustomerNestedInput = {
-  connect?: InputMaybe<Array<OrderWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<OrderCreateOrConnectWithoutCustomerInput>>;
-  create?: InputMaybe<Array<OrderCreateWithoutCustomerInput>>;
-  createMany?: InputMaybe<OrderCreateManyCustomerInputEnvelope>;
-  delete?: InputMaybe<Array<OrderWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<OrderScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<OrderWhereUniqueInput>>;
-  set?: InputMaybe<Array<OrderWhereUniqueInput>>;
-  update?: InputMaybe<Array<OrderUpdateWithWhereUniqueWithoutCustomerInput>>;
-  updateMany?: InputMaybe<Array<OrderUpdateManyWithWhereWithoutCustomerInput>>;
-  upsert?: InputMaybe<Array<OrderUpsertWithWhereUniqueWithoutCustomerInput>>;
 };
 
 export type OrderUpdateManyWithoutRestaurantNestedInput = {
@@ -2595,25 +2739,9 @@ export type OrderUpdateManyWithoutRestaurantNestedInput = {
   upsert?: InputMaybe<Array<OrderUpsertWithWhereUniqueWithoutRestaurantInput>>;
 };
 
-export type OrderUpdateWithWhereUniqueWithoutCustomerInput = {
-  data: OrderUpdateWithoutCustomerInput;
-  where: OrderWhereUniqueInput;
-};
-
 export type OrderUpdateWithWhereUniqueWithoutRestaurantInput = {
   data: OrderUpdateWithoutRestaurantInput;
   where: OrderWhereUniqueInput;
-};
-
-export type OrderUpdateWithoutCustomerInput = {
-  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  deliveryAddress?: InputMaybe<StringFieldUpdateOperationsInput>;
-  deliveryPerson?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  deliveryTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
-  foods?: InputMaybe<Scalars['JSON']['input']>;
-  restaurant?: InputMaybe<RestaurantUpdateOneRequiredWithoutOrdersNestedInput>;
-  status?: InputMaybe<EnumOrderStatusFieldUpdateOperationsInput>;
-  totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
 };
 
 export type OrderUpdateWithoutRestaurantInput = {
@@ -2623,14 +2751,9 @@ export type OrderUpdateWithoutRestaurantInput = {
   deliveryPerson?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   deliveryTime?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   foods?: InputMaybe<Scalars['JSON']['input']>;
+  isReviewed?: InputMaybe<BoolFieldUpdateOperationsInput>;
   status?: InputMaybe<EnumOrderStatusFieldUpdateOperationsInput>;
   totalPrice?: InputMaybe<FloatFieldUpdateOperationsInput>;
-};
-
-export type OrderUpsertWithWhereUniqueWithoutCustomerInput = {
-  create: OrderCreateWithoutCustomerInput;
-  update: OrderUpdateWithoutCustomerInput;
-  where: OrderWhereUniqueInput;
 };
 
 export type OrderUpsertWithWhereUniqueWithoutRestaurantInput = {
@@ -2651,6 +2774,7 @@ export type OrderWhereInput = {
   deliveryTime?: InputMaybe<DateTimeNullableFilter>;
   foods?: InputMaybe<JsonFilter>;
   id?: InputMaybe<IntFilter>;
+  isReviewed?: InputMaybe<BoolFilter>;
   restaurant?: InputMaybe<RestaurantRelationFilter>;
   restaurantId?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumOrderStatusFilter>;
@@ -2669,6 +2793,7 @@ export type OrderWhereUniqueInput = {
   deliveryTime?: InputMaybe<DateTimeNullableFilter>;
   foods?: InputMaybe<JsonFilter>;
   id?: InputMaybe<Scalars['Int']['input']>;
+  isReviewed?: InputMaybe<BoolFilter>;
   restaurant?: InputMaybe<RestaurantRelationFilter>;
   restaurantId?: InputMaybe<StringFilter>;
   status?: InputMaybe<EnumOrderStatusFilter>;
@@ -2682,6 +2807,7 @@ export type Query = {
   aggregateOrder: AggregateOrder;
   aggregateOrderItemCart: AggregateOrderItemCart;
   aggregateRestaurant: AggregateRestaurant;
+  aggregateReview: AggregateReview;
   aggregateUser: AggregateUser;
   customer?: Maybe<Customer>;
   customers: Array<Customer>;
@@ -2699,10 +2825,13 @@ export type Query = {
   findFirstOrderOrThrow?: Maybe<Order>;
   findFirstRestaurant?: Maybe<Restaurant>;
   findFirstRestaurantOrThrow?: Maybe<Restaurant>;
+  findFirstReview?: Maybe<Review>;
+  findFirstReviewOrThrow?: Maybe<Review>;
   findFirstUser?: Maybe<User>;
   findFirstUserOrThrow?: Maybe<User>;
   food?: Maybe<Food>;
   foods: Array<Food>;
+  getBestSellers: Array<Food>;
   getCurrentUser?: Maybe<User>;
   getCustomer?: Maybe<Customer>;
   getCustomerAddress: Array<CustomerAddress>;
@@ -2710,12 +2839,15 @@ export type Query = {
   getOrder?: Maybe<Order>;
   getOrderItemCart?: Maybe<OrderItemCart>;
   getRestaurant?: Maybe<Restaurant>;
+  getReview?: Maybe<Review>;
+  getSuggestion: Array<Food>;
   getUser?: Maybe<User>;
   groupByCustomer: Array<CustomerGroupBy>;
   groupByFood: Array<FoodGroupBy>;
   groupByOrder: Array<OrderGroupBy>;
   groupByOrderItemCart: Array<OrderItemCartGroupBy>;
   groupByRestaurant: Array<RestaurantGroupBy>;
+  groupByReview: Array<ReviewGroupBy>;
   groupByUser: Array<UserGroupBy>;
   order?: Maybe<Order>;
   orderItemCart?: Maybe<OrderItemCart>;
@@ -2723,6 +2855,9 @@ export type Query = {
   orders: Array<Order>;
   restaurant?: Maybe<Restaurant>;
   restaurants: Array<Restaurant>;
+  review?: Maybe<Review>;
+  reviews: Array<Review>;
+  searchFoods: Array<Food>;
   user?: Maybe<User>;
   users: Array<User>;
 };
@@ -2773,6 +2908,15 @@ export type QueryAggregateRestaurantArgs = {
 };
 
 
+export type QueryAggregateReviewArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
 export type QueryAggregateUserArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
@@ -2804,6 +2948,8 @@ export type QueryFetchFoodArgs = {
 
 export type QueryFetchFoodsArgs = {
   category?: InputMaybe<Scalars['String']['input']>;
+  limit?: Scalars['Int']['input'];
+  offset?: Scalars['Int']['input'];
 };
 
 
@@ -2912,6 +3058,26 @@ export type QueryFindFirstRestaurantOrThrowArgs = {
 };
 
 
+export type QueryFindFirstReviewArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ReviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
+export type QueryFindFirstReviewOrThrowArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ReviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
 export type QueryFindFirstUserArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
@@ -2947,6 +3113,11 @@ export type QueryFoodsArgs = {
 };
 
 
+export type QueryGetBestSellersArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryGetCustomerArgs = {
   where: CustomerWhereUniqueInput;
 };
@@ -2969,6 +3140,16 @@ export type QueryGetOrderItemCartArgs = {
 
 export type QueryGetRestaurantArgs = {
   where: RestaurantWhereUniqueInput;
+};
+
+
+export type QueryGetReviewArgs = {
+  where: ReviewWhereUniqueInput;
+};
+
+
+export type QueryGetSuggestionArgs = {
+  limit?: Scalars['Int']['input'];
 };
 
 
@@ -3027,6 +3208,16 @@ export type QueryGroupByRestaurantArgs = {
 };
 
 
+export type QueryGroupByReviewArgs = {
+  by: Array<ReviewScalarFieldEnum>;
+  having?: InputMaybe<ReviewScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
 export type QueryGroupByUserArgs = {
   by: Array<UserScalarFieldEnum>;
   having?: InputMaybe<UserScalarWhereWithAggregatesInput>;
@@ -3079,6 +3270,26 @@ export type QueryRestaurantsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RestaurantWhereInput>;
+};
+
+
+export type QueryReviewArgs = {
+  where: ReviewWhereUniqueInput;
+};
+
+
+export type QueryReviewsArgs = {
+  cursor?: InputMaybe<ReviewWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ReviewScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ReviewOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ReviewWhereInput>;
+};
+
+
+export type QuerySearchFoodsArgs = {
+  name: Scalars['String']['input'];
 };
 
 
@@ -3448,6 +3659,223 @@ export type RestaurantWhereUniqueInput = {
   operatingHours?: InputMaybe<StringNullableFilter>;
   orders?: InputMaybe<OrderListRelationFilter>;
   user?: InputMaybe<UserRelationFilter>;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  comment?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTimeISO']['output'];
+  customer: Customer;
+  customerId: Scalars['String']['output'];
+  food: Food;
+  foodId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rating: Scalars['Int']['output'];
+};
+
+export type ReviewAvgAggregate = {
+  __typename?: 'ReviewAvgAggregate';
+  rating?: Maybe<Scalars['Float']['output']>;
+};
+
+export type ReviewAvgOrderByAggregateInput = {
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewCountAggregate = {
+  __typename?: 'ReviewCountAggregate';
+  _all: Scalars['Int']['output'];
+  comment: Scalars['Int']['output'];
+  createdAt: Scalars['Int']['output'];
+  customerId: Scalars['Int']['output'];
+  foodId: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  rating: Scalars['Int']['output'];
+};
+
+export type ReviewCountOrderByAggregateInput = {
+  comment?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  customerId?: InputMaybe<SortOrder>;
+  foodId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewCreateInput = {
+  comment?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  customer: CustomerCreateNestedOneWithoutReviewInput;
+  food: FoodCreateNestedOneWithoutReviewInput;
+  id?: InputMaybe<Scalars['String']['input']>;
+  rating: Scalars['Int']['input'];
+};
+
+export type ReviewCreateManyInput = {
+  comment?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTimeISO']['input']>;
+  customerId: Scalars['String']['input'];
+  foodId: Scalars['String']['input'];
+  id?: InputMaybe<Scalars['String']['input']>;
+  rating: Scalars['Int']['input'];
+};
+
+export type ReviewGroupBy = {
+  __typename?: 'ReviewGroupBy';
+  _avg?: Maybe<ReviewAvgAggregate>;
+  _count?: Maybe<ReviewCountAggregate>;
+  _max?: Maybe<ReviewMaxAggregate>;
+  _min?: Maybe<ReviewMinAggregate>;
+  _sum?: Maybe<ReviewSumAggregate>;
+  comment?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['DateTimeISO']['output'];
+  customerId: Scalars['String']['output'];
+  foodId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  rating: Scalars['Int']['output'];
+};
+
+export type ReviewMaxAggregate = {
+  __typename?: 'ReviewMaxAggregate';
+  comment?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
+  customerId?: Maybe<Scalars['String']['output']>;
+  foodId?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  rating?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ReviewMaxOrderByAggregateInput = {
+  comment?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  customerId?: InputMaybe<SortOrder>;
+  foodId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewMinAggregate = {
+  __typename?: 'ReviewMinAggregate';
+  comment?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTimeISO']['output']>;
+  customerId?: Maybe<Scalars['String']['output']>;
+  foodId?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  rating?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ReviewMinOrderByAggregateInput = {
+  comment?: InputMaybe<SortOrder>;
+  createdAt?: InputMaybe<SortOrder>;
+  customerId?: InputMaybe<SortOrder>;
+  foodId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewOrderByWithAggregationInput = {
+  _avg?: InputMaybe<ReviewAvgOrderByAggregateInput>;
+  _count?: InputMaybe<ReviewCountOrderByAggregateInput>;
+  _max?: InputMaybe<ReviewMaxOrderByAggregateInput>;
+  _min?: InputMaybe<ReviewMinOrderByAggregateInput>;
+  _sum?: InputMaybe<ReviewSumOrderByAggregateInput>;
+  comment?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  customerId?: InputMaybe<SortOrder>;
+  foodId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewOrderByWithRelationInput = {
+  comment?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrder>;
+  customer?: InputMaybe<CustomerOrderByWithRelationInput>;
+  customerId?: InputMaybe<SortOrder>;
+  food?: InputMaybe<FoodOrderByWithRelationInput>;
+  foodId?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  rating?: InputMaybe<SortOrder>;
+};
+
+export enum ReviewScalarFieldEnum {
+  Comment = 'comment',
+  CreatedAt = 'createdAt',
+  CustomerId = 'customerId',
+  FoodId = 'foodId',
+  Id = 'id',
+  Rating = 'rating'
+}
+
+export type ReviewScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<ReviewScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<ReviewScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<ReviewScalarWhereWithAggregatesInput>>;
+  comment?: InputMaybe<StringNullableWithAggregatesFilter>;
+  createdAt?: InputMaybe<DateTimeWithAggregatesFilter>;
+  customerId?: InputMaybe<StringWithAggregatesFilter>;
+  foodId?: InputMaybe<StringWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  rating?: InputMaybe<IntWithAggregatesFilter>;
+};
+
+export type ReviewSumAggregate = {
+  __typename?: 'ReviewSumAggregate';
+  rating?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ReviewSumOrderByAggregateInput = {
+  rating?: InputMaybe<SortOrder>;
+};
+
+export type ReviewUpdateInput = {
+  comment?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  customer?: InputMaybe<CustomerUpdateOneRequiredWithoutReviewNestedInput>;
+  food?: InputMaybe<FoodUpdateOneRequiredWithoutReviewNestedInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  rating?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type ReviewUpdateManyMutationInput = {
+  comment?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  rating?: InputMaybe<IntFieldUpdateOperationsInput>;
+};
+
+export type ReviewWhereInput = {
+  AND?: InputMaybe<Array<ReviewWhereInput>>;
+  NOT?: InputMaybe<Array<ReviewWhereInput>>;
+  OR?: InputMaybe<Array<ReviewWhereInput>>;
+  comment?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  customer?: InputMaybe<CustomerRelationFilter>;
+  customerId?: InputMaybe<StringFilter>;
+  food?: InputMaybe<FoodRelationFilter>;
+  foodId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  rating?: InputMaybe<IntFilter>;
+};
+
+export type ReviewWhereUniqueInput = {
+  AND?: InputMaybe<Array<ReviewWhereInput>>;
+  NOT?: InputMaybe<Array<ReviewWhereInput>>;
+  OR?: InputMaybe<Array<ReviewWhereInput>>;
+  comment?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  customer?: InputMaybe<CustomerRelationFilter>;
+  customerId?: InputMaybe<StringFilter>;
+  food?: InputMaybe<FoodRelationFilter>;
+  foodId?: InputMaybe<StringFilter>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  rating?: InputMaybe<IntFilter>;
+};
+
+export type ReviewsParam = {
+  comment?: InputMaybe<Scalars['String']['input']>;
+  foodId: Scalars['String']['input'];
+  rating: Scalars['Float']['input'];
 };
 
 export enum Role {
@@ -3953,10 +4381,34 @@ export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __t
 
 export type FetchFoodsQueryVariables = Exact<{
   category?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
-export type FetchFoodsQuery = { __typename?: 'Query', fetchFoods: Array<{ __typename?: 'Food', id: string, name: string, description: string, category: FoodCategory, price: number, picture?: string | null, restaurantId: string }> };
+export type FetchFoodsQuery = { __typename?: 'Query', fetchFoods: Array<{ __typename?: 'Food', id: string, name: string, description: string, category: FoodCategory, price: number, picture?: string | null, restaurantId: string, averageRating: number, totalRatingsCount: number }> };
+
+export type GetBestSellerQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetBestSellerQuery = { __typename?: 'Query', getBestSellers: Array<{ __typename?: 'Food', id: string, name: string, description: string, category: FoodCategory, price: number, picture?: string | null, restaurantId: string, averageRating: number, totalRatingsCount: number }> };
+
+export type SearchFoodsQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type SearchFoodsQuery = { __typename?: 'Query', searchFoods: Array<{ __typename?: 'Food', name: string, id: string, description: string, category: FoodCategory, price: number, picture?: string | null, restaurantId: string, averageRating: number, totalRatingsCount: number }> };
+
+export type AddReviewMutationVariables = Exact<{
+  reviews: Array<ReviewsParam> | ReviewsParam;
+  orderId: Scalars['Float']['input'];
+}>;
+
+
+export type AddReviewMutation = { __typename?: 'Mutation', addReview: boolean };
 
 export type UpdateCartMutationVariables = Exact<{
   quantity: Scalars['Float']['input'];
@@ -4026,7 +4478,10 @@ export const VerifyAccountDocument = {"kind":"Document","definitions":[{"kind":"
 export const RequestOtpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"requestOtp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestOtp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}]}]}}]} as unknown as DocumentNode<RequestOtpMutation, RequestOtpMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"resetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"otp"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"otp"},"value":{"kind":"Variable","name":{"kind":"Name","value":"otp"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"verification"}},{"kind":"Field","name":{"kind":"Name","value":"customer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"cart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"foodId"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
-export const FetchFoodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchFoods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fetchFoods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantId"}}]}}]}}]} as unknown as DocumentNode<FetchFoodsQuery, FetchFoodsQueryVariables>;
+export const FetchFoodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchFoods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"category"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fetchFoods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"category"},"value":{"kind":"Variable","name":{"kind":"Name","value":"category"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantId"}},{"kind":"Field","name":{"kind":"Name","value":"averageRating"}},{"kind":"Field","name":{"kind":"Name","value":"totalRatingsCount"}}]}}]}}]} as unknown as DocumentNode<FetchFoodsQuery, FetchFoodsQueryVariables>;
+export const GetBestSellerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getBestSeller"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getBestSellers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantId"}},{"kind":"Field","name":{"kind":"Name","value":"averageRating"}},{"kind":"Field","name":{"kind":"Name","value":"totalRatingsCount"}}]}}]}}]} as unknown as DocumentNode<GetBestSellerQuery, GetBestSellerQueryVariables>;
+export const SearchFoodsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"searchFoods"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchFoods"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"restaurantId"}},{"kind":"Field","name":{"kind":"Name","value":"averageRating"}},{"kind":"Field","name":{"kind":"Name","value":"totalRatingsCount"}}]}}]}}]} as unknown as DocumentNode<SearchFoodsQuery, SearchFoodsQueryVariables>;
+export const AddReviewDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addReview"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"reviews"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReviewsParam"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addReview"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"reviews"},"value":{"kind":"Variable","name":{"kind":"Name","value":"reviews"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}]}]}}]} as unknown as DocumentNode<AddReviewMutation, AddReviewMutationVariables>;
 export const UpdateCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCart"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"quantity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"quantity"}}},{"kind":"Argument","name":{"kind":"Name","value":"foodId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}}}]}]}}]} as unknown as DocumentNode<UpdateCartMutation, UpdateCartMutationVariables>;
 export const FetchCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"fetchCart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fetchCart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}}]}}]}}]} as unknown as DocumentNode<FetchCartQuery, FetchCartQueryVariables>;
 export const RemoveFromCartDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"removeFromCart"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"removeFromCart"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"foodId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"foodId"}}}]}]}}]} as unknown as DocumentNode<RemoveFromCartMutation, RemoveFromCartMutationVariables>;
