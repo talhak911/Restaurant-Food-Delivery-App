@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
-import {StackNavigatorProps, TabNavigatorProps} from '../../types/types';
+import {FoodType, StackNavigatorProps, TabNavigatorProps} from '../../types/types';
 import {useEffect} from 'react';
 import {fetchFoods, getBestSeller} from '../../redux/slices/foodSlice';
 
@@ -17,26 +17,8 @@ const useHome = () => {
 
   const navigation = useNavigation<StackNavigatorProps>();
   const tabNavigation = useNavigation<TabNavigatorProps>();
-  const navigateToFoodDetail = ({
-    id,
-    description,
-    name,
-    picUrl,
-    price,
-  }: {
-    id: string;
-    description: string;
-    name: string;
-    picUrl: string | null | undefined;
-    price: string;
-  }) => {
-    navigation.navigate('Food Detail', {
-      id,
-      description,
-      name,
-      picUrl,
-      price,
-    });
+  const navigateToFoodDetail = (food: FoodType) => {
+    navigation.navigate('Food Detail', food);
   };
   const navigateToFoods = () => {
     tabNavigation.navigate('Foods');

@@ -19,7 +19,15 @@ import {LoadingImage} from '../../components/loadingImage/LoadingImage';
 import {styles} from './FoodDetailStyles';
 
 const FoodDetail = ({route}: FoodDetailsProps) => {
-  const {name, description, id, picUrl, price} = route.params;
+  const {
+    name,
+    description,
+    id,
+    picture,
+    price,
+    averageRating,
+    totalRatingsCount,
+  } = route.params;
   const {quantity, loading, addItems, removeItems, addToCart} =
     useFoodDetail(id);
   return (
@@ -29,7 +37,10 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
           <GoBack />
           <View style={{alignItems: 'flex-start'}}>
             <Text style={styles.name}>{name}</Text>
-            <Ratings ratings="4.2" />
+            <Ratings
+              averageRating={averageRating}
+              totalRatingsCount={totalRatingsCount}
+            />
           </View>
         </View>
         <View style={styles.topRightContainer}>
@@ -39,7 +50,7 @@ const FoodDetail = ({route}: FoodDetailsProps) => {
       </View>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.contentContainer}>
-          <LoadingImage style={styles.image} placeholder="food" uri={picUrl} />
+          <LoadingImage style={styles.image} placeholder="food" uri={picture} />
 
           <View style={styles.middleContainer}>
             <Text style={styles.price}>${price}</Text>

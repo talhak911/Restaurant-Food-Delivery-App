@@ -40,7 +40,7 @@ export type AddressType = {
   Address: string;
 };
 export type SliderItemProps = {
-  item: FetchFoodsQuery['fetchFoods'][number];
+  item: FoodType;
   index: number;
 };
 export type OrderItemCardProps = {
@@ -72,7 +72,7 @@ export type LoadingImageProps = {
   placeholder: 'food' | 'profile';
 };
 export type FoodCardProps = {
-  data: FetchFoodsQuery['fetchFoods'][number];
+  data: FoodType;
   navigation: StackNavigatorProps;
 };
 export type FoodItemPriceDisplayProps = {
@@ -157,13 +157,8 @@ export type TabParamsList = {
 export type StackNavigatorParamList = {
   Home: undefined;
   'Confirm Order': undefined;
-  'Food Detail': {
-    id: string;
-    picUrl: string | null | undefined;
-    name: string;
-    description: string;
-    price: string;
-  };
+  'Food Detail': 
+  FoodType
   'Leave a Review': {
     foodId: string;
     picUrl: string | null | undefined;
@@ -273,7 +268,7 @@ export type Food = {
   description: string;
   restaurantId: string;
 };
-
+export type FoodType =FetchFoodsQuery['fetchFoods'][number]
 export type FoodItem = {
   id: number;
   food: Food;
@@ -283,9 +278,9 @@ export type FoodItem = {
   totalPrice: number;
 };
 export type FoodState = {
-  foods: FetchFoodsQuery['fetchFoods'] | null;
-  filteredFoods: FetchFoodsQuery['fetchFoods'] | null;
-  bestSeller: FetchFoodsQuery['fetchFoods'] | null;
+  foods: FoodType[] | null;
+  filteredFoods: FoodType[] | null;
+  bestSeller: FoodType[] | null;
 };
 export type StackScreenConfig = {
   name: keyof StackNavigatorParamList;

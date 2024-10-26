@@ -13,11 +13,16 @@ import BackIcon from '../../assets/icons/back';
 import Carousel from '../../components/carousel/Carousel';
 import FoodItemPriceDisplay from '../../components/foodItemPriceDisplay/FoodItemPriceDisplay';
 import HomeHeader from '../../components/homeHeader/HomeHeader';
-import { styles } from './HomeStyles';
+import {styles} from './HomeStyles';
 
 const Home = () => {
-  const {navigateToFoodDetail,navigateToBestSeller, navigateToFoods, bestSeller, recommended} =
-    useHome();
+  const {
+    navigateToFoodDetail,
+    navigateToBestSeller,
+    navigateToFoods,
+    bestSeller,
+    recommended,
+  } = useHome();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -94,13 +99,7 @@ const Home = () => {
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
-                    navigateToFoodDetail({
-                      id: item.id,
-                      description: item.description,
-                      name: item.name,
-                      picUrl: item.picture,
-                      price: item.price.toString(),
-                    });
+                    navigateToFoodDetail(item);
                   }}>
                   <FoodItemPriceDisplay
                     height={108}
@@ -135,23 +134,17 @@ const Home = () => {
           </Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection: 'row', gap: 7, paddingVertical: 9}}>
-              {recommended?.map((item, index) => (
+              {recommended?.map((food, index) => (
                 <TouchableOpacity
                   key={index}
                   onPress={() => {
-                    navigateToFoodDetail({
-                      id: item.id,
-                      description: item.description,
-                      name: item.name,
-                      picUrl: item.picture,
-                      price: item.price.toString(),
-                    });
+                    navigateToFoodDetail(food);
                   }}>
                   <FoodItemPriceDisplay
-                    uri={item.picture}
+                    uri={food.picture}
                     height={140}
                     width={159}
-                    price={item.price.toString()}
+                    price={food.price.toString()}
                   />
                 </TouchableOpacity>
               ))}
