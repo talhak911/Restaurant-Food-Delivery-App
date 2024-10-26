@@ -281,6 +281,7 @@ export type FoodState = {
   foods: FoodType[] | null;
   filteredFoods: FoodType[] | null;
   bestSeller: FoodType[] | null;
+  suggestedFoods: FoodType[] | null;
 };
 export type StackScreenConfig = {
   name: keyof StackNavigatorParamList;

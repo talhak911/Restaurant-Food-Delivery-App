@@ -22,6 +22,7 @@ const documents = {
     "\n  query getCurrentUser {\n    getCurrentUser {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n": types.GetCurrentUserDocument,
     "\n  query fetchFoods($category: String, $limit: Int, $offset: Int) {\n    fetchFoods(category: $category, limit: $limit, offset: $offset) {\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n": types.FetchFoodsDocument,
     "\n  query getBestSeller ($limit:Int){\n    getBestSellers (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n": types.GetBestSellerDocument,
+    "\n  query getSuggestion ($limit:Int){\n    getSuggestion (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n": types.GetSuggestionDocument,
     "\n  query searchFoods ($name: String!){\n    searchFoods(name: $name) {\n      name\n      id\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n": types.SearchFoodsDocument,
     "\n  mutation addReview($reviews: [ReviewsParam!]!, $orderId: Float!) {\n    addReview(reviews: $reviews, orderId: $orderId)\n  }\n": types.AddReviewDocument,
     "\n  mutation updateCart($quantity: Float!, $foodId: String!) {\n    updateCart(quantity: $quantity, foodId: $foodId)\n  }\n": types.UpdateCartDocument,
@@ -84,6 +85,10 @@ export function gql(source: "\n  query fetchFoods($category: String, $limit: Int
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query getBestSeller ($limit:Int){\n    getBestSellers (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n"): (typeof documents)["\n  query getBestSeller ($limit:Int){\n    getBestSellers (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query getSuggestion ($limit:Int){\n    getSuggestion (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n"): (typeof documents)["\n  query getSuggestion ($limit:Int){\n    getSuggestion (limit:$limit){\n      id\n      name\n      description\n      category\n      price\n      picture\n      restaurantId\n      averageRating\n      totalRatingsCount\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {FetchFoodsDocument, FoodCategory, GetBestSellerDocument} from '../../gql/graphql';
+import {FetchFoodsDocument, FoodCategory, GetBestSellerDocument, GetSuggestionDocument} from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/ApolloProvider';
 import {FoodState} from '../../types/types';
 import Toast from 'react-native-toast-message';
@@ -7,7 +7,8 @@ import Toast from 'react-native-toast-message';
 const initialState: FoodState = {
   foods: null,
   filteredFoods: null,
-  bestSeller:null
+  bestSeller:null,
+  suggestedFoods:null
 };
 
 export const fetchFoods = createAsyncThunk(
@@ -35,13 +36,31 @@ export const getBestSeller = createAsyncThunk(
     {rejectWithValue},
   ) => {
     try {
-
       const response = await client.query({
         query: GetBestSellerDocument,
         variables:{limit}
       });
 
       return response?.data?.getBestSellers;
+    
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const getSuggestedFoods = createAsyncThunk(
+  'food/getSuggestedFoods',
+  async (
+    {limit}: { limit?: number},
+    {rejectWithValue},
+  ) => {
+    try {
+      const response = await client.query({
+        query: GetSuggestionDocument,
+        variables:{limit}
+      });
+
+      return response?.data?.getSuggestion;
     
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -71,6 +90,12 @@ export const foodSlice = createSlice({
       state.bestSeller=action.payload
     });
     builder.addCase(getBestSeller.rejected, (_, action) => {
+      Toast.show({type: 'error', text1: action.payload as string});
+    });
+    builder.addCase(getSuggestedFoods.fulfilled, (state, action) => {
+      state.suggestedFoods=action.payload
+    });
+    builder.addCase(getSuggestedFoods.rejected, (_, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
     });
   },

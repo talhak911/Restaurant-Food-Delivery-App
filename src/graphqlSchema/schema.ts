@@ -122,6 +122,21 @@ export const GET_BEST_SELLER = gql`
     }
   }
 `;
+export const GET_SUGGESTION = gql`
+  query getSuggestion ($limit:Int){
+    getSuggestion (limit:$limit){
+      id
+      name
+      description
+      category
+      price
+      picture
+      restaurantId
+      averageRating
+      totalRatingsCount
+    }
+  }
+`;
 export const SEARCH_FOODS = gql`
   query searchFoods ($name: String!){
     searchFoods(name: $name) {
