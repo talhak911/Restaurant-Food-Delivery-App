@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   belowImageContainer: {
     paddingTop: 10,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
   },
   price: {
@@ -24,17 +24,19 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.orange,
   },
-  ratingsContainer: {
+  ratingsContainer:{flexDirection:"row",alignItems:"center",gap:6},
+  orangeDot: {
     height: 5,
     width: 5,
     backgroundColor: COLORS.orange,
     borderRadius: 2.5,
   },
-  nameContainer: {flexDirection: 'row', alignItems: 'center', gap: 11},
+  nameContainer: {flexDirection: 'row', alignItems: 'flex-start', gap: 11},
   name: {
     fontFamily: POOPINS_SEMI_BOLD,
     fontSize: 18,
     lineHeight: 20,
+    maxWidth:'70%',
     color: COLORS.almostBlack,
   },
   description: {

@@ -5,18 +5,13 @@ import {LoadingImage} from '../loadingImage/LoadingImage';
 import {styles} from './FoodCardStyles';
 
 const FoodCard = ({data, navigation}: FoodCardProps) => {
-  const {price, picture, name, description, id} = data;
+  const {price, picture, name, description, averageRating, totalRatingsCount} =
+    data;
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate('Food Detail', {
-          id,
-          name,
-          picUrl: picture,
-          description,
-          price: String(price),
-        });
+        navigation.navigate('Food Detail', data);
       }}>
       <LoadingImage
         placeholder="food"
@@ -26,8 +21,13 @@ const FoodCard = ({data, navigation}: FoodCardProps) => {
       <View style={styles.belowImageContainer}>
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{name}</Text>
-          <View style={styles.ratingsContainer} />
-          <Ratings ratings="5.0" />
+          <View style={styles.ratingsContainer}>
+            <View style={styles.orangeDot} />
+            <Ratings
+              averageRating={averageRating}
+              totalRatingsCount={totalRatingsCount}
+            />
+          </View>
         </View>
         <Text style={styles.price}>${price}</Text>
       </View>
