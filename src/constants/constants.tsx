@@ -50,6 +50,7 @@ import OnBoardingDeliveryIcon from '../assets/icons/onBoardingDelivery';
 import Help from '../screens/help/Help';
 import LeaveReview from '../screens/leaveReview/LeaveReview';
 import BestSeller from '../screens/bestSeller/BestSeller';
+import Recommendations from '../screens/recommendations/Recommendations';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -123,6 +124,7 @@ export const STACK_SCREENS: StackScreenConfig[] = [
   {name: 'Help & FAQs', component: Help},
   {name: 'Leave a Review', component: LeaveReview},
   {name: 'Best Seller', component: BestSeller},
+  {name: 'Recommendations', component: Recommendations},
 ];
 
 export const TAB_SCREENS: TabScreen[] = [

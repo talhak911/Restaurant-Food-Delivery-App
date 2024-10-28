@@ -20,6 +20,7 @@ const Home = () => {
     navigateToFoodDetail,
     navigateToBestSeller,
     navigateToFoods,
+    navigateToRecommendations,
     bestSeller,
     recommended,
   } = useHome();
@@ -120,18 +121,38 @@ const Home = () => {
         <View
           style={{
             paddingHorizontal: 35,
-
             flex: 1,
             backgroundColor: 'white',
           }}>
-          <Text
+          <View
             style={{
-              fontFamily: LEAGUE_SPARTAN_MEDIUM,
-              fontSize: 20,
-              color: COLORS.almostBlack,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
-            Recommended
-          </Text>
+            <Text
+              style={{
+                fontFamily: LEAGUE_SPARTAN_MEDIUM,
+                fontSize: 20,
+                color: COLORS.almostBlack,
+              }}>
+              Recommended
+            </Text>
+            <TouchableOpacity
+              onPress={navigateToRecommendations}
+              style={{flexDirection: 'row', alignItems: 'center', gap: 11}}>
+              <Text
+                style={{
+                  fontFamily: LEAGUE_SPARTAN_SEMI_BOLD,
+                  color: COLORS.orange,
+                }}>
+                View All
+              </Text>
+              <View style={{transform: [{rotate: '180deg'}]}}>
+                <BackIcon />
+              </View>
+            </TouchableOpacity>
+          </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection: 'row', gap: 7, paddingVertical: 9}}>
               {recommended?.map((food, index) => (

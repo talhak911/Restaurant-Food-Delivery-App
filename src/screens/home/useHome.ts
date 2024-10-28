@@ -27,6 +27,9 @@ const useHome = () => {
   const navigateToBestSeller = () => {
     navigation.navigate('Best Seller');
   };
+  const navigateToRecommendations = () => {
+    navigation.navigate('Recommendations');
+  };
   return {
     foods,
     bestSeller,
@@ -34,6 +37,7 @@ const useHome = () => {
     navigateToFoods,
     navigateToFoodDetail,
     navigateToBestSeller,
+    navigateToRecommendations
   };
 };
 

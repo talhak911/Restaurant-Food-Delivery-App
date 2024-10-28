@@ -167,6 +167,8 @@ export type LeaveReviewParams = {
 };
 export type StackNavigatorParamList = {
   Home: undefined;
+  Settings: undefined;
+  Recommendations: undefined;
   'Confirm Order': undefined;
   'Food Detail': FoodType;
   'Leave a Review': LeaveReviewParams;
@@ -178,7 +180,6 @@ export type StackNavigatorParamList = {
   'Payment Method': undefined;
   'Contact Us': undefined;
   'Help & FAQs': undefined;
-  Settings: undefined;
   'Password Setting': undefined;
   'Add New Address': undefined;
   'Forget Password': undefined;
