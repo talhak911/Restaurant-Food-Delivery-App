@@ -7,21 +7,26 @@ import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {fetchFoods} from '../../redux/slices/foodSlice';
 
 const useFoods = () => {
+  const [category, setCategory] = useState<FilterBy | null>(null);
   const [activeButton, setActionButton] = useState<FilterBy | null>(null);
   const [offset, setOffset] = useState(0);
+  const [searchQuery,setSearchQuery]=useState("")
   const dispatch = useAppDispatch();
   const foods = useAppSelector(state => state.foods.filteredFoods);
   useEffect(() => {
-    dispatch(
-      fetchFoods({category: activeButton?.toUpperCase() as FoodCategory}),
-    );
+    dispatch(fetchFoods({category: category?.toUpperCase() as FoodCategory}));
     setOffset(15);
-  }, [activeButton]);
-
+  }, [category]);
+  const onSearch = async () => {
+    setActionButton(null);
+    await dispatch(fetchFoods({name:searchQuery}));
+    setSearchQuery("")
+  };
   const loadMoreFoods = () => {
     dispatch(
       fetchFoods({
-        category: activeButton?.toUpperCase() as FoodCategory,
+        category: category?.toUpperCase() as FoodCategory,
+        name:searchQuery,
         offset,
       }),
     );
@@ -30,8 +35,10 @@ const useFoods = () => {
 
   const handlePressFoodCategory = (category: FilterBy) => {
     if (category === activeButton) {
+      setCategory(null);
       setActionButton(null);
     } else {
+      setCategory(category);
       setActionButton(category);
     }
   };
@@ -43,6 +50,9 @@ const useFoods = () => {
     activeButton,
     foods,
     navigation,
+    searchQuery,
+    setSearchQuery,
+    onSearch,
   };
 };
 

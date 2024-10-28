@@ -8,7 +8,17 @@ import useCart from '../../hooks/useCart';
 import {styles} from './HomeHeaderStyles';
 import useHomeHeader from './useHomeHeader';
 
-const HomeHeader = ({greetingShown}: {greetingShown?: boolean}) => {
+const HomeHeader = ({
+  greetingShown,
+  onSearch,
+  setSearchQuery,
+  searchQuery,
+}: {
+  greetingShown?: boolean;
+  onSearch: () => void;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const {openCart} = useCart();
   const {navigateToProfile} = useHomeHeader();
   return (
@@ -19,6 +29,10 @@ const HomeHeader = ({greetingShown}: {greetingShown?: boolean}) => {
             style={styles.searchInput}
             placeholderTextColor={COLORS.grey}
             placeholder="Search"
+            onChangeText={setSearchQuery}
+            returnKeyType="search"
+            value={searchQuery}
+            onSubmitEditing={onSearch}
           />
           <SearchFilterIcon />
         </View>

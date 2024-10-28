@@ -18,8 +18,8 @@ export const refreshTokenAction = async (refreshToken: string) => {
           `,
       }),
     });
-    const data = await response.json();
-    const accessToken = data.data.refreshToken;
+    const res = await response.json();
+    const accessToken = res.data.refreshToken;
     if (accessToken) {
       await AsyncStorage.setItem('authToken', accessToken);
       return accessToken;
@@ -33,9 +33,9 @@ export const refreshTokenAction = async (refreshToken: string) => {
 export const isAccessTokenExpired = (accessToken: string) => {
   const {exp} = jwtDecode(accessToken);
   if (exp) {
-    const bufferTime = 500 * 1000;
+    const bufferTime = 100 * 1000;
     const expirationTime = exp * 1000;
-    return Date.now() > expirationTime - bufferTime;
+    return Date.now() > (expirationTime-bufferTime);
   }
   return true;
 };

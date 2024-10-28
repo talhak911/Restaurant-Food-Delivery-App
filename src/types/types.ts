@@ -288,6 +288,7 @@ export type FoodItem = {
 };
 export type FoodState = {
   foods: FoodType[] | null;
+  loading:boolean,
   filteredFoods: FoodType[] | null;
   bestSeller: FoodType[] | null;
   suggestedFoods: FoodType[] | null;

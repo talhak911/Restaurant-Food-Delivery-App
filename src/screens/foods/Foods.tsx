@@ -16,10 +16,24 @@ import useFoods from './useFoods';
 import {styles} from './FoodsStyles';
 
 const Foods = () => {
-  const {activeButton, foods, handlePressFoodCategory, navigation,loadMoreFoods} = useFoods();
+  const {
+    activeButton,
+    foods,
+    handlePressFoodCategory,
+    navigation,
+    onSearch,
+    loadMoreFoods,
+    searchQuery,
+    setSearchQuery,
+  } = useFoods();
+
   return (
     <SafeAreaView style={styles.container}>
-      <HomeHeader />
+      <HomeHeader
+        onSearch={onSearch}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
       <View style={styles.topContainer}>
         <View style={styles.categoriesContainer}>
           {CATEGORIES.map((item, index) => (
@@ -64,7 +78,7 @@ const Foods = () => {
             style={{marginTop: 16}}
             data={foods}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={item => item.id.toString()}
             renderItem={({item}) => (
               <FoodCard data={item} navigation={navigation} />
             )}
@@ -72,7 +86,7 @@ const Foods = () => {
               paddingBottom: 110,
             }}
             onEndReached={loadMoreFoods}
-            onEndReachedThreshold={0.5} 
+            onEndReachedThreshold={0.5}
           />
         </View>
       </View>

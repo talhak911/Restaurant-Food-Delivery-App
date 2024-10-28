@@ -93,8 +93,18 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const FETCH_FOODS = gql`
-  query fetchFoods($category: String, $limit: Int, $offset: Int) {
-    fetchFoods(category: $category, limit: $limit, offset: $offset) {
+  query fetchFoods(
+    $category: String
+    $limit: Int
+    $offset: Int
+    $name: String
+  ) {
+    fetchFoods(
+      category: $category
+      limit: $limit
+      offset: $offset
+      name: $name
+    ) {
       id
       name
       description
@@ -108,8 +118,8 @@ export const FETCH_FOODS = gql`
   }
 `;
 export const GET_BEST_SELLER = gql`
-  query getBestSeller ($limit:Int){
-    getBestSellers (limit:$limit){
+  query getBestSeller($limit: Int) {
+    getBestSellers(limit: $limit) {
       id
       name
       description
@@ -123,25 +133,10 @@ export const GET_BEST_SELLER = gql`
   }
 `;
 export const GET_SUGGESTION = gql`
-  query getSuggestion ($limit:Int){
-    getSuggestion (limit:$limit){
+  query getSuggestion($limit: Int) {
+    getSuggestion(limit: $limit) {
       id
       name
-      description
-      category
-      price
-      picture
-      restaurantId
-      averageRating
-      totalRatingsCount
-    }
-  }
-`;
-export const SEARCH_FOODS = gql`
-  query searchFoods ($name: String!){
-    searchFoods(name: $name) {
-      name
-      id
       description
       category
       price
@@ -262,7 +257,7 @@ export const CHANGE_PASSWORD = gql`
   }
 `;
 export const CANCEL_ORDER = gql`
-mutation cancelOrder($orderId:Float!){
-cancelOrder(orderId:$orderId)
-}
+  mutation cancelOrder($orderId: Float!) {
+    cancelOrder(orderId: $orderId)
+  }
 `;
