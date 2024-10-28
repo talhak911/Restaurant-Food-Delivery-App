@@ -8,7 +8,6 @@ export const useMyOrders = () => {
   const [isActive, setIsActive] = useState<OrderStatus>(OrderStatus.Active);
   const orders = useAppSelector(state => state.orders.orders);
   const [filteredOrders, setFilteredOrders] = useState(orders);
-
   const dispatch = useAppDispatch();
 
   useFocusEffect(

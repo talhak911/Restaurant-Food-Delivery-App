@@ -7,13 +7,19 @@ import OrderItemCard from '../orderItemCard/OrderItemCard';
 import {OrderCard2Props} from '../../types/types';
 import {OrderStatus} from '../../gql/graphql';
 import {styles} from './OrderCard2Styles';
+import useOrderCard2 from './useOrderCard2';
+import useOrder from '../../hooks/useOrder';
 
 const OrderCard2 = ({
   foods,
+  orderId,
   orderStatus,
   dateTime,
   totalPrice,
+  isReviewed,
 }: OrderCard2Props) => {
+  const {naviateToReview} = useOrderCard2();
+  const {handleCancelOrder, loading} = useOrder({orderId});
   return (
     <View>
       <View style={styles.topContainer}>
@@ -45,25 +51,52 @@ const OrderCard2 = ({
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        <CustomButton
-          title="Leave a review"
-          fontSize={15}
-          width={120}
-          pH={12}
-          pV={5}
-        />
+        {orderStatus === 'PENDING' ? (
+          <CustomButton
+            onPress={handleCancelOrder}
+            loading={loading}
+            title="Cancel Order"
+            fontSize={15}
+            pV={5}
+          />
+        ) : orderStatus === 'DELIVERED' ? (
+          <CustomButton
+            disabled={isReviewed}
+            onPress={() => {
+              naviateToReview({orderId, foods});
+            }}
+            bgColor={isReviewed ? COLORS.yellow2 : COLORS.orange}
+            textColor={isReviewed ? COLORS.orange : 'white'}
+            title={isReviewed ? 'Reviewed ' : 'Leave a review'}
+            fontSize={15}
+            pV={5}
+          />
+        ) : (
+          <CustomButton title={'Provide feedback'} fontSize={15} pV={5} />
+        )}
         <View style={styles.totalPriceContainer}>
           <Text style={styles.total}>Total</Text>
           <Text style={styles.totalPrice}>${totalPrice}</Text>
         </View>
-        <CustomButton
-          title="Order Again"
-          fontSize={15}
-          bgColor={COLORS.orange2}
-          textColor={COLORS.orange}
-          pH={12}
-          pV={5}
-        />
+        {orderStatus === 'DELIVERED' ? (
+          <CustomButton
+            title="Order Again"
+            fontSize={15}
+            bgColor={COLORS.orange2}
+            textColor={COLORS.orange}
+            pV={5}
+          />
+        ) : (
+          orderStatus === 'OUT_FOR_DELIVERY' && (
+            <CustomButton
+              title="Track Driver"
+              fontSize={15}
+              bgColor={COLORS.orange2}
+              textColor={COLORS.orange}
+              pV={5}
+            />
+          )
+        )}
       </View>
     </View>
   );

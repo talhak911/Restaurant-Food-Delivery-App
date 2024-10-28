@@ -1,19 +1,26 @@
-import { useNavigation } from "@react-navigation/native"
-import { StackNavigatorProps,  } from "../../types/types"
+import {useNavigation} from '@react-navigation/native';
+import {
+  NavigateToReviewFromOrderCard,
+  StackNavigatorProps,
+} from '../../types/types';
 
 const useOrderCard = () => {
-const navigation = useNavigation<StackNavigatorProps>()
+  const navigation = useNavigation<StackNavigatorProps>();
 
-const naviateToReview=({foodId,name,picUrl}:{foodId:string,name:string,picUrl:string})=>{
-    navigation.navigate("Leave a Review",{
-      foodId,
-        name,
-        picUrl
-    })
-}
-return {
-    naviateToReview
-  }
-}
+  const naviateToReview = ({
+    foodId,
+    name,
+    picture,
+    orderId,
+  }: NavigateToReviewFromOrderCard) => {
+    navigation.navigate('Leave a Review', {
+      orderId,
+      reviews: [{foodId, name, picture}],
+    });
+  };
+  return {
+    naviateToReview,
+  };
+};
 
-export default useOrderCard
+export default useOrderCard;

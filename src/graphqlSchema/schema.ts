@@ -215,6 +215,7 @@ export const FETCH_ORDERS = gql`
       restaurantId
       deliveryAddress
       createdAt
+      isReviewed
     }
   }
 `;
@@ -259,4 +260,9 @@ export const CHANGE_PASSWORD = gql`
   mutation changePassword($password: String!, $newPassword: String!) {
     changePassword(password: $password, newPassword: $newPassword)
   }
+`;
+export const CANCEL_ORDER = gql`
+mutation cancelOrder($orderId:Float!){
+cancelOrder(orderId:$orderId)
+}
 `;

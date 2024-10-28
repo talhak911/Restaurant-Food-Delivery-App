@@ -53,7 +53,9 @@ const MyOrder = () => {
                   order.foods?.map((foodItem: FoodItem, foodIndex: number) => (
                     <OrderCard
                       key={foodIndex}
-                      picUrl={foodItem.food.picture}
+                      isReviewed={order.isReviewed}
+                      orderId={order.id}
+                      picture={foodItem.food.picture}
                       dateTime={formatDate(order.createdAt)}
                       items={`${foodItem.quantity}`}
                       orderStatus={order.status}
@@ -66,6 +68,8 @@ const MyOrder = () => {
                 ) : (
                   <OrderCard2
                     key={index}
+                    orderId={order.id}
+                    isReviewed={order.isReviewed}
                     foods={order.foods}
                     dateTime={formatDate(order.createdAt)}
                     totalPrice={`${order.totalPrice}`}

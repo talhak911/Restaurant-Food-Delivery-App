@@ -30,9 +30,10 @@ const documents = {
     "\n  mutation removeFromCart($foodId: String!) {\n    removeFromCart(foodId: $foodId)\n  }\n": types.RemoveFromCartDocument,
     "\n  mutation addCustomerAddress($name: String!, $address: String!) {\n    addCustomerAddress(name: $name, address: $address) {\n      id\n      name\n      address\n    }\n  }\n": types.AddCustomerAddressDocument,
     "\n  mutation placeOrder($deliveryAddress: String!) {\n    placeOrder(deliveryAddress: $deliveryAddress) {\n      totalPrice\n      foods\n    }\n  }\n": types.PlaceOrderDocument,
-    "\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n    }\n  }\n": types.FetchOrdersDocument,
+    "\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n      isReviewed\n    }\n  }\n": types.FetchOrdersDocument,
     "\n  mutation updateCustomer(\n    $dateOfBirth: DateTimeISO\n    $phone: String\n    $name: String\n    $picture: String\n  ) {\n    updateCustomer(\n      dateOfBirth: $dateOfBirth\n      phone: $phone\n      name: $name\n      picture: $picture\n    ) {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n": types.UpdateCustomerDocument,
     "\n  mutation changePassword($password: String!, $newPassword: String!) {\n    changePassword(password: $password, newPassword: $newPassword)\n  }\n": types.ChangePasswordDocument,
+    "\nmutation cancelOrder($orderId:Float!){\ncancelOrder(orderId:$orderId)\n}\n": types.CancelOrderDocument,
 };
 
 /**
@@ -120,7 +121,7 @@ export function gql(source: "\n  mutation placeOrder($deliveryAddress: String!) 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n    }\n  }\n"): (typeof documents)["\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n    }\n  }\n"];
+export function gql(source: "\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n      isReviewed\n    }\n  }\n"): (typeof documents)["\n  query fetchOrders($status: String) {\n    fetchOrders(status: $status) {\n      id\n      totalPrice\n      foods\n      status\n      deliveryPerson\n      deliveryTime\n      customerId\n      restaurantId\n      deliveryAddress\n      createdAt\n      isReviewed\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -129,6 +130,10 @@ export function gql(source: "\n  mutation updateCustomer(\n    $dateOfBirth: Dat
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation changePassword($password: String!, $newPassword: String!) {\n    changePassword(password: $password, newPassword: $newPassword)\n  }\n"): (typeof documents)["\n  mutation changePassword($password: String!, $newPassword: String!) {\n    changePassword(password: $password, newPassword: $newPassword)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\nmutation cancelOrder($orderId:Float!){\ncancelOrder(orderId:$orderId)\n}\n"): (typeof documents)["\nmutation cancelOrder($orderId:Float!){\ncancelOrder(orderId:$orderId)\n}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

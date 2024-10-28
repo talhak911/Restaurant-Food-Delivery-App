@@ -1,9 +1,12 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {
+  AddReviewDocument,
+  CancelOrderDocument,
   FetchOrdersDocument,
   FetchOrdersQuery,
   OrderStatus,
   PlaceOrderDocument,
+  ReviewsParam,
 } from '../../gql/graphql';
 import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
@@ -11,7 +14,7 @@ import { emptyCart } from './cartSlice';
 
 const initialState: {orders: FetchOrdersQuery['fetchOrders'] | null,loading:boolean} = {
   orders: null,
-  loading:false
+  loading:false,
 };
 
 export const fetchOrders = createAsyncThunk(
@@ -49,6 +52,39 @@ if(response.data){
     }
   },
 );
+export const leaveReview = createAsyncThunk(
+  'order/leaveReview',
+  async ({orderId,reviews}: {orderId: number,reviews:ReviewsParam[]}, {rejectWithValue,dispatch}) => {
+    try {
+      const response = await client.mutate({
+        mutation: AddReviewDocument,
+        variables: {orderId,reviews},
+      });
+if(response.data){
+   await dispatch(fetchOrders({}))
+   dispatch(emptyCart())
+}
+      return response?.data?.addReview;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+export const cancelOrder = createAsyncThunk(
+  'order/cancelOrder',
+  async ({orderId}: {orderId: number}, {rejectWithValue,dispatch}) => {
+    try {
+      const response = await client.mutate({
+        mutation: CancelOrderDocument,
+        variables: {orderId},
+      });
+       dispatch(fetchOrders({}))
+      return response?.data?.cancelOrder;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
 
 export const orderSlice = createSlice({
   name: 'orderSlice',
@@ -76,6 +112,23 @@ export const orderSlice = createSlice({
     builder.addCase(placeOrder.rejected, (state, action) => {
       Toast.show({type:"error",text1:action.payload as string});
       state.loading = false
+    });
+    builder.addCase(leaveReview.pending, (state, action) => {
+      state.loading = true
+    });
+    builder.addCase(leaveReview.fulfilled, (state) => {
+        Toast.show({type:"success",text1:"Review Added"});
+        state.loading = false
+    });
+    builder.addCase(leaveReview.rejected, (state, action) => {
+      Toast.show({type:"error",text1:action.payload as string});
+      state.loading = false
+    });
+    builder.addCase(cancelOrder.fulfilled, (state) => {
+        Toast.show({text1:"Order cancelled"});
+    });
+    builder.addCase(cancelOrder.rejected, (state, action) => {
+      Toast.show({type:"error",text1:action.payload as string});
     });
   },
 });

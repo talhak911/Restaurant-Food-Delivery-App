@@ -9,26 +9,29 @@ import FoodItemPriceDisplay from '../foodItemPriceDisplay/FoodItemPriceDisplay';
 import {OrderCardProps} from '../../types/types';
 import {Font} from '../../utils/responsive';
 import useOrderCard from './useOrderCard';
+import useOrder from '../../hooks/useOrder';
 
 const OrderCard = ({
-  picUrl,
+  picture,
   name,
   dateTime,
   orderStatus,
   totalPrice,
   price,
+  isReviewed,
   items,
-  foodId
+  orderId,
+  foodId,
 }: OrderCardProps) => {
-
-  const {naviateToReview}=useOrderCard()
+  const {naviateToReview} = useOrderCard();
+  const {handleCancelOrder, loading} = useOrder({orderId});
   return (
     <View style={styles.cardContainer}>
       <FoodItemPriceDisplay
         height={108}
         width={71}
         price={price}
-        uri={picUrl}
+        uri={picture}
       />
       <View style={styles.containerContent}>
         <View style={styles.leftContentContainer}>
@@ -38,15 +41,42 @@ const OrderCard = ({
             <View style={styles.orderStatusContainer}>
               {orderStatus == OrderStatus.Delivered && <TickIcon />}
               {orderStatus == OrderStatus.Canceled && <CrossIcon />}
-              <Text style={styles.orderStatus}>Order {orderStatus}</Text>
+              <Text style={styles.orderStatus}>
+                Order{' '}
+                {orderStatus === 'OUT_FOR_DELIVERY'
+                  ? 'Out for Delivery'
+                  : orderStatus}
+              </Text>
             </View>
           )}
           <View style={styles.reviewButton}>
-            <CustomButton 
-            onPress={()=>{
-              naviateToReview({foodId,name,picUrl})
-            }}
-            title="Leave a review" fontSize={Font(15)} pV={5} />
+            {orderStatus === 'PENDING' ? (
+              <CustomButton
+                onPress={handleCancelOrder}
+                loading={loading}
+                title="Cancel Order"
+                fontSize={Font(15)}
+                pV={5}
+              />
+            ) : orderStatus === 'DELIVERED' ? (
+              <CustomButton
+                disabled={isReviewed}
+                onPress={() => {
+                  naviateToReview({foodId, name, picture, orderId});
+                }}
+                bgColor={isReviewed ? COLORS.yellow2 : COLORS.orange}
+                textColor={isReviewed ? COLORS.orange : 'white'}
+                title={isReviewed ? 'Reviewed ' : 'Leave a review'}
+                fontSize={Font(15)}
+                pV={5}
+              />
+            ) : (
+              <CustomButton
+                title={'Provide feedback'}
+                fontSize={Font(15)}
+                pV={5}
+              />
+            )}
           </View>
         </View>
         <View style={styles.rightContentContainer}>
@@ -54,13 +84,25 @@ const OrderCard = ({
           <Text style={styles.items}>{items} items</Text>
 
           <View style={styles.orderAgainButton}>
-            <CustomButton
-              title="Order Again"
-              fontSize={Font(15)}
-              bgColor={COLORS.orange2}
-              textColor={COLORS.orange}
-              pV={5}
-            />
+            {orderStatus === 'DELIVERED' ? (
+              <CustomButton
+                title="Order Again"
+                fontSize={Font(15)}
+                bgColor={COLORS.orange2}
+                textColor={COLORS.orange}
+                pV={5}
+              />
+            ) : (
+              orderStatus === 'OUT_FOR_DELIVERY' && (
+                <CustomButton
+                  title="Track Driver"
+                  fontSize={Font(15)}
+                  bgColor={COLORS.orange2}
+                  textColor={COLORS.orange}
+                  pV={5}
+                />
+              )
+            )}
           </View>
         </View>
       </View>

@@ -55,10 +55,14 @@ export type OrderCard2Props = {
   dateTime: string;
   orderStatus: OrderStatus;
   totalPrice: string;
+  isReviewed: boolean;
+  orderId: number;
 };
 export type OrderCardProps = {
-  picUrl: string;
+  picture: string;
   name: string;
+  isReviewed: boolean;
+  orderId: number;
   dateTime: string;
   price: string;
   orderStatus: OrderStatus;
@@ -80,7 +84,7 @@ export type FoodItemPriceDisplayProps = {
   height: number;
   width: number;
   price: string;
-  priceTagBottom?:number
+  priceTagBottom?: number;
 };
 export type DateInputProps = {
   date: string;
@@ -153,17 +157,19 @@ export type TabParamsList = {
   Favoirite: undefined;
   'My Orders': undefined;
 };
-
+export type LeaveReviewParams = {
+  orderId: number;
+  reviews: {
+    foodId: string;
+    picture: string | null | undefined;
+    name: string;
+  }[];
+};
 export type StackNavigatorParamList = {
   Home: undefined;
   'Confirm Order': undefined;
-  'Food Detail': 
-  FoodType
-  'Leave a Review': {
-    foodId: string;
-    picUrl: string | null | undefined;
-    name: string;
-  };
+  'Food Detail': FoodType;
+  'Leave a Review': LeaveReviewParams;
   'Best Seller': undefined;
   'My Orders': undefined;
   'Coming Soon': undefined;
@@ -268,11 +274,13 @@ export type Food = {
   description: string;
   restaurantId: string;
 };
-export type FoodType =FetchFoodsQuery['fetchFoods'][number]
+export type FoodType = FetchFoodsQuery['fetchFoods'][number];
 export type FoodItem = {
   id: number;
   food: Food;
   foodId: string;
+  // name:string;
+  // picture:string;
   quantity: number;
   customerId: string;
   totalPrice: number;
@@ -298,4 +306,15 @@ export type AuthScreen = {
   name: keyof AuthStackParamList;
   component: React.ComponentType<any>;
   options?: NativeStackNavigationOptions;
+};
+
+export type NavigateToReviewFromOrderCard = {
+  foodId: string;
+  name: string;
+  picture: string;
+  orderId: number;
+};
+export type NavigateToReviewFromOrderCard2 = {
+  foods: FoodItem[];
+  orderId: number;
 };
