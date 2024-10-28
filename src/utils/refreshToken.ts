@@ -35,12 +35,6 @@ export const isAccessTokenExpired = (accessToken: string) => {
   if (exp) {
     const bufferTime = 500 * 1000;
     const expirationTime = exp * 1000;
-    console.log(
-      'NOw time is ',
-      Date.now(),
-      'Expiry time is ',
-      expirationTime - bufferTime,
-    );
     return Date.now() > expirationTime - bufferTime;
   }
   return true;
