@@ -20,8 +20,8 @@ export const refreshTokenAction = async (refreshToken: string) => {
     });
     const data = await response.json();
     const accessToken = data.data.refreshToken;
-    if (data.data.refreshToken) {
-      await AsyncStorage.setItem('authToken', data.data.refreshToken);
+    if (accessToken) {
+      await AsyncStorage.setItem('authToken', accessToken);
       return accessToken;
     }
   } catch (error: any) {
@@ -33,8 +33,15 @@ export const refreshTokenAction = async (refreshToken: string) => {
 export const isAccessTokenExpired = (accessToken: string) => {
   const {exp} = jwtDecode(accessToken);
   if (exp) {
-    const bufferTime = 30 * 1000;
+    const bufferTime = 500 * 1000;
     const expirationTime = exp * 1000;
+    console.log(
+      'NOw time is ',
+      Date.now(),
+      'Expiry time is ',
+      expirationTime - bufferTime,
+    );
     return Date.now() > expirationTime - bufferTime;
   }
+  return true;
 };
