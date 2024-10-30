@@ -7,8 +7,10 @@ import {
   UpdateCustomerDocument,
   UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
+import auth from '@react-native-firebase/auth'
 import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const initialState: {user: reduxUser} = {
   user: null,
@@ -102,6 +104,25 @@ export const changePassword = createAsyncThunk(
     }
   },
 );
+export const signUpWithGoogle = createAsyncThunk(
+  'auth/signUpWithGoogle',
+  async (_, {rejectWithValue}) => {
+    try {
+
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+      const res = await GoogleSignin.signIn();
+      if(res.data?.idToken){
+      const googleCredential = auth.GoogleAuthProvider.credential(res.data?.idToken);
+      const response = await auth().signInWithCredential(googleCredential);
+        Toast.show({text1:`welcome ${response.user.displayName}`})
+      
+}
+    } catch (error: any) {
+      Toast.show({text1:`${error.message}`,type:"error"})
+      return rejectWithValue('Error while sign up');
+    }
+  },
+);
 
 export const authSlice = createSlice({
   name: 'authSlice',
@@ -130,7 +151,7 @@ export const authSlice = createSlice({
         Toast.show({text1: 'Profile Updated'});
       }
     });
-    builder.addCase(updateCustomer.rejected, (state, action) => {
+    builder.addCase(updateCustomer.rejected, (_, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
     });
     builder.addCase(changePassword.fulfilled, () => {

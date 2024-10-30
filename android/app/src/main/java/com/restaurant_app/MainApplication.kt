@@ -1,4 +1,4 @@
-package com.restaurant_app
+package com.restaurant_app_talha
 
 import android.app.Application
 import com.facebook.react.PackageList

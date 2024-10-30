@@ -15,8 +15,8 @@ import CustomDropdown from '../../components/customDropDown/CustomDropDown';
 import {Role} from '../../gql/graphql';
 import {Width} from '../../utils/responsive';
 import FacebookIcon from '../../assets/icons/facebook';
-import GoogleIcon from '../../assets/icons/google';
 import DateInput from '../../components/dateInput/DateInput';
+import {SignUpGoogle} from '../../components/signUpGoogle/SignUpGoogle';
 
 export const SignUp = () => {
   const {
@@ -82,7 +82,7 @@ export const SignUp = () => {
                 />
                 <Text style={styles.signUpOptionsText}>or sign up with</Text>
                 <View style={{flexDirection: 'row', gap: 9}}>
-                  <GoogleIcon />
+                  <SignUpGoogle loading={loading} setLoading={() => {}} />
                   <FacebookIcon />
                 </View>
                 <View style={styles.footerContainer}>

@@ -1,4 +1,4 @@
-package com.restaurant_app
+package com.restaurant_app_talha
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

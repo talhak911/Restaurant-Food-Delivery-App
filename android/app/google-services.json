@@ -1,26 +1,44 @@
 {
   "project_info": {
-    "project_number": "1053392520319",
-    "project_id": "restaurant-app-11bd8",
-    "storage_bucket": "restaurant-app-11bd8.appspot.com"
+    "project_number": "531351131390",
+    "project_id": "restaurant-app-talha",
+    "storage_bucket": "restaurant-app-talha.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1053392520319:android:d1344257d55670614f6b4a",
+        "mobilesdk_app_id": "1:531351131390:android:04a9a01ac68288653d81af",
         "android_client_info": {
-          "package_name": "com.restaurant_app"
+          "package_name": "com.restaurant_app_talha"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "531351131390-ffrjlrev708cb9o5ljchhlukn77aaj9j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.restaurant_app_talha",
+            "certificate_hash": "5314139dd588462fd974ab4cb4980973f7f132c8"
+          }
+        },
+        {
+          "client_id": "531351131390-e8uoj2af3fac6i2qhcmgnt944k858fh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyD8dakHKKzgZC2cASReIiPaoh6GaiENqfo"
+          "current_key": "AIzaSyCHYpPK9PlSuHT9GbOd7yqgT0hh4SfrLqw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "531351131390-e8uoj2af3fac6i2qhcmgnt944k858fh2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
