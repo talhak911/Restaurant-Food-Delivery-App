@@ -13,19 +13,22 @@ const HomeHeader = ({
   onSearch,
   setSearchQuery,
   searchQuery,
+  editable
 }: {
   greetingShown?: boolean;
-  onSearch: () => void;
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  onSearch?: () => void;
+  searchQuery?: string;
+  setSearchQuery?: React.Dispatch<React.SetStateAction<string>>;
+  editable?:boolean
 }) => {
   const {openCart} = useCart();
   const {navigateToProfile} = useHomeHeader();
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <View style={styles.searchBarContainer}>
+        <View style={styles.searchBarContainer} pointerEvents="box-none">
           <TextInput
+            editable={editable}
             style={styles.searchInput}
             placeholderTextColor={COLORS.grey}
             placeholder="Search"

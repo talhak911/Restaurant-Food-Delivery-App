@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Touchable, TouchableHighlight} from 'react-native';
 import React from 'react';
 import useHome from './useHome';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -27,7 +27,11 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HomeHeader />
+      <TouchableOpacity
+      onPress={navigateToFoods}
+      >
+      <HomeHeader editable={false}/>
+      </TouchableOpacity>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <View
           style={{
