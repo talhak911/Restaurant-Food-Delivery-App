@@ -1,3 +1,8 @@
+import {FindUserDocument} from '../gql/graphql';
+import {client} from '../providers/apolloProvider/ApolloProvider';
+import {sign} from 'react-native-pure-jwt';
+
+import {JWT_SECRET} from '@env';
 export const toPascalCase = (str: string) => {
   return str
     .toLowerCase()
@@ -12,4 +17,27 @@ export const formatDate = (dateString: string | Date) => {
     minute: 'numeric',
     hour12: true,
   }).format(new Date(dateString));
+};
+
+export const userExist = async (email: string) => {
+  const response = await client.query({
+    query: FindUserDocument,
+    variables: {email},
+  });
+  console.log('THE user eixst response ', response.data.findUser);
+  return response.data.findUser;
+};
+
+export const generateOAuthToken = async ({
+  email,
+  provider,
+}: {
+  email: string;
+  provider: string;
+}) => {
+  console.log('token signining ');
+  const token = await sign({email, provider}, JWT_SECRET, {alg: 'HS256'});
+  console.log('token signining end');
+
+  return token;
 };

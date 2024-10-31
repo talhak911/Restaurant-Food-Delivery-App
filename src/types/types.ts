@@ -226,6 +226,12 @@ export type AuthStackParamList = {
   'Verify Otp': {email: string};
   VerifyEmail: undefined;
   'Forget Password': undefined;
+  'Sign Up': {
+    token: string;
+    name: string;
+    email: string;
+    picture?: string;
+  };
 };
 
 export type AuthNavigationProp = NativeStackNavigationProp<AuthStackParamList>;
@@ -255,6 +261,10 @@ export type VerifyOtpProps = NativeStackScreenProps<
   AuthStackParamList,
   'Verify Otp'
 >;
+export type OAuthSignUpProps = NativeStackScreenProps<
+  AuthStackParamList,
+  'Sign Up'
+>;
 
 export type reduxUser = GetCurrentUserQuery['getCurrentUser'];
 
@@ -280,15 +290,13 @@ export type FoodItem = {
   id: number;
   food: Food;
   foodId: string;
-  // name:string;
-  // picture:string;
   quantity: number;
   customerId: string;
   totalPrice: number;
 };
 export type FoodState = {
   foods: FoodType[] | null;
-  loading:boolean,
+  loading: boolean;
   filteredFoods: FoodType[] | null;
   bestSeller: FoodType[] | null;
   suggestedFoods: FoodType[] | null;
@@ -319,4 +327,10 @@ export type NavigateToReviewFromOrderCard = {
 export type NavigateToReviewFromOrderCard2 = {
   foods: FoodItem[];
   orderId: number;
+};
+export type UseOAuthSignUpParams = {
+  token: string;
+  name: string;
+  email: string;
+  picture?: string;
 };

@@ -33,6 +33,9 @@ const documents = {
     "\n  mutation updateCustomer(\n    $dateOfBirth: DateTimeISO\n    $phone: String\n    $name: String\n    $picture: String\n  ) {\n    updateCustomer(\n      dateOfBirth: $dateOfBirth\n      phone: $phone\n      name: $name\n      picture: $picture\n    ) {\n      dateOfBirth\n      name\n      id\n      email\n      phone\n      role\n      verification\n      customer {\n        address\n        picture\n        cart {\n          id\n          foodId\n          totalPrice\n          food {\n            name\n            price\n            id\n          }\n        }\n      }\n    }\n  }\n": types.UpdateCustomerDocument,
     "\n  mutation changePassword($password: String!, $newPassword: String!) {\n    changePassword(password: $password, newPassword: $newPassword)\n  }\n": types.ChangePasswordDocument,
     "\n  mutation cancelOrder($orderId: Float!) {\n    cancelOrder(orderId: $orderId)\n  }\n": types.CancelOrderDocument,
+    "\n  query findUser($email: String!) {\n    findUser(email: $email)\n  }\n": types.FindUserDocument,
+    "\n  mutation oAuthSignIn($token: String!) {\n    oAuthSignIn(token: $token){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n": types.OAuthSignInDocument,
+    "\n  mutation oAuthSignUp($token: String!,$data:OAuthSignUpInputs!) {\n    oAuthSignUp(token: $token,data:$data){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n": types.OAuthSignUpDocument,
 };
 
 /**
@@ -129,6 +132,18 @@ export function gql(source: "\n  mutation changePassword($password: String!, $ne
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation cancelOrder($orderId: Float!) {\n    cancelOrder(orderId: $orderId)\n  }\n"): (typeof documents)["\n  mutation cancelOrder($orderId: Float!) {\n    cancelOrder(orderId: $orderId)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query findUser($email: String!) {\n    findUser(email: $email)\n  }\n"): (typeof documents)["\n  query findUser($email: String!) {\n    findUser(email: $email)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation oAuthSignIn($token: String!) {\n    oAuthSignIn(token: $token){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation oAuthSignIn($token: String!) {\n    oAuthSignIn(token: $token){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation oAuthSignUp($token: String!,$data:OAuthSignUpInputs!) {\n    oAuthSignUp(token: $token,data:$data){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n"): (typeof documents)["\n  mutation oAuthSignUp($token: String!,$data:OAuthSignUpInputs!) {\n    oAuthSignUp(token: $token,data:$data){\n      user {\n        id\n        email\n        phone\n        dateOfBirth\n        name\n        role\n        verification\n        customer {\n          address\n          picture\n          id\n          cart {\n            id\n            foodId\n            totalPrice\n            food {\n              name\n              price\n              id\n            }\n          }\n        }\n      }\n      accessToken\n      refreshToken\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

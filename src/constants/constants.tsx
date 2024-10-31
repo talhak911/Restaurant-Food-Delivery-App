@@ -51,6 +51,7 @@ import Help from '../screens/help/Help';
 import LeaveReview from '../screens/leaveReview/LeaveReview';
 import BestSeller from '../screens/bestSeller/BestSeller';
 import Recommendations from '../screens/recommendations/Recommendations';
+import OAuthSignUp from '../screens/oAuthSignUp/OAuthSignUp';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -165,6 +166,7 @@ export const AUTH_SCREENS: AuthScreen[] = [
   {name: 'Log In', component: SignIn},
   {name: 'Verify Otp', component: VerifyOtp},
   {name: 'Forget Password', component: ForgetPassword},
+  {name: 'Sign Up', component: OAuthSignUp},
 ];
 
 export const ON_BOARDING_ITEMS = [

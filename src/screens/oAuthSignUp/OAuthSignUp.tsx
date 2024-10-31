@@ -1,36 +1,25 @@
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import styles from './signUpStyles';
-import {useSignUp} from './useSignUp';
+import {SafeAreaView, Text, View} from 'react-native';
+import {useOAuthSignUp} from './useOAuthSignUp';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CustomInput} from '../../components/customInput/CustomInput';
 import {CustomButton} from '../../components/customButton/CustomButton';
-import {COLORS} from '../../constants/color';
 import CustomDropdown from '../../components/customDropDown/CustomDropDown';
 import {Role} from '../../gql/graphql';
-import {Width} from '../../utils/responsive';
-import FacebookIcon from '../../assets/icons/facebook';
 import DateInput from '../../components/dateInput/DateInput';
-import {SignUpGoogle} from '../../components/signUpGoogle/SignUpGoogle';
+import {styles} from './OAuthSignUpStyles';
+import {OAuthSignUpProps} from '../../types/types';
 import Loader from '../../components/loader/Loader';
 
-export const SignUp = () => {
+const OAuthSignUp = ({route: {params}}: OAuthSignUpProps) => {
   const {
-    navigateToSignIn,
     handleSignUp,
     fields,
     role,
     loading,
-    oAuthLoading,
     dob,
     selectRole,
     handleDateChange,
-  } = useSignUp();
+  } = useOAuthSignUp(params);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,6 +29,7 @@ export const SignUp = () => {
           keyboardShouldPersistTaps="always"
           style={{flex: 1}}>
           <View style={styles.contentContainer}>
+            <Text style={styles.title}>Finish Setting Up your Account!</Text>
             <View style={styles.gap}>
               {fields.map((field, index) => (
                 <CustomInput
@@ -62,37 +52,16 @@ export const SignUp = () => {
                 selectedValue={role}
               />
             </View>
-            {oAuthLoading ? (
+            {loading ? (
               <Loader color="black" />
             ) : (
-              <View style={{alignItems: 'center'}}>
-                <View style={styles.termsContainer}>
-                  <Text style={styles.terms}>
-                    By continuing, you agree to{' '}
-                    <Text style={{color: COLORS.orange}}>Terms of Use </Text>
-                    and{' '}
-                    <Text style={{color: COLORS.orange}}>Privacy Policy.</Text>
-                  </Text>
-                </View>
+              <View style={styles.buttonContainer}>
                 <CustomButton
-                  title="Sign Up"
-                  pH={Width(15)}
+                  title="Continue"
+                  pH={30}
                   loading={loading}
                   onPress={handleSignUp}
                 />
-                <Text style={styles.signUpOptionsText}>or sign up with</Text>
-                <View style={{flexDirection: 'row', gap: 9}}>
-                  <SignUpGoogle />
-                  <FacebookIcon />
-                </View>
-                <View style={styles.footerContainer}>
-                  <Text style={styles.footerText}>
-                    Already have an account?
-                  </Text>
-                  <TouchableOpacity onPress={navigateToSignIn}>
-                    <Text style={styles.footerLink}>Log in</Text>
-                  </TouchableOpacity>
-                </View>
               </View>
             )}
           </View>
@@ -101,3 +70,5 @@ export const SignUp = () => {
     </SafeAreaView>
   );
 };
+
+export default OAuthSignUp;

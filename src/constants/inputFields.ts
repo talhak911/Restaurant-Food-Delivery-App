@@ -59,6 +59,29 @@ export const SIGN_UP_FIELDS = (
     keyboardType: 'numeric',
   },
 ];
+
+export const OAuthSignUpFields = (
+  password: string,
+  setPassword: (text: string) => void,
+  phone: string,
+  setPhone: (text: string) => void,
+): FIELDS_TYPE[] => [
+  {
+    label: 'Password',
+    value: password,
+    onChange: setPassword,
+    placeholder: 'Enter password',
+    secureInput: true,
+  },
+
+  {
+    label: 'Mobile Number',
+    value: phone,
+    onChange: setPhone,
+    placeholder: '03XXXXXXXXXX',
+    keyboardType: 'numeric',
+  },
+];
 export const RESET_PASSWORD_FIELDS = (
   email: string,
   setEmail: (text: string) => void,

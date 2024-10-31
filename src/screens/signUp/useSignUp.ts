@@ -6,6 +6,7 @@ import {useMutation} from '@apollo/client';
 import {Role, SignUpDocument} from '../../gql/graphql';
 import {validateSignUpForm} from '../../utils/validation';
 import Toast from 'react-native-toast-message';
+import {useAppSelector} from '../../hooks/useStore';
 
 export const useSignUp = () => {
   const navigation = useNavigation<AuthNavigationProp>();
@@ -16,6 +17,7 @@ export const useSignUp = () => {
   const [dob, setDob] = useState('');
   const [phone, setPhone] = useState('');
   const [signUp, {loading}] = useMutation(SignUpDocument);
+  const oAuthLoading = useAppSelector(state => state.auth.loading);
   const handleSignUp = async () => {
     const isValid = validateSignUpForm(name, email, password, phone, dob, role);
     if (!isValid || !role) {
@@ -71,6 +73,7 @@ export const useSignUp = () => {
     handleSignUp,
     selectRole,
     loading,
+    oAuthLoading,
     fields,
     role,
     dob,

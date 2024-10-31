@@ -4,16 +4,21 @@ import {
   AddCustomerAddressDocument,
   ChangePasswordDocument,
   GetCurrentUserDocument,
+  OAuthSignInDocument,
+  OAuthSignUpDocument,
+  Role,
   UpdateCustomerDocument,
   UpdateCustomerMutationVariables,
 } from '../../gql/graphql';
-import auth from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth';
 import {client} from '../../providers/apolloProvider/ApolloProvider';
 import Toast from 'react-native-toast-message';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const initialState: {user: reduxUser} = {
+const initialState: {user: reduxUser; loading: boolean} = {
   user: null,
+  loading: false,
 };
 
 export const fetchUserData = createAsyncThunk(
@@ -104,21 +109,64 @@ export const changePassword = createAsyncThunk(
     }
   },
 );
-export const signUpWithGoogle = createAsyncThunk(
-  'auth/signUpWithGoogle',
-  async (_, {rejectWithValue}) => {
+export const oAuthSignIn = createAsyncThunk(
+  'auth/oAuthSignIn',
+  async (token: string, {rejectWithValue, dispatch}) => {
     try {
-
-      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      const res = await GoogleSignin.signIn();
-      if(res.data?.idToken){
-      const googleCredential = auth.GoogleAuthProvider.credential(res.data?.idToken);
-      const response = await auth().signInWithCredential(googleCredential);
-        Toast.show({text1:`welcome ${response.user.displayName}`})
-      
-}
+      const response = await client.mutate({
+        mutation: OAuthSignInDocument,
+        variables: {token},
+      });
+      const data = response.data?.oAuthSignIn;
+      if (data) {
+        await client.clearStore();
+        await AsyncStorage.setItem('authToken', data.accessToken);
+        await AsyncStorage.setItem('refreshToken', data.refreshToken);
+        dispatch(setUser(data.user));
+        Toast.show({text1: 'Login successful'});
+      }
     } catch (error: any) {
-      Toast.show({text1:`${error.message}`,type:"error"})
+      return rejectWithValue('Error while sign up');
+    }
+  },
+);
+
+export const oAuthSignUp = createAsyncThunk(
+  'auth/oAuthSignUp',
+  async (
+    {
+      token,
+      data: {dateOfBirth, name, password, phone, role, picture},
+    }: {
+      token: string;
+      data: {
+        dateOfBirth: string;
+        name: string;
+        password: string;
+        phone: string;
+        role: Role;
+        picture?: string;
+      };
+    },
+    {rejectWithValue},
+  ) => {
+    try {
+      const response = await client.mutate({
+        mutation: OAuthSignUpDocument,
+        variables: {
+          token,
+          data: {dateOfBirth, name, password, phone, role, picture},
+        },
+      });
+      const data = response.data?.oAuthSignUp;
+      if (data) {
+        await client.clearStore();
+        await AsyncStorage.setItem('authToken', data.accessToken);
+        await AsyncStorage.setItem('refreshToken', data.refreshToken);
+        return data.user;
+      }
+    } catch (error: any) {
+      Toast.show({text1: `${error.message}`, type: 'error'});
       return rejectWithValue('Error while sign up');
     }
   },
@@ -159,6 +207,28 @@ export const authSlice = createSlice({
     });
     builder.addCase(changePassword.rejected, (state, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
+    });
+    builder.addCase(oAuthSignUp.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(oAuthSignUp.fulfilled, (state, action) => {
+      state.user=action.payload;
+      state.loading=false
+    });
+    builder.addCase(oAuthSignUp.rejected, (state, action) => {
+      Toast.show({type: 'error', text1: action.payload as string});
+      state.loading=false
+    });
+    builder.addCase(oAuthSignIn.pending, state => {
+      state.loading = true;
+    });
+    builder.addCase(oAuthSignIn.fulfilled, (state, action) => {
+      state.user=action.payload;
+      state.loading=false
+    });
+    builder.addCase(oAuthSignIn.rejected, (state, action) => {
+      Toast.show({type: 'error', text1: action.payload as string});
+      state.loading=false
     });
   },
 });

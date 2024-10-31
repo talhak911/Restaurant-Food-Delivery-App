@@ -261,3 +261,73 @@ export const CANCEL_ORDER = gql`
     cancelOrder(orderId: $orderId)
   }
 `;
+export const FIND_USER = gql`
+  query findUser($email: String!) {
+    findUser(email: $email)
+  }
+`;
+export const O_AUTH_SIGN_IN = gql`
+  mutation oAuthSignIn($token: String!) {
+    oAuthSignIn(token: $token){
+      user {
+        id
+        email
+        phone
+        dateOfBirth
+        name
+        role
+        verification
+        customer {
+          address
+          picture
+          id
+          cart {
+            id
+            foodId
+            totalPrice
+            food {
+              name
+              price
+              id
+            }
+          }
+        }
+      }
+      accessToken
+      refreshToken
+    }
+  }
+`;
+
+export const O_AUTH_SIGN_UP = gql`
+  mutation oAuthSignUp($token: String!,$data:OAuthSignUpInputs!) {
+    oAuthSignUp(token: $token,data:$data){
+      user {
+        id
+        email
+        phone
+        dateOfBirth
+        name
+        role
+        verification
+        customer {
+          address
+          picture
+          id
+          cart {
+            id
+            foodId
+            totalPrice
+            food {
+              name
+              price
+              id
+            }
+          }
+        }
+      }
+      accessToken
+      refreshToken
+    }
+  }
+`;

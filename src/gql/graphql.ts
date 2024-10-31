@@ -179,6 +179,7 @@ export type CreateManyAndReturnUser = {
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
   phone: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role: Role;
@@ -1347,6 +1348,8 @@ export type Mutation = {
   deleteOneRestaurant?: Maybe<Restaurant>;
   deleteOneReview?: Maybe<Review>;
   deleteOneUser?: Maybe<User>;
+  oAuthSignIn: SignInResponse;
+  oAuthSignUp: SignInResponse;
   placeOrder: Order;
   refreshToken: Scalars['String']['output'];
   removeFoodItem: Scalars['String']['output'];
@@ -1610,6 +1613,17 @@ export type MutationDeleteOneReviewArgs = {
 
 export type MutationDeleteOneUserArgs = {
   where: UserWhereUniqueInput;
+};
+
+
+export type MutationOAuthSignInArgs = {
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationOAuthSignUpArgs = {
+  data: OAuthSignUpInputs;
+  token: Scalars['String']['input'];
 };
 
 
@@ -2096,6 +2110,15 @@ export enum NullsOrder {
   First = 'first',
   Last = 'last'
 }
+
+export type OAuthSignUpInputs = {
+  dateOfBirth: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  phone: Scalars['String']['input'];
+  picture?: InputMaybe<Scalars['String']['input']>;
+  role: Scalars['String']['input'];
+};
 
 export type Order = {
   __typename?: 'Order';
@@ -2829,6 +2852,7 @@ export type Query = {
   findFirstReviewOrThrow?: Maybe<Review>;
   findFirstUser?: Maybe<User>;
   findFirstUserOrThrow?: Maybe<User>;
+  findUser: Scalars['Boolean']['output'];
   food?: Maybe<Food>;
   foods: Array<Food>;
   getBestSellers: Array<Food>;
@@ -2857,7 +2881,6 @@ export type Query = {
   restaurants: Array<Restaurant>;
   review?: Maybe<Review>;
   reviews: Array<Review>;
-  searchFoods: Array<Food>;
   user?: Maybe<User>;
   users: Array<User>;
 };
@@ -3099,6 +3122,11 @@ export type QueryFindFirstUserOrThrowArgs = {
 };
 
 
+export type QueryFindUserArgs = {
+  email: Scalars['String']['input'];
+};
+
+
 export type QueryFoodArgs = {
   where: FoodWhereUniqueInput;
 };
@@ -3286,11 +3314,6 @@ export type QueryReviewsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<ReviewWhereInput>;
-};
-
-
-export type QuerySearchFoodsArgs = {
-  name: Scalars['String']['input'];
 };
 
 
@@ -3979,6 +4002,7 @@ export type User = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   phone: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
   restaurant?: Maybe<Restaurant>;
   role: Role;
   verification: Scalars['Boolean']['output'];
@@ -4003,6 +4027,7 @@ export type UserCountAggregate = {
   name: Scalars['Int']['output'];
   password: Scalars['Int']['output'];
   phone: Scalars['Int']['output'];
+  provider: Scalars['Int']['output'];
   resetPassOtp: Scalars['Int']['output'];
   resetPassOtpExpiry: Scalars['Int']['output'];
   role: Scalars['Int']['output'];
@@ -4098,6 +4123,7 @@ export type UserGroupBy = {
   name: Scalars['String']['output'];
   password: Scalars['String']['output'];
   phone: Scalars['String']['output'];
+  provider: Scalars['String']['output'];
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role: Role;
@@ -4114,6 +4140,7 @@ export type UserMaxAggregate = {
   name?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
+  provider?: Maybe<Scalars['String']['output']>;
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role?: Maybe<Role>;
@@ -4140,6 +4167,7 @@ export type UserMinAggregate = {
   name?: Maybe<Scalars['String']['output']>;
   password?: Maybe<Scalars['String']['output']>;
   phone?: Maybe<Scalars['String']['output']>;
+  provider?: Maybe<Scalars['String']['output']>;
   resetPassOtp?: Maybe<Scalars['String']['output']>;
   resetPassOtpExpiry?: Maybe<Scalars['DateTimeISO']['output']>;
   role?: Maybe<Role>;
@@ -4195,6 +4223,7 @@ export enum UserScalarFieldEnum {
   Name = 'name',
   Password = 'password',
   Phone = 'phone',
+  Provider = 'provider',
   ResetPassOtp = 'resetPassOtp',
   ResetPassOtpExpiry = 'resetPassOtpExpiry',
   Role = 'role',
@@ -4479,6 +4508,28 @@ export type CancelOrderMutationVariables = Exact<{
 
 export type CancelOrderMutation = { __typename?: 'Mutation', cancelOrder: string };
 
+export type FindUserQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+
+export type FindUserQuery = { __typename?: 'Query', findUser: boolean };
+
+export type OAuthSignInMutationVariables = Exact<{
+  token: Scalars['String']['input'];
+}>;
+
+
+export type OAuthSignInMutation = { __typename?: 'Mutation', oAuthSignIn: { __typename?: 'SignInResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, email: string, phone: string, dateOfBirth: any, name: string, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<any>, picture?: string | null, id: string, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } } };
+
+export type OAuthSignUpMutationVariables = Exact<{
+  token: Scalars['String']['input'];
+  data: OAuthSignUpInputs;
+}>;
+
+
+export type OAuthSignUpMutation = { __typename?: 'Mutation', oAuthSignUp: { __typename?: 'SignInResponse', accessToken: string, refreshToken: string, user: { __typename?: 'User', id: string, email: string, phone: string, dateOfBirth: any, name: string, role: Role, verification: boolean, customer?: { __typename?: 'Customer', address: Array<any>, picture?: string | null, id: string, cart: Array<{ __typename?: 'OrderItemCart', id: number, foodId: string, totalPrice: number, food: { __typename?: 'Food', name: string, price: number, id: string } }> } | null } } };
+
 
 export const SignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"signUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<SignUpMutation, SignUpMutationVariables>;
 export const RefreshTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"refreshToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"refreshToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"refreshToken"},"value":{"kind":"Variable","name":{"kind":"Name","value":"refreshToken"}}}]}]}}]} as unknown as DocumentNode<RefreshTokenMutation, RefreshTokenMutationVariables>;
@@ -4500,3 +4551,6 @@ export const FetchOrdersDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const UpdateCustomerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateCustomer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dateOfBirth"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"DateTimeISO"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"phone"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"picture"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCustomer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dateOfBirth"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dateOfBirth"}}},{"kind":"Argument","name":{"kind":"Name","value":"phone"},"value":{"kind":"Variable","name":{"kind":"Name","value":"phone"}}},{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"picture"},"value":{"kind":"Variable","name":{"kind":"Name","value":"picture"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"verification"}},{"kind":"Field","name":{"kind":"Name","value":"customer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"cart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"foodId"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateCustomerMutation, UpdateCustomerMutationVariables>;
 export const ChangePasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"changePassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changePassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"newPassword"},"value":{"kind":"Variable","name":{"kind":"Name","value":"newPassword"}}}]}]}}]} as unknown as DocumentNode<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const CancelOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"cancelOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cancelOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}]}]}}]} as unknown as DocumentNode<CancelOrderMutation, CancelOrderMutationVariables>;
+export const FindUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"findUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"findUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<FindUserQuery, FindUserQueryVariables>;
+export const OAuthSignInDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"oAuthSignIn"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oAuthSignIn"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"verification"}},{"kind":"Field","name":{"kind":"Name","value":"customer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"foodId"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<OAuthSignInMutation, OAuthSignInMutationVariables>;
+export const OAuthSignUpDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"oAuthSignUp"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"OAuthSignUpInputs"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"oAuthSignUp"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"dateOfBirth"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"verification"}},{"kind":"Field","name":{"kind":"Name","value":"customer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"picture"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"cart"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"foodId"}},{"kind":"Field","name":{"kind":"Name","value":"totalPrice"}},{"kind":"Field","name":{"kind":"Name","value":"food"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}}]}}]}}]} as unknown as DocumentNode<OAuthSignUpMutation, OAuthSignUpMutationVariables>;
