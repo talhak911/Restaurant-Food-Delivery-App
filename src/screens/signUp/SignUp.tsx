@@ -83,7 +83,6 @@ export const SignUp = () => {
                 <Text style={styles.signUpOptionsText}>or sign up with</Text>
                 <View style={{flexDirection: 'row', gap: 9}}>
                   <SignUpGoogle />
-                  <FacebookIcon />
                 </View>
                 <View style={styles.footerContainer}>
                   <Text style={styles.footerText}>

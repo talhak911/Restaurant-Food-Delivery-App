@@ -122,8 +122,7 @@ export const oAuthSignIn = createAsyncThunk(
         await client.clearStore();
         await AsyncStorage.setItem('authToken', data.accessToken);
         await AsyncStorage.setItem('refreshToken', data.refreshToken);
-        dispatch(setUser(data.user));
-        Toast.show({text1: 'Login successful'});
+        return data.user
       }
     } catch (error: any) {
       return rejectWithValue('Error while sign up');
@@ -179,6 +178,9 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setLoading:(state,action)=>{
+      state.loading=action.payload
+    }
   },
   extraReducers: builder => {
     builder.addCase(addCustomerAddress.fulfilled, (state, action) => {
@@ -233,5 +235,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const {setUser} = authSlice.actions;
+export const {setUser,setLoading} = authSlice.actions;
 export default authSlice.reducer;

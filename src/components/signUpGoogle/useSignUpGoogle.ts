@@ -1,12 +1,12 @@
 import Toast from 'react-native-toast-message';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {AuthNavigationProp} from '../../types/types';
 import {generateOAuthToken, userExist} from '../../utils/utils';
 import {useAppDispatch} from '../../hooks/useStore';
-import {oAuthSignIn} from '../../redux/slices/authSlice';
+import {oAuthSignIn, setLoading} from '../../redux/slices/authSlice';
 export const useSignUpGoogle = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<AuthNavigationProp>();
@@ -18,6 +18,7 @@ export const useSignUpGoogle = () => {
   }, []);
   const signInWithGoogle = async () => {
     try {
+      dispatch(setLoading(true))
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       const res = await GoogleSignin.signIn();
       if (res.data?.idToken) {

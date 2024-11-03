@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
-import {useAppDispatch} from '../../hooks/useStore';
+import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {setUser} from '../../redux/slices/authSlice';
 import {AuthNavigationProp} from '../../types/types';
 import {SIGN_IN_FIELDS} from '../../constants/inputFields';
@@ -13,6 +13,7 @@ import Toast from 'react-native-toast-message';
 
 export const useSignIn = () => {
   const dispatch = useAppDispatch();
+  const oAuthLoading = useAppSelector(state=>state.auth.loading)
   const navigation = useNavigation<AuthNavigationProp>();
   const navigateToSignUp = () => {
     navigation.navigate('New Account');
@@ -59,5 +60,6 @@ export const useSignIn = () => {
     navigateToForgetPassword,
     fields,
     loading,
+    oAuthLoading
   };
 };

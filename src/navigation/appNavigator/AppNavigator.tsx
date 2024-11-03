@@ -8,6 +8,9 @@ import Loader from '../../components/loader/Loader';
 
 export default function AppNavigator() {
   const {initializing, user} = useAppNavigator();
+  console.log(
+    "OUr user , ",user
+  )
   if (initializing) return <Loader color='black'/>;
   return user?.role === 'CUSTOMER' ? (
     <NavigationContainer>
