@@ -144,7 +144,7 @@ export const TAB_SCREENS: TabScreen[] = [
   {
     name: 'Favoirite',
     options: {headerShown: false},
-    component: OnBoarding,
+    component: ComingSoon,
     icon: <FavouriteIcon />,
   },
   {name: 'My Orders', component: MyOrder, icon: <TabOrderIcon />},
