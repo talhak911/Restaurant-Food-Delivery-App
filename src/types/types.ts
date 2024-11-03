@@ -154,7 +154,7 @@ export type TabParamsList = {
   };
   Help: undefined;
   Foods: undefined;
-  Favoirite: undefined;
+  Favourite: undefined;
   'My Orders': undefined;
 };
 export type LeaveReviewParams = {
