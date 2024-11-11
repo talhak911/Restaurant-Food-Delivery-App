@@ -4,7 +4,6 @@ import {COLORS} from '../../constants/color';
 import HomeIcon from '../../assets/icons/home';
 import {Text, View} from 'react-native';
 import {LEAGUE_SPARTAN_BOLD} from '../../constants/fonts';
-import {NavigationContainer} from '@react-navigation/native';
 import RestaurantHome from '../../screens/restaurnantHome/RestaurantHome';
 import GoBack from '../../components/goBack/GoBack';
 
@@ -12,7 +11,7 @@ export const RestaurantTabNavigator = () => {
   const Tab = createBottomTabNavigator<RestaurntTabsParamsList>();
 
   return (
-    <NavigationContainer>
+
       <Tab.Navigator
         screenOptions={() => ({
           tabBarShowLabel: false,
@@ -51,6 +50,5 @@ export const RestaurantTabNavigator = () => {
           component={RestaurantHome}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };

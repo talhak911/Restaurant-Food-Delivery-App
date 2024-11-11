@@ -6,13 +6,16 @@ import AppNavigator from './src/navigation/appNavigator/AppNavigator';
 import {store} from './src/redux/store';
 import {ApolloProvider} from './src/providers/apolloProvider/ApolloProvider';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView>
       <Provider store={store}>
         <ApolloProvider>
-          <AppNavigator />
+        <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
           <Toast/>
         </ApolloProvider>
       </Provider>

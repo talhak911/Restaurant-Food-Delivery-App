@@ -52,6 +52,7 @@ import LeaveReview from '../screens/leaveReview/LeaveReview';
 import BestSeller from '../screens/bestSeller/BestSeller';
 import Recommendations from '../screens/recommendations/Recommendations';
 import OAuthSignUp from '../screens/oAuthSignUp/OAuthSignUp';
+import NotificationSetting from '../screens/notificationSetting/NotificationSetting';
 
 export const IMAGES = {
   profile: require('../assets/images/profile.jpg'),
@@ -94,7 +95,7 @@ export const SETTINGS = [
   {
     icon: <NotificationsIcon />,
     title: 'Notifications Setting',
-    screen: 'Coming Soon',
+    screen: 'Notification Setting',
   },
   {
     icon: <PasswordIcon />,
@@ -107,7 +108,11 @@ export const SETTINGS = [
     screen: 'Coming Soon',
   },
 ];
-
+export const NOTIFICATIONS:{label:string,key:'general'|'sound'|'vibrate'}[] = [
+  {label: 'General Notification', key: 'general'},
+  {label: 'Sound', key: 'sound'},
+  {label: 'Vibrate', key: 'vibrate'},
+];
 export const STACK_SCREENS: StackScreenConfig[] = [
   {name: 'Home', component: Home, options: {headerShown: false}},
   {name: 'My Profile', component: Profile},
@@ -115,6 +120,7 @@ export const STACK_SCREENS: StackScreenConfig[] = [
   {name: 'Settings', component: Settings},
   {name: 'Coming Soon', component: ComingSoon},
   {name: 'Password Setting', component: ChangePassword},
+  {name: 'Notification Setting', component: NotificationSetting},
   {name: 'Confirm Order', component: ConfirmOrder},
   {name: 'Delivery Address', component: DeliveryAddress},
   {name: 'Add New Address', component: AddAddress},

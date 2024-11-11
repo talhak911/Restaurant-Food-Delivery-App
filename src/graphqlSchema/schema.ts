@@ -29,6 +29,7 @@ export const SIGN_IN = gql`
           address
           picture
           id
+          wantsOrderNotifications
           cart {
             id
             foodId
@@ -76,6 +77,7 @@ export const GET_CURRENT_USER = gql`
       verification
       customer {
         address
+        wantsOrderNotifications
         picture
         cart {
           id
@@ -237,6 +239,7 @@ export const UPDATE_CUSTOMER = gql`
       customer {
         address
         picture
+        wantsOrderNotifications
         cart {
           id
           foodId
@@ -261,6 +264,11 @@ export const CANCEL_ORDER = gql`
     cancelOrder(orderId: $orderId)
   }
 `;
+export const UPDATE_ORDER_NOTIFICATIONS = gql`
+  mutation updateOrderNotifications($status: Boolean!) {
+    updateOrderNotifications(status: $status)
+  }
+`;
 export const FIND_USER = gql`
   query findUser($email: String!) {
     findUser(email: $email)
@@ -280,6 +288,7 @@ export const O_AUTH_SIGN_IN = gql`
         customer {
           address
           picture
+          wantsOrderNotifications
           id
           cart {
             id
@@ -314,6 +323,7 @@ export const O_AUTH_SIGN_UP = gql`
           address
           picture
           id
+          wantsOrderNotifications
           cart {
             id
             foodId

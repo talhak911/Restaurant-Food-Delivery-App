@@ -1,4 +1,3 @@
-import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../types/types';
 import {COLORS} from '../../constants/color';
@@ -17,7 +16,6 @@ export default function AuthNavigator() {
     );
   }
   return (
-    <NavigationContainer>
       <Stack.Navigator
       initialRouteName={initialRoute}
         screenOptions={({navigation}) => ({
@@ -58,6 +56,6 @@ export default function AuthNavigator() {
           />
         ))}
       </Stack.Navigator>
-    </NavigationContainer>
+
   );
 }

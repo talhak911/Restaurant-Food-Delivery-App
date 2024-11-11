@@ -181,6 +181,7 @@ export type StackNavigatorParamList = {
   'Contact Us': undefined;
   'Help & FAQs': undefined;
   'Password Setting': undefined;
+  'Notification Setting': undefined;
   'Add New Address': undefined;
   'Forget Password': undefined;
 };

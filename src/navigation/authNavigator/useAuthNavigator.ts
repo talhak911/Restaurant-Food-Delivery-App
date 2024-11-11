@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { AuthStackParamList } from "../../types/types";
 
 const useAuthNavigator = () => {
-    const [initialRoute, setInitialRoute] = useState<keyof AuthStackParamList | null>(null); // For storing the initial route
+    const [initialRoute, setInitialRoute] = useState<keyof AuthStackParamList | null>(null);
 
     useEffect(() => {
       const checkOnboardingStatus = async () => {

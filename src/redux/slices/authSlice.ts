@@ -9,6 +9,7 @@ import {
   Role,
   UpdateCustomerDocument,
   UpdateCustomerMutationVariables,
+  UpdateOrderNotificationsDocument,
 } from '../../gql/graphql';
 import auth from '@react-native-firebase/auth';
 import {client} from '../../providers/apolloProvider/ApolloProvider';
@@ -129,6 +130,23 @@ export const oAuthSignIn = createAsyncThunk(
     }
   },
 );
+export const changeNotificationSetting = createAsyncThunk(
+  'auth/changeNotificationSetting',
+  async (status: boolean, {rejectWithValue, dispatch}) => {
+    try {
+      const response = await client.mutate({
+        mutation: UpdateOrderNotificationsDocument,
+        variables: {status},
+      });
+      const data = response.data?.updateOrderNotifications;
+if(data){
+  return status
+}
+    } catch (error: any) {
+      return rejectWithValue('Error while sign up');
+    }
+  },
+);
 
 export const oAuthSignUp = createAsyncThunk(
   'auth/oAuthSignUp',
@@ -231,6 +249,10 @@ export const authSlice = createSlice({
     builder.addCase(oAuthSignIn.rejected, (state, action) => {
       Toast.show({type: 'error', text1: action.payload as string});
       state.loading=false
+    });
+    builder.addCase(changeNotificationSetting.fulfilled, (state, action) => {
+      Toast.show({text1:"Notification setting updated"});
+      state.user!.customer!.wantsOrderNotifications=action.payload!
     });
   },
 });
