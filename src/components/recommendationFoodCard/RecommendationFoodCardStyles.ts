@@ -3,20 +3,12 @@ import { COLORS } from "../../constants/color";
 import { LEAGUE_SPARTAN_LIGHT, LEAGUE_SPARTAN_MEDIUM } from "../../constants/fonts";
 
 export const styles = StyleSheet.create({
-    // nameAndRatingContainer:{
-    //     marginTop: 11,
-    //     flexDirection: 'row',
-    //     alignItems: 'flex-start',
-    //     justifyContent: 'space-between',
-    //     width: '100%',
-    //   },
       name:{
         marginTop: 11,
         fontFamily: LEAGUE_SPARTAN_MEDIUM,
         fontSize: 16,
         lineHeight: 15,
         color: COLORS.almostBlack,
-        // width: '70%',
       },
       bottomContainer:{
         marginTop:8,
