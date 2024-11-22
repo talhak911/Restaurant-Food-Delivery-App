@@ -20,5 +20,6 @@ export default function App(): React.JSX.Element {
         </ApolloProvider>
       </Provider>
     </GestureHandlerRootView>
+    //helow from main
   );
 }
