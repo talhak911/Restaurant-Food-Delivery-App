@@ -7,7 +7,7 @@ import {store} from './src/redux/store';
 import {ApolloProvider} from './src/providers/apolloProvider/ApolloProvider';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-
+//in fix/homepage branch testing
 export default function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView>
