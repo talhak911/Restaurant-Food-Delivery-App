@@ -8,6 +8,7 @@ import {ApolloProvider} from './src/providers/apolloProvider/ApolloProvider';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 //in fix/homepage branch testing
+// new changes for fix/homepage
 export default function App(): React.JSX.Element {
   return (
     <GestureHandlerRootView>
